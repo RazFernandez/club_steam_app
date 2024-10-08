@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "941224322500",
+    "project_id": "club-steam",
+    "storage_bucket": "club-steam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941224322500:android:7572fe6bae0f0b31adf091",
+        "android_client_info": {
+          "package_name": "com.example.club_steam_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2Dhc4nqHloJNIIk9PvHHv7g_DryzMiRk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
