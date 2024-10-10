@@ -1,5 +1,4 @@
-import 'dart:async';
-
+import 'package:club_steam_app/views/login.dart';
 import 'package:flutter/material.dart';
 import 'utils/util.dart';
 import 'utils/theme.dart';
@@ -16,11 +15,7 @@ void main() async {
   // Pass all uncaught "fatal" errors from the framework to Crashlytics
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
-  runZonedGuarded(() {
-    runApp(const MyApp());
-  }, (error, stackTrace) {
-    FirebaseCrashlytics.instance.recordError(error, stackTrace, fatal: true);
-  });
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -41,7 +36,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Club Steam',
       theme: brightness == Brightness.light ? theme.light() : theme.dark(),
-      home: const MyHomePage(title: 'Club Steam Homepage'),
+      home: LoginView(),
     );
   }
 }
