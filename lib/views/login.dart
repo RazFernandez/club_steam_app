@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:club_steam_app/widgets/passwordField.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -30,14 +31,7 @@ class LoginView extends StatelessWidget {
               height: 16,
             ),
             // Password TextField
-            TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'Contraseña',
-                prefixIcon: Icon(Icons.lock),
-                suffixIcon: Icon(Icons.visibility),
-              ),
-            ),
+            PasswordTextField(),
             SizedBox(
               height: 24,
             ),
