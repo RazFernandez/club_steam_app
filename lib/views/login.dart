@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:club_steam_app/widgets/passwordField.dart';
 import 'package:club_steam_app/views/register.dart';
+import 'package:club_steam_app/views/home.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -82,7 +83,7 @@ class LoginView extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => RegisterView()),
+                      MaterialPageRoute(builder: (context) => HomeView()),
                     );
                   },
                   child: Text(
