@@ -14,7 +14,7 @@ class _RegisterViewState extends State<RegisterView> {
   // Variable to hold selected role
   String? _selectedRole;
 
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   int _currentPage = 0; // Track current page for progress bar
 
   // This function updates the current page index and rebuilds the progress bar
