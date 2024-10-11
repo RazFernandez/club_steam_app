@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:club_steam_app/widgets/passwordField.dart';
+import 'package:club_steam_app/views/register.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -30,14 +32,7 @@ class LoginView extends StatelessWidget {
               height: 16,
             ),
             // Password TextField
-            TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'Contraseña',
-                prefixIcon: Icon(Icons.lock),
-                suffixIcon: Icon(Icons.visibility),
-              ),
-            ),
+            PasswordTextField(),
             SizedBox(
               height: 24,
             ),
@@ -83,7 +78,13 @@ class LoginView extends StatelessWidget {
               children: [
                 Text('¿No tienes una cuenta?'),
                 TextButton(
-                  onPressed: () {},
+                  // Send the user to the registatrion form
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RegisterView()),
+                    );
+                  },
                   child: Text(
                     'Registrate',
                     style: TextStyle(fontWeight: FontWeight.bold),
