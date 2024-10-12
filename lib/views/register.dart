@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:club_steam_app/widgets/customFormField.dart';
+import 'package:club_steam_app/utils/validation.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -67,22 +68,11 @@ class _RegisterViewState extends State<RegisterView> {
                             labelText: 'Correo Electrónico',
                             prefixIcon: Icon(Icons.email_outlined),
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Por favor, introduzca un correo institucional valido';
-                            }
-                            return null;
-                          }),
+                          validator: isValidEmail),
                       CustomFormField(
-                        labelText: "Correo",
-                        icon: emailIcon,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor, introduzca un correo institucional valido';
-                          }
-                          return null;
-                        },
-                      ),
+                          labelText: "Correo",
+                          icon: emailIcon,
+                          validator: isValidEmail),
                       // Password field
                       TextFormField(
                           decoration: InputDecoration(
