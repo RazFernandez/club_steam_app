@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:club_steam_app/widgets/customFormField.dart';
 import 'package:club_steam_app/utils/validation.dart';
+import 'package:club_steam_app/widgets/passwordFormField.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -16,6 +17,11 @@ class _RegisterViewState extends State<RegisterView> {
   // Here go the Icons used for the Text Form Fields
   IconData emailIcon = Icons.email_outlined;
 
+  // Controllers to retrieve the values of password fields
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
   // Variable to hold selected role
   String? _selectedRole;
 
@@ -28,6 +34,8 @@ class _RegisterViewState extends State<RegisterView> {
       _currentPage = page;
     });
   }
+
+  // This function comparates that both password fields are the same
 
   // Function to validate and submit the form
   void _submitForm() {
@@ -63,29 +71,22 @@ class _RegisterViewState extends State<RegisterView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       // Email field
-                      TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Correo Electrónico',
-                            prefixIcon: Icon(Icons.email_outlined),
-                          ),
-                          validator: isValidEmail),
                       CustomFormField(
                           labelText: "Correo",
                           icon: emailIcon,
-                          validator: isValidEmail),
+                          validator: (value) => isValidEmail(value)),
                       // Password field
-                      TextFormField(
-                          decoration: InputDecoration(
-                            labelText: 'Contraseña',
-                            prefixIcon: Icon(Icons.lock),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Por favor, introduzca un correo institucional valido';
-                            }
-                            return null;
-                          }),
-                      // The password
+                      PasswordFormField(
+                          controller: _passwordController,
+                          labelText: "Contraseña",
+                          validator: (value) => isValidPassword(value)),
+                      PasswordFormField(
+                          controller: _confirmPasswordController,
+                          labelText: "Confirmar Contraseña",
+                          validator: (value) => validatePasswords(
+                              _passwordController.text,
+                              _confirmPasswordController.text)),
+
                       /*
                       // First Name
                       TextFormField(
