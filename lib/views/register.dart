@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:club_steam_app/widgets/customFormField.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -10,6 +11,9 @@ class RegisterView extends StatefulWidget {
 class _RegisterViewState extends State<RegisterView> {
   // Key to identify the form and perform validation
   final _formKey = GlobalKey<FormState>();
+
+  // Here go the Icons used for the Text Form Fields
+  IconData emailIcon = Icons.email_outlined;
 
   // Variable to hold selected role
   String? _selectedRole;
@@ -57,6 +61,42 @@ class _RegisterViewState extends State<RegisterView> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      // Email field
+                      TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Correo Electrónico',
+                            prefixIcon: Icon(Icons.email_outlined),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor, introduzca un correo institucional valido';
+                            }
+                            return null;
+                          }),
+                      CustomFormField(
+                        labelText: "Correo",
+                        icon: emailIcon,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor, introduzca un correo institucional valido';
+                          }
+                          return null;
+                        },
+                      ),
+                      // Password field
+                      TextFormField(
+                          decoration: InputDecoration(
+                            labelText: 'Contraseña',
+                            prefixIcon: Icon(Icons.lock),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Por favor, introduzca un correo institucional valido';
+                            }
+                            return null;
+                          }),
+                      // The password
+                      /*
                       // First Name
                       TextFormField(
                         decoration: InputDecoration(
@@ -100,13 +140,13 @@ class _RegisterViewState extends State<RegisterView> {
                           }
                           return null;
                         },
-                      ),
+                      ),*/
                       SizedBox(height: 24),
 
                       // Register button to submit the form
                       SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton(
+                        child: FilledButton(
                           onPressed: _submitForm, // Submit form
                           child: Text('Registrarse'),
                         ),
