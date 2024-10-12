@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:club_steam_app/widgets/customFormField.dart';
 import 'package:club_steam_app/utils/validation.dart';
 import 'package:club_steam_app/widgets/passwordFormField.dart';
+import 'package:club_steam_app/controllers/user_controller.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -17,7 +18,8 @@ class _RegisterViewState extends State<RegisterView> {
   // Here go the Icons used for the Text Form Fields
   IconData emailIcon = Icons.email_outlined;
 
-  // Controllers to retrieve the values of password fields
+  // Controllers to retrieve the values of text fields
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
@@ -38,12 +40,32 @@ class _RegisterViewState extends State<RegisterView> {
   // This function comparates that both password fields are the same
 
   // Function to validate and submit the form
-  void _submitForm() {
+  void _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      // If all fields are valid, process the registration
-      debugPrint('Form is valid, proceed with registration');
+      String? email = _emailController.text;
+      String? password = _passwordController.text;
+      bool success = await UserController().registerUser(email, password);
+
+      // Whether the creation of the user account was succeful or not, it displays
+      // a snackbar
+      if (success) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Su cuenta ha sido creada con éxito')),
+          );
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Ha ocurrido un error')),
+          );
+        }
+      }
     } else {
-      debugPrint('Form is invalid');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("No ha rellenado todos los campos de registro")));
+      }
     }
   }
 
@@ -72,6 +94,7 @@ class _RegisterViewState extends State<RegisterView> {
                     children: <Widget>[
                       // Email field
                       CustomFormField(
+                          controller: _emailController,
                           labelText: "Correo",
                           icon: emailIcon,
                           validator: (value) => isValidEmail(value)),
