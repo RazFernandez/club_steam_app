@@ -79,7 +79,7 @@ class _LoginViewState extends State<LoginView> {
                 labelText: "Contraseña",
                 validator: (value) => isValidPassword(value),
               ),
-              SizedBox(height: 24),
+              SizedBox(height: 16),
               // Login Button
               SizableButtom(
                   onPressed: () {
@@ -99,7 +99,7 @@ class _LoginViewState extends State<LoginView> {
                   Expanded(child: Divider())
                 ],
               ),
-              SizedBox(height: 24),
+              SizedBox(height: 16),
               Text("Inicie Sesión con"),
               // Google Sing-In Button
               IconButton(

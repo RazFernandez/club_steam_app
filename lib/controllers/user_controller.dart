@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class UserController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  // Register a user into firebase auth
   Future<bool> registerUser(String email, String password) async {
     try {
       UserCredential userCredential = await _auth
@@ -23,6 +24,7 @@ class UserController {
     return false;
   }
 
+  // Login a user into firebase auth
   Future<bool> loginUser(String email, String password) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
@@ -35,5 +37,11 @@ class UserController {
     return false;
   }
 
+  // Keep theuser log-in
   User? get currentUser => _auth.currentUser;
+
+  // Logout the user
+  Future<void> logoutUser() async {
+    await _auth.signOut();
+  }
 }
