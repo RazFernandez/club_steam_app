@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:club_steam_app/widgets/customFormField.dart';
+import 'package:club_steam_app/utils/validation.dart';
+import 'package:club_steam_app/widgets/passwordFormField.dart';
+import 'package:club_steam_app/controllers/user_controller.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -11,10 +15,19 @@ class _RegisterViewState extends State<RegisterView> {
   // Key to identify the form and perform validation
   final _formKey = GlobalKey<FormState>();
 
+  // Here go the Icons used for the Text Form Fields
+  IconData emailIcon = Icons.email_outlined;
+
+  // Controllers to retrieve the values of text fields
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+
   // Variable to hold selected role
   String? _selectedRole;
 
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   int _currentPage = 0; // Track current page for progress bar
 
   // This function updates the current page index and rebuilds the progress bar
@@ -24,13 +37,33 @@ class _RegisterViewState extends State<RegisterView> {
     });
   }
 
-  // Function to validate and submit the form
-  void _submitForm() {
+  // Function to validate and submit the registration form
+  void _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      // If all fields are valid, process the registration
-      debugPrint('Form is valid, proceed with registration');
+      String? email = _emailController.text;
+      String? password = _passwordController.text;
+      bool success = await UserController().registerUser(email, password);
+
+      // Whether the creation of the user account was succeful or not, it displays
+      // a snackbar
+      if (success) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Su cuenta ha sido creada con éxito')),
+          );
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Ha ocurrido un error')),
+          );
+        }
+      }
     } else {
-      debugPrint('Form is invalid');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("No ha rellenado todos los campos de registro")));
+      }
     }
   }
 
@@ -57,6 +90,25 @@ class _RegisterViewState extends State<RegisterView> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      // Email field
+                      CustomFormField(
+                          controller: _emailController,
+                          labelText: "Correo",
+                          icon: emailIcon,
+                          validator: (value) => isValidEmail(value)),
+                      // Password field
+                      PasswordFormField(
+                          controller: _passwordController,
+                          labelText: "Contraseña",
+                          validator: (value) => isValidPassword(value)),
+                      PasswordFormField(
+                          controller: _confirmPasswordController,
+                          labelText: "Confirmar Contraseña",
+                          validator: (value) => validatePasswords(
+                              _passwordController.text,
+                              _confirmPasswordController.text)),
+
+                      /*
                       // First Name
                       TextFormField(
                         decoration: InputDecoration(
@@ -100,13 +152,13 @@ class _RegisterViewState extends State<RegisterView> {
                           }
                           return null;
                         },
-                      ),
+                      ),*/
                       SizedBox(height: 24),
 
                       // Register button to submit the form
                       SizedBox(
                         width: double.infinity,
-                        child: ElevatedButton(
+                        child: FilledButton(
                           onPressed: _submitForm, // Submit form
                           child: Text('Registrarse'),
                         ),
