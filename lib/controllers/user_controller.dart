@@ -22,4 +22,18 @@ class UserController {
     }
     return false;
   }
+
+  Future<bool> loginUser(String email, String password) async {
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      User? user = userCredential.user;
+      return user != null;
+    } catch (e) {
+      debugPrint("Error: $e");
+    }
+    return false;
+  }
+
+  User? get currentUser => _auth.currentUser;
 }

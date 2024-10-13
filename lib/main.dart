@@ -1,4 +1,6 @@
 import 'package:club_steam_app/views/login.dart';
+import 'package:club_steam_app/views/home.dart';
+import 'package:club_steam_app/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'utils/util.dart';
 import 'utils/theme.dart';
@@ -36,7 +38,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Club Steam',
       theme: brightness == Brightness.light ? theme.light() : theme.dark(),
-      home: LoginView(),
+      home: _checkUserLogin(),
     );
+  }
+
+  Widget _checkUserLogin() {
+    if (UserController().currentUser != null) {
+      return HomeView();
+    } else {
+      return LoginView();
+    }
   }
 }

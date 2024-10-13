@@ -37,9 +37,7 @@ class _RegisterViewState extends State<RegisterView> {
     });
   }
 
-  // This function comparates that both password fields are the same
-
-  // Function to validate and submit the form
+  // Function to validate and submit the registration form
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
       String? email = _emailController.text;
