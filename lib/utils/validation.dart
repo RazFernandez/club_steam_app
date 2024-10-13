@@ -41,3 +41,15 @@ String? validatePasswords(String? password, String? confirmPassword) {
   }
   return null;
 }
+
+// Phone number validation function
+String? isValidPhoneNumber(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Por favor, introduzca un número de celular válido';
+  }
+  final RegExp regex = RegExp(r'^\d{10}$');
+  if (!regex.hasMatch(value)) {
+    return 'Debe contener exactamente 10 dígitos';
+  }
+  return null;
+}

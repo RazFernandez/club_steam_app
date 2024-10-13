@@ -17,6 +17,7 @@ class _RegisterViewState extends State<RegisterView> {
 
   // Here go the Icons used for the Text Form Fields
   IconData emailIcon = Icons.email_outlined;
+  IconData phoneIcon = Icons.phone;
 
   // Controllers to retrieve the values of text fields
   final TextEditingController _emailController = TextEditingController();
@@ -96,6 +97,11 @@ class _RegisterViewState extends State<RegisterView> {
                           labelText: "Correo",
                           icon: emailIcon,
                           validator: (value) => isValidEmail(value)),
+                      // Cellphone number field
+                      CustomFormField.phoneNumber(
+                          labelText: "Número de Celular",
+                          icon: phoneIcon,
+                          validator: (value) => isValidPhoneNumber(value)),
                       // Password field
                       PasswordFormField(
                           controller: _passwordController,
