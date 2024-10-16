@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:club_steam_app/widgets/customFormField.dart';
-import 'package:club_steam_app/utils/validation.dart';
 import 'package:club_steam_app/widgets/passwordFormField.dart';
+import 'package:club_steam_app/widgets/dropdownFormField.dart';
+import 'package:club_steam_app/utils/validation.dart';
 import 'package:club_steam_app/controllers/user_controller.dart';
+import 'package:club_steam_app/utils/dropdown_items.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -18,12 +20,22 @@ class _RegisterViewState extends State<RegisterView> {
   // Here go the Icons used for the Text Form Fields
   IconData emailIcon = Icons.email_outlined;
   IconData phoneIcon = Icons.phone;
+  IconData personIcon = Icons.person_2_outlined;
+  IconData typeUserIcon = Icons.group_outlined;
 
-  // Controllers to retrieve the values of text fields
+  // Controllers to retrieve the values of text fields]
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _lastFatherNameController =
+      TextEditingController();
+  final TextEditingController _lastMotherNameController =
+      TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+  final TextEditingController _userTypeController = TextEditingController();
+  final TextEditingController _unitController = TextEditingController();
+  String? selectedUserType;
 
   // Variable to hold selected role
   String? _selectedRole;
@@ -91,6 +103,25 @@ class _RegisterViewState extends State<RegisterView> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      // Name field
+                      CustomFormField(
+                          labelText: "Nombres",
+                          icon: personIcon,
+                          validator: (value) => isValidField(
+                              value, 'Por favor, no deje este campo vacio')),
+                      // Father Last name
+                      CustomFormField(
+                          labelText: "Apellido Paterno",
+                          icon: personIcon,
+                          validator: (value) => isValidField(
+                              value, 'Por favor, no deje este campo vacio')),
+                      // Mother Last name
+                      CustomFormField(
+                          labelText: "Apellido Materno",
+                          icon: personIcon,
+                          validator: (value) => isValidField(
+                              value, 'Por favor, no deje este campo vacio')),
+
                       // Email field
                       CustomFormField(
                           controller: _emailController,
@@ -102,6 +133,16 @@ class _RegisterViewState extends State<RegisterView> {
                           labelText: "Número de Celular",
                           icon: phoneIcon,
                           validator: (value) => isValidPhoneNumber(value)),
+                      // Type of user field
+                      DropdownFormField<String>(
+                        labelText: 'Tipo de usuario',
+                        icon: typeUserIcon,
+                        items: userTypes,
+                        value: selectedUserType,
+                        controller: _userTypeController,
+                        validator: (value) => isValidField(
+                            value, 'Por favor, seleccione una opción'),
+                      ),
                       // Password field
                       PasswordFormField(
                           controller: _passwordController,
@@ -113,54 +154,7 @@ class _RegisterViewState extends State<RegisterView> {
                           validator: (value) => validatePasswords(
                               _passwordController.text,
                               _confirmPasswordController.text)),
-
-                      /*
-                      // First Name
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Nombres',
-                          prefixIcon: Icon(Icons.person_2_outlined),
-                        ),
-                        // Add a validator for the form
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor, ingresa tu nombre';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: 16),
-
-                      // Last Name (Paternal)
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Apellido Paterno',
-                          prefixIcon: Icon(Icons.person_2_outlined),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor, ingresa tu apellido paterno';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: 16),
-
-                      // Last Name (Maternal)
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Apellido Materno',
-                          prefixIcon: Icon(Icons.person_2_outlined),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor, ingresa tu apellido materno';
-                          }
-                          return null;
-                        },
-                      ),*/
                       SizedBox(height: 24),
-
                       // Register button to submit the form
                       SizedBox(
                         width: double.infinity,

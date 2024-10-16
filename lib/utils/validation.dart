@@ -1,6 +1,14 @@
 /* This file centralizes all validation functions to ensure user inputs across
  various fields are consistently and effectively validated. */
 
+// General validation fields
+String? isValidField(String? value, String message) {
+  if (value == null || value.isEmpty) {
+    return message;
+  }
+  return null;
+}
+
 // Email validation fields
 String? isValidEmail(String? value) {
   if (value == null || value.isEmpty) {
