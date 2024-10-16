@@ -8,6 +8,7 @@ class DropdownFormField<T> extends StatefulWidget {
   final String Function(T value)? itemLabel;
   final TextEditingController controller;
   final String? Function(T?)? validator;
+  final void Function(T?)? onChanged; // Optional onChanged callback
 
   const DropdownFormField({
     super.key,
@@ -18,6 +19,7 @@ class DropdownFormField<T> extends StatefulWidget {
     this.value,
     this.itemLabel,
     this.validator,
+    this.onChanged,
   });
 
   @override
@@ -54,6 +56,9 @@ class DropdownFormFieldState<T> extends State<DropdownFormField<T>> {
           selectedValue = value;
           widget.controller.text = value.toString(); // Update the controller
         });
+        if (widget.onChanged != null) {
+          widget.onChanged!(value); // Call external onChanged if provided
+        }
       },
       validator: widget.validator,
     );

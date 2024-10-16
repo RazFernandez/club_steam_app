@@ -61,3 +61,22 @@ String? isValidPhoneNumber(String? value) {
   }
   return null;
 }
+
+// Control number validation function
+String? isValidControlNumber(String? value) {
+  // Check if the value is null or empty
+  if (value == null || value.isEmpty) {
+    return 'Por favor, ingrese un número de control';
+  }
+
+  // Define the regular expression for the control number pattern
+  final RegExp controlNumberRegExp = RegExp(r'^\d{3}[kK]\d{4}$');
+
+  // Validate the input against the regular expression
+  if (!controlNumberRegExp.hasMatch(value)) {
+    return 'El número de control no tiene un formato válido (ej: 201k0019)';
+  }
+
+  // Return null if the input is valid
+  return null;
+}

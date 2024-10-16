@@ -22,6 +22,9 @@ class _RegisterViewState extends State<RegisterView> {
   IconData phoneIcon = Icons.phone;
   IconData personIcon = Icons.person_2_outlined;
   IconData typeUserIcon = Icons.group_outlined;
+  IconData engineeringIcon = Icons.engineering_outlined;
+  IconData controlNumIcon = Icons.numbers_outlined;
+  IconData unidadAdminIcon = Icons.business_outlined;
 
   // Controllers to retrieve the values of text fields]
   final TextEditingController _nameController = TextEditingController();
@@ -35,7 +38,12 @@ class _RegisterViewState extends State<RegisterView> {
       TextEditingController();
   final TextEditingController _userTypeController = TextEditingController();
   final TextEditingController _unitController = TextEditingController();
+  final TextEditingController _controlNumberController =
+      TextEditingController();
+
+  // Variables to hold selected dropdown values
   String? selectedUserType;
+  String? selectedUnit;
 
   // Variable to hold selected role
   String? _selectedRole;
@@ -48,6 +56,46 @@ class _RegisterViewState extends State<RegisterView> {
     setState(() {
       _currentPage = page;
     });
+  }
+
+  // Function to render the fields based on the type of user
+  Widget _renderContentFields(String? userType) {
+    // Both Docente and Estudiante shows a field to select their ingenieria
+    if (userType == 'Docente' || userType == 'Estudiante') {
+      return Column(
+        children: [
+          DropdownFormField<String>(
+            labelText: 'Ingenieria',
+            icon: engineeringIcon,
+            items: ingenieriaOptions,
+            value: selectedUnit,
+            controller: _unitController,
+            validator: (value) =>
+                isValidField(value, "Por favor, seleccione una opción"),
+          ),
+          // Just the Estudiantes request their control number
+          if (userType == 'Estudiante')
+            CustomFormField(
+              labelText: 'Número de Control',
+              icon: controlNumIcon,
+              controller: _controlNumberController,
+              validator: (value) => isValidControlNumber(value),
+            )
+        ],
+      );
+      // Instead of their ingenieria, the collaborators request their unidad administrativa
+    } else if (userType == 'Colaborador') {
+      return DropdownFormField<String>(
+        labelText: 'Unidad Administrativa',
+        icon: unidadAdminIcon,
+        items: unidadAdministrativaOptions,
+        value: selectedUnit,
+        controller: _unitController,
+        validator: (value) =>
+            isValidField(value, 'Por favor, seleccione una opción'),
+      );
+    }
+    return SizedBox.shrink();
   }
 
   // Function to validate and submit the registration form
@@ -121,7 +169,6 @@ class _RegisterViewState extends State<RegisterView> {
                           icon: personIcon,
                           validator: (value) => isValidField(
                               value, 'Por favor, no deje este campo vacio')),
-
                       // Email field
                       CustomFormField(
                           controller: _emailController,
@@ -142,7 +189,15 @@ class _RegisterViewState extends State<RegisterView> {
                         controller: _userTypeController,
                         validator: (value) => isValidField(
                             value, 'Por favor, seleccione una opción'),
+                        onChanged: (value) {
+                          setState(() {
+                            selectedUserType = value;
+                          });
+                        },
                       ),
+                      // Rendering content fields based on user type
+                      _renderContentFields(selectedUserType),
+
                       // Password field
                       PasswordFormField(
                           controller: _passwordController,
