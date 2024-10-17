@@ -1,4 +1,5 @@
 import 'package:club_steam_app/views/register.dart';
+import 'package:club_steam_app/widgets/redirectTextButton.dart';
 import 'package:flutter/material.dart';
 import 'package:club_steam_app/widgets/customFormField.dart';
 import 'package:club_steam_app/utils/validation.dart';
@@ -115,16 +116,11 @@ class _LoginViewState extends State<LoginView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("¿No tienes una cuenta?"),
-                  TextButton(
-                    onPressed: () {
-                      navigateTo(context, RegisterView());
-                    },
-                    child: Text(
-                      'Registrate',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                  RedirectTextButton(
+                      labelText: "¿No tienes una cuenta?",
+                      context: context,
+                      targetView: RegisterView(),
+                      buttonText: "Registrate")
                 ],
               )
             ],

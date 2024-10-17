@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:club_steam_app/utils/navigation_utils.dart';
 import 'package:club_steam_app/views/login.dart';
+import 'package:club_steam_app/widgets/redirectTextButton.dart';
 
 // Assuming renderProfileImagePage is in the same file.
 // If it's in another file, make sure to import it correctly.
@@ -88,16 +88,11 @@ Widget renderProfileImagePage(BuildContext context, Function switchView) {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("¿Ya tienes una cuenta?"),
-                TextButton(
-                  onPressed: () {
-                    navigateAndClearStack(context, LoginView());
-                  },
-                  child: Text(
-                    'Iniciar Sesión',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
+                RedirectTextButton(
+                    labelText: "¿Ya tienes una cuenta?",
+                    context: context,
+                    targetView: LoginView(),
+                    buttonText: "Iniciar Sesión")
               ],
             ),
           ],

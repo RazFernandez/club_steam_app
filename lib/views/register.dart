@@ -1,8 +1,10 @@
-import 'package:club_steam_app/views/profileImage.dart';
 import 'package:flutter/material.dart';
+import 'package:club_steam_app/views/profileImage.dart';
+import 'package:club_steam_app/views/login.dart';
 import 'package:club_steam_app/widgets/customFormField.dart';
 import 'package:club_steam_app/widgets/passwordFormField.dart';
 import 'package:club_steam_app/widgets/dropdownFormField.dart';
+import 'package:club_steam_app/widgets/redirectTextButton.dart';
 import 'package:club_steam_app/utils/validation.dart';
 import 'package:club_steam_app/controllers/user_controller.dart';
 import 'package:club_steam_app/utils/dropdown_items.dart';
@@ -231,6 +233,12 @@ class _RegisterViewState extends State<RegisterView> {
                         child: Text('Siguiente'),
                       ),
                     ),
+                    SizedBox(height: 16),
+                    RedirectTextButton(
+                        labelText: "¿Ya tienes una cuenta?",
+                        context: context,
+                        targetView: LoginView(),
+                        buttonText: "Iniciar Sesión")
                   ],
                 ),
               ),
