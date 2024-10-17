@@ -1,3 +1,4 @@
+import 'package:club_steam_app/views/profileImage.dart';
 import 'package:flutter/material.dart';
 import 'package:club_steam_app/widgets/customFormField.dart';
 import 'package:club_steam_app/widgets/passwordFormField.dart';
@@ -5,6 +6,7 @@ import 'package:club_steam_app/widgets/dropdownFormField.dart';
 import 'package:club_steam_app/utils/validation.dart';
 import 'package:club_steam_app/controllers/user_controller.dart';
 import 'package:club_steam_app/utils/dropdown_items.dart';
+import 'package:club_steam_app/utils/navigation_utils.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -45,8 +47,7 @@ class _RegisterViewState extends State<RegisterView> {
   String? selectedUserType;
   String? selectedUnit;
 
-  // Variable to hold selected role
-  String? _selectedRole;
+  // Progress tracking
 
   final PageController _pageController = PageController();
   int _currentPage = 0; // Track current page for progress bar
@@ -214,8 +215,10 @@ class _RegisterViewState extends State<RegisterView> {
                       SizedBox(
                         width: double.infinity,
                         child: FilledButton(
-                          onPressed: _submitForm, // Submit form
-                          child: Text('Registrarse'),
+                          onPressed: () {
+                            navigateTo(context, ProfileImageView());
+                          }, // Submit form
+                          child: Text('Siguiente'),
                         ),
                       ),
                     ],
