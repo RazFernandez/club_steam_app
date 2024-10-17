@@ -7,6 +7,7 @@ import 'package:club_steam_app/utils/validation.dart';
 import 'package:club_steam_app/controllers/user_controller.dart';
 import 'package:club_steam_app/utils/dropdown_items.dart';
 import 'package:club_steam_app/utils/navigation_utils.dart';
+import 'package:club_steam_app/utils/widget_utils.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -48,14 +49,29 @@ class _RegisterViewState extends State<RegisterView> {
   String? selectedUnit;
 
   // Progress tracking
-
   final PageController _pageController = PageController();
   int _currentPage = 0; // Track current page for progress bar
+
+  // This is the init State function
+  @override
+  void initState() {
+    super.initState();
+    _pageController.addListener(() {
+      _onPageChanged(_pageController.page!.round());
+    });
+  }
 
   // This function updates the current page index and rebuilds the progress bar
   void _onPageChanged(int page) {
     setState(() {
       _currentPage = page;
+    });
+  }
+
+  // Method to switch between views
+  void switchView(int page) {
+    setState(() {
+      _currentPage = page; // Set the current page to the passed value
     });
   }
 
@@ -129,104 +145,135 @@ class _RegisterViewState extends State<RegisterView> {
     }
   }
 
+  // Function to render the first page of the registration from
+  Widget renderRegisterFormView(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        // Linear progress bar to show step progress
+        //LinearProgressIndicator(value: (_currentPage + 1) / 2),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(24.0, 32.0, 24.0, 32.0),
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey, // Form key for validation
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    // Name field
+                    CustomFormField(
+                        labelText: "Nombres",
+                        icon: personIcon,
+                        validator: (value) => isValidField(
+                            value, 'Por favor, no deje este campo vacio')),
+                    // Father Last name
+                    CustomFormField(
+                        labelText: "Apellido Paterno",
+                        icon: personIcon,
+                        validator: (value) => isValidField(
+                            value, 'Por favor, no deje este campo vacio')),
+                    // Mother Last name
+                    CustomFormField(
+                        labelText: "Apellido Materno",
+                        icon: personIcon,
+                        validator: (value) => isValidField(
+                            value, 'Por favor, no deje este campo vacio')),
+                    // Email field
+                    CustomFormField(
+                        controller: _emailController,
+                        labelText: "Correo",
+                        icon: emailIcon,
+                        validator: (value) => isValidEmail(value)),
+                    // Cellphone number field
+                    CustomFormField.phoneNumber(
+                        labelText: "Número de Celular",
+                        icon: phoneIcon,
+                        validator: (value) => isValidPhoneNumber(value)),
+                    // Type of user field
+                    DropdownFormField<String>(
+                      labelText: 'Tipo de usuario',
+                      icon: typeUserIcon,
+                      items: userTypes,
+                      value: selectedUserType,
+                      controller: _userTypeController,
+                      validator: (value) => isValidField(
+                          value, 'Por favor, seleccione una opción'),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedUserType = value;
+                        });
+                      },
+                    ),
+                    // Rendering content fields based on user type
+                    _renderContentFields(selectedUserType),
+
+                    // Password field
+                    PasswordFormField(
+                        controller: _passwordController,
+                        labelText: "Contraseña",
+                        validator: (value) => isValidPassword(value)),
+                    PasswordFormField(
+                        controller: _confirmPasswordController,
+                        labelText: "Confirmar Contraseña",
+                        validator: (value) => validatePasswords(
+                            _passwordController.text,
+                            _confirmPasswordController.text)),
+                    SizedBox(height: 24),
+                    // Register button to submit the form
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton(
+                        onPressed: () {
+                          //_submitForm();
+                          //navigateTo(context, ProfileImageView());
+                          switchView(1);
+                        }, // Submit form
+                        child: Text('Siguiente'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Registro'),
         leading: IconButton(
-          onPressed: () => Navigator.pop(context),
+          onPressed: () =>
+              handleBackNavigation(context, _currentPage, (int newPage) {
+            setState(() {
+              _currentPage = newPage;
+            });
+          }),
           icon: Icon(Icons.arrow_back),
         ),
       ),
       body: Column(
-        children: <Widget>[
-          // Linear progress bar to show step progress
-          LinearProgressIndicator(value: (_currentPage + 1) / 2),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(24.0, 32.0, 24.0, 32.0),
-              child: SingleChildScrollView(
-                child: Form(
-                  key: _formKey, // Form key for validation
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      // Name field
-                      CustomFormField(
-                          labelText: "Nombres",
-                          icon: personIcon,
-                          validator: (value) => isValidField(
-                              value, 'Por favor, no deje este campo vacio')),
-                      // Father Last name
-                      CustomFormField(
-                          labelText: "Apellido Paterno",
-                          icon: personIcon,
-                          validator: (value) => isValidField(
-                              value, 'Por favor, no deje este campo vacio')),
-                      // Mother Last name
-                      CustomFormField(
-                          labelText: "Apellido Materno",
-                          icon: personIcon,
-                          validator: (value) => isValidField(
-                              value, 'Por favor, no deje este campo vacio')),
-                      // Email field
-                      CustomFormField(
-                          controller: _emailController,
-                          labelText: "Correo",
-                          icon: emailIcon,
-                          validator: (value) => isValidEmail(value)),
-                      // Cellphone number field
-                      CustomFormField.phoneNumber(
-                          labelText: "Número de Celular",
-                          icon: phoneIcon,
-                          validator: (value) => isValidPhoneNumber(value)),
-                      // Type of user field
-                      DropdownFormField<String>(
-                        labelText: 'Tipo de usuario',
-                        icon: typeUserIcon,
-                        items: userTypes,
-                        value: selectedUserType,
-                        controller: _userTypeController,
-                        validator: (value) => isValidField(
-                            value, 'Por favor, seleccione una opción'),
-                        onChanged: (value) {
-                          setState(() {
-                            selectedUserType = value;
-                          });
-                        },
-                      ),
-                      // Rendering content fields based on user type
-                      _renderContentFields(selectedUserType),
-
-                      // Password field
-                      PasswordFormField(
-                          controller: _passwordController,
-                          labelText: "Contraseña",
-                          validator: (value) => isValidPassword(value)),
-                      PasswordFormField(
-                          controller: _confirmPasswordController,
-                          labelText: "Confirmar Contraseña",
-                          validator: (value) => validatePasswords(
-                              _passwordController.text,
-                              _confirmPasswordController.text)),
-                      SizedBox(height: 24),
-                      // Register button to submit the form
-                      SizedBox(
-                        width: double.infinity,
-                        child: FilledButton(
-                          onPressed: () {
-                            navigateTo(context, ProfileImageView());
-                          }, // Submit form
-                          child: Text('Siguiente'),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+        children: [
+          // Smooth animation for the progress bar
+          TweenAnimationBuilder(
+            tween: Tween<double>(begin: 0, end: (_currentPage + 1) / 2),
+            duration: Duration(milliseconds: 500), // Animation duration
+            builder: (context, value, child) {
+              return LinearProgressIndicator(value: value);
+            },
           ),
+          Expanded(
+              // Use changeWidgetBodyTree to dynamically change the widget in the body
+              child: changeWidgetBodyTree(
+            context,
+            _currentPage == 0
+                ? renderRegisterFormView(context)
+                : renderProfileImagePage(context, switchView),
+          )),
         ],
       ),
     );
