@@ -6,6 +6,7 @@ class RedirectTextButton extends StatelessWidget {
   final BuildContext context; // The current context
   final Widget targetView; // The view to navigate to
   final String buttonText; // The text on the button
+  final int navigationMode; // 0 for stacking views, 1 for clearing the stack
 
   const RedirectTextButton({
     super.key,
@@ -13,6 +14,7 @@ class RedirectTextButton extends StatelessWidget {
     required this.context,
     required this.targetView,
     required this.buttonText,
+    this.navigationMode = 0, // Default is stacking views
   });
 
   @override
@@ -23,8 +25,14 @@ class RedirectTextButton extends StatelessWidget {
         Text(labelText), // Display the label text
         TextButton(
           onPressed: () {
-            navigateAndClearStack(
-                context, targetView); // Navigate to the target view
+            // Check the navigationMode to decide the navigation method
+            if (navigationMode == 1) {
+              // Clear stack and navigate to the target view
+              navigateAndClearStack(context, targetView);
+            } else {
+              // Stack the views with regular push
+              navigateTo(context, targetView);
+            }
           },
           child: Text(
             buttonText,

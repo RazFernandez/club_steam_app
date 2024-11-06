@@ -226,15 +226,16 @@ class _RegisterViewState extends State<RegisterView> {
                       width: double.infinity,
                       child: FilledButton(
                         onPressed: () {
-                          //_submitForm();
+                          _submitForm();
                           //navigateTo(context, ProfileImageView());
-                          switchView(1);
+                          //switchView(1);
                         }, // Submit form
                         child: Text('Siguiente'),
                       ),
                     ),
                     SizedBox(height: 16),
                     RedirectTextButton(
+                        navigationMode: 1,
                         labelText: "¿Ya tienes una cuenta?",
                         context: context,
                         targetView: LoginView(),

@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "941224322500",
     "project_id": "club-steam",
-    "storage_bucket": "club-steam.appspot.com"
+    "storage_bucket": "club-steam.firebasestorage.app"
   },
   "client": [
     {
