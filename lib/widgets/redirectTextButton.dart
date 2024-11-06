@@ -6,7 +6,6 @@ class RedirectTextButton extends StatelessWidget {
   final BuildContext context; // The current context
   final Widget targetView; // The view to navigate to
   final String buttonText; // The text on the button
-  final bool clearStack; // Flag to indicate whether to clear the stack
 
   const RedirectTextButton({
     super.key,
@@ -14,7 +13,6 @@ class RedirectTextButton extends StatelessWidget {
     required this.context,
     required this.targetView,
     required this.buttonText,
-    this.clearStack = false, // Default is false (do not clear the stack)
   });
 
   @override
@@ -25,16 +23,12 @@ class RedirectTextButton extends StatelessWidget {
         Text(labelText), // Display the label text
         TextButton(
           onPressed: () {
-            // Check if the stack should be cleared or not
-            if (clearStack) {
-              navigateAndClearStack(this.context, targetView);
-            } else {
-              navigateTo(this.context, targetView);
-            }
+            navigateAndClearStack(
+                context, targetView); // Navigate to the target view
           },
           child: Text(
             buttonText,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
       ],

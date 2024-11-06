@@ -89,12 +89,10 @@ Widget renderProfileImagePage(BuildContext context, Function switchView) {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 RedirectTextButton(
-                  labelText: "¿Ya tienes una cuenta?",
-                  context: context,
-                  targetView: LoginView(),
-                  buttonText: "Iniciar Sesión",
-                  clearStack: true,
-                ),
+                    labelText: "¿Ya tienes una cuenta?",
+                    context: context,
+                    targetView: LoginView(),
+                    buttonText: "Iniciar Sesión")
               ],
             ),
           ],

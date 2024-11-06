@@ -5,7 +5,6 @@ import 'package:club_steam_app/widgets/customFormField.dart';
 import 'package:club_steam_app/widgets/passwordFormField.dart';
 import 'package:club_steam_app/widgets/dropdownFormField.dart';
 import 'package:club_steam_app/widgets/redirectTextButton.dart';
-import 'package:club_steam_app/widgets/simpleSnackBar.dart';
 import 'package:club_steam_app/utils/validation.dart';
 import 'package:club_steam_app/controllers/user_controller.dart';
 import 'package:club_steam_app/utils/dropdown_items.dart';
@@ -129,16 +128,21 @@ class _RegisterViewState extends State<RegisterView> {
       // a snackbar
       if (success) {
         if (mounted) {
-          simpleSnackBar(context, 'Su cuenta ha sido creada con éxito');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Su cuenta ha sido creada con éxito')),
+          );
         }
       } else {
         if (mounted) {
-          simpleSnackBar(context, 'Ha ocurrido un error');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Ha ocurrido un error')),
+          );
         }
       }
     } else {
       if (mounted) {
-        simpleSnackBar(context, 'No ha rellenado todos los campos de registro');
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("No ha rellenado todos los campos de registro")));
       }
     }
   }
@@ -231,12 +235,10 @@ class _RegisterViewState extends State<RegisterView> {
                     ),
                     SizedBox(height: 16),
                     RedirectTextButton(
-                      labelText: "¿Ya tienes una cuenta?",
-                      context: context,
-                      targetView: LoginView(),
-                      buttonText: "Iniciar Sesión",
-                      clearStack: true,
-                    )
+                        labelText: "¿Ya tienes una cuenta?",
+                        context: context,
+                        targetView: LoginView(),
+                        buttonText: "Iniciar Sesión")
                   ],
                 ),
               ),
@@ -247,7 +249,6 @@ class _RegisterViewState extends State<RegisterView> {
     );
   }
 
-  // The build method
   @override
   Widget build(BuildContext context) {
     return Scaffold(
