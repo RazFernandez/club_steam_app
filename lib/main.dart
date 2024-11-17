@@ -11,12 +11,13 @@ import 'services/firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
+    name: 'club-steam',
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   // Pass all uncaught "fatal" errors from the framework to Crashlytics
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 

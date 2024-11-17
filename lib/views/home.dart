@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:club_steam_app/views/profile.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -73,12 +74,7 @@ class _HomeViewState extends State<HomeView> {
           ),
 
           // Perfil
-          Center(
-            child: Text(
-              'Perfil',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-          ),
+          ProfileView(),
         ],
       ),
     );

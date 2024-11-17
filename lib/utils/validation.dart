@@ -1,6 +1,14 @@
 /* This file centralizes all validation functions to ensure user inputs across
  various fields are consistently and effectively validated. */
 
+// General validation fields
+String? isValidField(String? value, String message) {
+  if (value == null || value.isEmpty) {
+    return message;
+  }
+  return null;
+}
+
 // Email validation fields
 String? isValidEmail(String? value) {
   if (value == null || value.isEmpty) {
@@ -39,5 +47,36 @@ String? validatePasswords(String? password, String? confirmPassword) {
   if (password != confirmPassword) {
     return 'Las contraseñas no coinciden';
   }
+  return null;
+}
+
+// Phone number validation function
+String? isValidPhoneNumber(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Por favor, introduzca un número de celular válido';
+  }
+  final RegExp regex = RegExp(r'^\d{10}$');
+  if (!regex.hasMatch(value)) {
+    return 'Debe contener exactamente 10 dígitos';
+  }
+  return null;
+}
+
+// Control number validation function
+String? isValidControlNumber(String? value) {
+  // Check if the value is null or empty
+  if (value == null || value.isEmpty) {
+    return 'Por favor, ingrese un número de control';
+  }
+
+  // Define the regular expression for the control number pattern
+  final RegExp controlNumberRegExp = RegExp(r'^\d{3}[kK]\d{4}$');
+
+  // Validate the input against the regular expression
+  if (!controlNumberRegExp.hasMatch(value)) {
+    return 'El número de control no tiene un formato válido (ej: 201k0019)';
+  }
+
+  // Return null if the input is valid
   return null;
 }
