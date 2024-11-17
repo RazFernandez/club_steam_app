@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:club_steam_app/utils/icons.dart';
 import 'package:club_steam_app/views/register.dart';
 import 'package:club_steam_app/widgets/redirectTextButton.dart';
-import 'package:flutter/material.dart';
 import 'package:club_steam_app/widgets/customFormField.dart';
 import 'package:club_steam_app/utils/validation.dart';
 import 'package:club_steam_app/widgets/passwordFormField.dart';
@@ -22,7 +23,7 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController _passwordController = TextEditingController();
 
   // Icons for fields and buttons
-  IconData emailIcon = Icons.email_outlined;
+  //IconData emailIcon = Icons.email_outlined;
 
   // Function to validate and submit the login form
   void _submitForm(BuildContext context) async {
@@ -71,7 +72,7 @@ class _LoginViewState extends State<LoginView> {
               CustomFormField(
                   controller: _emailController,
                   labelText: "Correo",
-                  icon: emailIcon,
+                  icon: AppIcons.emailIcon,
                   validator: (value) => isValidEmail(value)),
               SizedBox(height: 16),
               // Password TextField

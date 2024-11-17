@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:club_steam_app/utils/icons.dart';
 
 class PasswordFormField extends StatefulWidget {
   final TextEditingController? controller;
@@ -28,15 +29,16 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
       obscureText: _isObscure,
       decoration: InputDecoration(
           labelText: widget.labelText,
-          prefixIcon: Icon(Icons.lock),
+          prefixIcon: Icon(AppIcons.lockPasswordIcon),
           suffixIcon: IconButton(
               onPressed: () {
                 setState(() {
                   _isObscure = !_isObscure;
                 });
               },
-              icon:
-                  Icon(_isObscure ? Icons.visibility : Icons.visibility_off))),
+              icon: Icon(_isObscure
+                  ? AppIcons.viewPasswordIcon
+                  : AppIcons.hidePasswordIcon))),
       validator: widget.validator,
     );
   }

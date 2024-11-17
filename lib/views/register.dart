@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:club_steam_app/utils/icons.dart';
 import 'package:club_steam_app/views/profileImage.dart';
 import 'package:club_steam_app/views/login.dart';
 import 'package:club_steam_app/widgets/customFormField.dart';
@@ -21,15 +22,6 @@ class RegisterView extends StatefulWidget {
 class _RegisterViewState extends State<RegisterView> {
   // Key to identify the form and perform validation
   final _formKey = GlobalKey<FormState>();
-
-  // Here go the Icons used for the Text Form Fields
-  IconData emailIcon = Icons.email_outlined;
-  IconData phoneIcon = Icons.phone;
-  IconData personIcon = Icons.person_2_outlined;
-  IconData typeUserIcon = Icons.group_outlined;
-  IconData engineeringIcon = Icons.engineering_outlined;
-  IconData controlNumIcon = Icons.numbers_outlined;
-  IconData unidadAdminIcon = Icons.business_outlined;
 
   // Controllers to retrieve the values of text fields]
   final TextEditingController _nameController = TextEditingController();
@@ -85,7 +77,7 @@ class _RegisterViewState extends State<RegisterView> {
         children: [
           DropdownFormField<String>(
             labelText: 'Ingenieria',
-            icon: engineeringIcon,
+            icon: AppIcons.engineeringIcon,
             items: ingenieriaOptions,
             value: selectedUnit,
             controller: _unitController,
@@ -96,7 +88,7 @@ class _RegisterViewState extends State<RegisterView> {
           if (userType == 'Estudiante')
             CustomFormField(
               labelText: 'Número de Control',
-              icon: controlNumIcon,
+              icon: AppIcons.controlNumIcon,
               controller: _controlNumberController,
               validator: (value) => isValidControlNumber(value),
             )
@@ -106,7 +98,7 @@ class _RegisterViewState extends State<RegisterView> {
     } else if (userType == 'Colaborador') {
       return DropdownFormField<String>(
         labelText: 'Unidad Administrativa',
-        icon: unidadAdminIcon,
+        icon: AppIcons.unidadAdminIcon,
         items: unidadAdministrativaOptions,
         value: selectedUnit,
         controller: _unitController,
@@ -165,36 +157,36 @@ class _RegisterViewState extends State<RegisterView> {
                     // Name field
                     CustomFormField(
                         labelText: "Nombres",
-                        icon: personIcon,
+                        icon: AppIcons.personIcon,
                         validator: (value) => isValidField(
                             value, 'Por favor, no deje este campo vacio')),
                     // Father Last name
                     CustomFormField(
                         labelText: "Apellido Paterno",
-                        icon: personIcon,
+                        icon: AppIcons.personIcon,
                         validator: (value) => isValidField(
                             value, 'Por favor, no deje este campo vacio')),
                     // Mother Last name
                     CustomFormField(
                         labelText: "Apellido Materno",
-                        icon: personIcon,
+                        icon: AppIcons.personIcon,
                         validator: (value) => isValidField(
                             value, 'Por favor, no deje este campo vacio')),
                     // Email field
                     CustomFormField(
                         controller: _emailController,
                         labelText: "Correo",
-                        icon: emailIcon,
+                        icon: AppIcons.emailIcon,
                         validator: (value) => isValidEmail(value)),
                     // Cellphone number field
                     CustomFormField.phoneNumber(
                         labelText: "Número de Celular",
-                        icon: phoneIcon,
+                        icon: AppIcons.phoneIcon,
                         validator: (value) => isValidPhoneNumber(value)),
                     // Type of user field
                     DropdownFormField<String>(
                       labelText: 'Tipo de usuario',
-                      icon: typeUserIcon,
+                      icon: AppIcons.typeUserIcon,
                       items: userTypes,
                       value: selectedUserType,
                       controller: _userTypeController,
