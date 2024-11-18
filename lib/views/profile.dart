@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:club_steam_app/controllers/user_controller.dart';
+import 'package:club_steam_app/controllers/auth_controller.dart';
 import 'package:club_steam_app/views/login.dart';
 
 class ProfileView extends StatefulWidget {
@@ -12,7 +12,7 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   // Log out the user and redirect it into the login view
   void _logout() async {
-    await UserController().logoutUser();
+    await AuthController().logoutUser();
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

@@ -6,6 +6,7 @@ import 'package:club_steam_app/utils/Strings.dart';
 class AuthController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  // Verify the account of the user
   Future<String> loginUserWithPassword(String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
@@ -21,5 +22,11 @@ class AuthController {
         return LoginMessages.errorConnectionFirebase;
       }
     }
+  }
+
+  // Logout the user from the app
+  // Logout the user
+  Future<void> logoutUser() async {
+    await _auth.signOut();
   }
 }
