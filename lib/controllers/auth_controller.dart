@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:club_steam_app/models/user_model.dart';
 import 'package:club_steam_app/utils/Strings.dart';
 
 class AuthController {
