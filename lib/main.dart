@@ -1,6 +1,6 @@
 import 'package:club_steam_app/views/login.dart';
 import 'package:club_steam_app/views/home.dart';
-import 'package:club_steam_app/controllers/user_controller.dart';
+import 'package:club_steam_app/controllers/user_controller_old.dart';
 import 'package:flutter/material.dart';
 import 'utils/util.dart';
 import 'utils/theme.dart';

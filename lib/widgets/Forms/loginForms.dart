@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:club_steam_app/utils/icons.dart';
-import 'package:club_steam_app/utils/strings.dart';
+import 'package:club_steam_app/utils/strings_app.dart';
 import 'package:club_steam_app/utils/validation.dart';
 import 'package:club_steam_app/widgets/passwordFormField.dart';
 import 'package:club_steam_app/widgets/sizableButtom.dart';
@@ -25,8 +25,8 @@ class _LoginFormState extends State<LoginForm> {
   // Method to check if the form is valid.
   void _submitForm(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      String? email = _emailController.text;
-      String? password = _passwordController.text;
+      String? email = _emailController.text.trim();
+      String? password = _passwordController.text.trim();
       // Firabase Message
       String message =
           await AuthController().loginUserWithPassword(email, password);
@@ -35,7 +35,7 @@ class _LoginFormState extends State<LoginForm> {
         SnackBar(content: Text(message)),
       );
 
-      if (message == LoginMessages.successfulLogin) {
+      if (message == FormFieldMessage.successfulLogin) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => HomeView()),

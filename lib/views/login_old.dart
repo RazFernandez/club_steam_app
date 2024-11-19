@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:club_steam_app/utils/icons.dart';
-import 'package:club_steam_app/views/register.dart';
+import 'package:club_steam_app/views/register_old.dart';
 import 'package:club_steam_app/widgets/redirectTextButton.dart';
 import 'package:club_steam_app/widgets/customFormField.dart';
 import 'package:club_steam_app/utils/validation.dart';
@@ -8,7 +8,7 @@ import 'package:club_steam_app/widgets/passwordFormField.dart';
 import 'package:club_steam_app/widgets/sizableButtom.dart';
 import 'package:club_steam_app/utils/navigation_utils.dart';
 import 'package:club_steam_app/views/home.dart';
-import 'package:club_steam_app/controllers/user_controller.dart';
+import 'package:club_steam_app/controllers/user_controller_old.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});

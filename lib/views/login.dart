@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:club_steam_app/widgets/customForms.dart';
+import 'package:club_steam_app/widgets/Forms/loginForms.dart';
 import 'package:club_steam_app/views/register.dart';
 import 'package:club_steam_app/widgets/redirectTextButton.dart';
 
