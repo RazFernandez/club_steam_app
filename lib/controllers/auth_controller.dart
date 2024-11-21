@@ -44,9 +44,18 @@ class AuthController {
     }
   }
 
-  // Logout the user from the app
   // Logout the user
   Future<void> logoutUser() async {
     await _auth.signOut();
+  }
+
+  // Correct this properly
+
+  // Verify if the user is currently singed-up
+  Future<bool> checkUserLogin() async {
+    if (_auth.currentUser != null) {
+      return true;
+    }
+    return false;
   }
 }
