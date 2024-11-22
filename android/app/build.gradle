@@ -28,7 +28,7 @@ android {
         applicationId = "com.example.club_steam_app"
         // Set the minimum SDK version to 23
         minSdkVersion 23
-        targetSdkVersion 30
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
     }
