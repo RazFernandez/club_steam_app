@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  // Correct this properly
+// Correct this properly
 
 // Move to another method
   Widget _checkUserLogin() {

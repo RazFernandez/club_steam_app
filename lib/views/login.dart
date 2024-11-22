@@ -24,7 +24,7 @@ class _LoginViewState extends State<LoginView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Logo Image
-              Image.asset('lib/assets/icon/Club_Steam_Logo.png', height: 200),
+              Image.asset('lib/assets/icon/club-steam-logo.png', height: 200),
               SizedBox(height: 24),
               // Login form widget from customForms
               LoginForm(),
