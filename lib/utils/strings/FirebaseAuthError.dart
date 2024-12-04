@@ -1,63 +1,113 @@
 class FirebaseAuthErrorHandler {
-  // Define error message constants
-  static const String invalidEmailMessage = 'El correo no es válido.';
-  static const String userDisabledMessage = 'El usuario ha sido deshabilitado.';
-  static const String userNotFoundMessage =
+  // Login-specific error message constants
+  static const String loginInvalidEmailMessage = 'El correo no es válido.';
+  static const String loginUserDisabledMessage =
+      'El usuario ha sido deshabilitado.';
+  static const String loginUserNotFoundMessage =
       'No existe ningún usuario correspondiente al correo proporcionado.';
-  static const String wrongPasswordMessage = 'La contraseña es inválida.';
-  static const String tooManyRequestsMessage =
+  static const String loginWrongPasswordMessage = 'La contraseña es inválida.';
+  static const String loginTooManyRequestsMessage =
       'Demasiadas solicitudes al mismo tiempo. Por favor, intente más tarde.';
-  static const String userTokenExpiredMessage =
+  static const String loginUserTokenExpiredMessage =
       'Su token de actualización ha expirado.';
-  static const String networkRequestFailedMessage =
+  static const String loginNetworkRequestFailedMessage =
       'Error de conexión a internet.';
-  static const String invalidLoginCredentialsMessage =
+  static const String loginInvalidLoginCredentialsMessage =
       'La contraseña es inválida, o la cuenta no tiene una contraseña establecida.';
-  static const String operationNotAllowedMessage =
+  static const String loginOperationNotAllowedMessage =
       'Las cuentas de correo/contraseña no están habilitadas.';
-  static const String unknownErrorMessage = 'Ocurrió un error inesperado.';
+  static const String loginUnknownErrorMessage =
+      'Ocurrió un error inesperado en el inicio de sesión.';
+
+  // Register-specific error message constants
+  static const String registerEmailAlreadyInUseMessage =
+      'Ya existe una cuenta con la dirección de correo proporcionada.';
+  static const String registerInvalidEmailMessage =
+      'El correo proporcionado no es válido.';
+  static const String registerOperationNotAllowedMessage =
+      'El registro con correo/contraseña no está habilitado.';
+  static const String registerWeakPasswordMessage =
+      'La contraseña es demasiado débil.';
+  static const String registerTooManyRequestsMessage =
+      'Demasiadas solicitudes al mismo tiempo. Por favor, intente más tarde.';
+  static const String registerUserTokenExpiredMessage =
+      'Su token de autenticación ha expirado.';
+  static const String registerNetworkRequestFailedMessage =
+      'Error de conexión a internet.';
+  static const String registerUnknownErrorMessage =
+      'Ocurrió un error inesperado en el registro.';
 
   // Variable to hold the current error message
-  static String errorMessage = unknownErrorMessage;
+  static String errorMessage = '';
 
-  // This method sets the correct string message to be used
-  static void setErrorMessage(String code) {
+  // Method to set error message for login
+  static void setLoginErrorMessage(String code) {
     switch (code) {
       case 'invalid-email':
-        errorMessage = invalidEmailMessage;
+        errorMessage = loginInvalidEmailMessage;
         break;
       case 'user-disabled':
-        errorMessage = userDisabledMessage;
+        errorMessage = loginUserDisabledMessage;
         break;
       case 'user-not-found':
-        errorMessage = userNotFoundMessage;
+        errorMessage = loginUserNotFoundMessage;
         break;
       case 'wrong-password':
-        errorMessage = wrongPasswordMessage;
+        errorMessage = loginWrongPasswordMessage;
         break;
       case 'too-many-requests':
-        errorMessage = tooManyRequestsMessage;
+        errorMessage = loginTooManyRequestsMessage;
         break;
       case 'user-token-expired':
-        errorMessage = userTokenExpiredMessage;
+        errorMessage = loginUserTokenExpiredMessage;
         break;
       case 'network-request-failed':
-        errorMessage = networkRequestFailedMessage;
+        errorMessage = loginNetworkRequestFailedMessage;
         break;
       case 'INVALID_LOGIN_CREDENTIALS':
       case 'invalid-credential':
-        errorMessage = invalidLoginCredentialsMessage;
+        errorMessage = loginInvalidLoginCredentialsMessage;
         break;
       case 'operation-not-allowed':
-        errorMessage = operationNotAllowedMessage;
+        errorMessage = loginOperationNotAllowedMessage;
         break;
       default:
-        errorMessage = unknownErrorMessage;
+        errorMessage = loginUnknownErrorMessage;
         break;
     }
   }
 
-  // Method to get the current error message
+  // Method to set error message for register
+  static void setRegisterErrorMessage(String code) {
+    switch (code) {
+      case 'email-already-in-use':
+        errorMessage = registerEmailAlreadyInUseMessage;
+        break;
+      case 'invalid-email':
+        errorMessage = registerInvalidEmailMessage;
+        break;
+      case 'operation-not-allowed':
+        errorMessage = registerOperationNotAllowedMessage;
+        break;
+      case 'weak-password':
+        errorMessage = registerWeakPasswordMessage;
+        break;
+      case 'too-many-requests':
+        errorMessage = registerTooManyRequestsMessage;
+        break;
+      case 'user-token-expired':
+        errorMessage = registerUserTokenExpiredMessage;
+        break;
+      case 'network-request-failed':
+        errorMessage = registerNetworkRequestFailedMessage;
+        break;
+      default:
+        errorMessage = registerUnknownErrorMessage;
+        break;
+    }
+  }
+
+  // Method to retrieve the current error message
   static String getErrorMessage() {
     return errorMessage;
   }

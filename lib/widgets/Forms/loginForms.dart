@@ -41,7 +41,7 @@ class _LoginFormState extends State<LoginForm> {
         }
       } on FirebaseAuthException catch (e) {
         // Handle Firebase authentication error
-        FirebaseAuthErrorHandler.setErrorMessage(e.code);
+        FirebaseAuthErrorHandler.setLoginErrorMessage(e.code);
         String errorMessage = FirebaseAuthErrorHandler.getErrorMessage();
 
         // Show the error message as a toast using fluttertoast
