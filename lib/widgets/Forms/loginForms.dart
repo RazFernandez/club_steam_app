@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:club_steam_app/controllers/auth_controller.dart';
 import 'package:club_steam_app/utils/icons.dart';
-import 'package:club_steam_app/utils/strings_app.dart';
 import 'package:club_steam_app/utils/validation.dart';
+import 'package:club_steam_app/utils/strings/FirebaseAuthError.dart';
 import 'package:club_steam_app/widgets/passwordFormField.dart';
 import 'package:club_steam_app/widgets/sizableButtom.dart';
 import 'package:club_steam_app/widgets/customFormField.dart';
-import 'package:club_steam_app/controllers/auth_controller.dart';
 import 'package:club_steam_app/views/home.dart';
 
 class LoginForm extends StatefulWidget {
@@ -24,21 +26,33 @@ class _LoginFormState extends State<LoginForm> {
 
   // Method to check if the form is valid.
   void _submitForm(BuildContext context) async {
+    String? email = _emailController.text.trim();
+    String? password = _passwordController.text.trim();
+
     if (_formKey.currentState!.validate()) {
-      String? email = _emailController.text.trim();
-      String? password = _passwordController.text.trim();
-      // Firabase Message
-      String message =
-          await AuthController().loginUserWithPassword(email, password);
+      // Login the user
+      try {
+        bool result = await AuthController()
+            .signInUsingEmail(email: email, password: password);
+        // Sends the user to the homeview
+        if (result && context.mounted) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => HomeView()));
+        }
+      } on FirebaseAuthException catch (e) {
+        // Handle Firebase authentication error
+        FirebaseAuthErrorHandler.setErrorMessage(e.code);
+        String errorMessage = FirebaseAuthErrorHandler.getErrorMessage();
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message)),
-      );
-
-      if (message == FormFieldMessage.successfulLogin) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomeView()),
+        // Show the error message as a toast using fluttertoast
+        Fluttertoast.showToast(
+          msg: errorMessage,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 2, // Duration for iOS web
+          backgroundColor: Colors.black87,
+          textColor: Colors.white,
+          fontSize: 16.0,
         );
       }
     }

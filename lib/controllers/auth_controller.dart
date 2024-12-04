@@ -1,10 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:club_steam_app/utils/strings_app.dart';
+import 'package:club_steam_app/utils/strings/FirebaseAuthError.dart';
+
+//import 'package:club_steam_app/views/home.dart';
 
 class AuthController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   late UserCredential userCredential;
 
+  // This function creates new users
   Future<String> registerUser(String email, String password) async {
     try {
       userCredential =
@@ -27,21 +31,11 @@ class AuthController {
   }
 
   // Verify the account of the user
-  Future<String> loginUserWithPassword(String email, String password) async {
-    try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
-      return FormFieldMessage.successfulLogin;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        return FormFieldMessage.wrongEmail;
-      } else if (e.code == 'wrong-password') {
-        return FormFieldMessage.wrongPaswword;
-      } else if (e.code == 'network-request-failed') {
-        return FormFieldMessage.noNetworkConnection;
-      } else {
-        return FormFieldMessage.errorConnectionFirebase;
-      }
-    }
+  Future<bool> signInUsingEmail(
+      {required String email, required String password}) async {
+    // Try validating the user
+    await _auth.signInWithEmailAndPassword(email: email, password: password);
+    return true;
   }
 
   // Logout the user

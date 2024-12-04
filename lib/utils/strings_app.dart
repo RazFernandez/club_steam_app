@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+@Deprecated(
+    'For handling errors with firebase auth, better use the class FirebaseAuthErrorHandler and methods')
+
 // Messages used on Login View
 class FormFieldMessage {
   static String wrongEmail = "No se encontro un usuario con dicho correo";

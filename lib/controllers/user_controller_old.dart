@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:club_steam_app/models/user_model.dart';
 import 'package:flutter/material.dart';
 
+@Deprecated('Old class, better use auth_controller class instead')
 class UserController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
