@@ -1,33 +1,36 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:club_steam_app/utils/strings_app.dart';
 import 'package:club_steam_app/utils/strings/FirebaseAuthError.dart';
+import 'package:flutter/foundation.dart';
 
 //import 'package:club_steam_app/views/home.dart';
 
 class AuthController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  late UserCredential userCredential;
+  //UserCredential? userCredential;
+  static User? currentUser;
+
+  // Getter for currentUser
+  User? getCurrenUser() {
+    return currentUser;
+  }
+
+  // Setter for currentUser
+  void setCurrentUser() {
+    currentUser = _auth.currentUser;
+  }
 
   // This function creates new users
-  Future<String> registerUser(String email, String password) async {
-    try {
-      userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      return FormFieldMessage.sucessfulRegistration;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'email-already-in-use') {
-        return FormFieldMessage
-            .existingAccount; // Ensure this constant is defined
-      } else {
-        return FormFieldMessage
-            .errorConnectionFirebase; // Ensure this constant is defined
-      }
-    } catch (e) {
-      return "An unexpected error occurred: ${e.toString()}";
-    }
+  Future<bool> registerUser(
+      {required String email, required String password}) async {
+    await _auth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+
+    setCurrentUser();
+
+    return true;
   }
 
   // Verify the account of the user
@@ -35,6 +38,7 @@ class AuthController {
       {required String email, required String password}) async {
     // Try validating the user
     await _auth.signInWithEmailAndPassword(email: email, password: password);
+    setCurrentUser();
     return true;
   }
 

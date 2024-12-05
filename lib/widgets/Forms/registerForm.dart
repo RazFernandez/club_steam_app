@@ -1,16 +1,28 @@
-import 'package:club_steam_app/views/login.dart';
+// Flutter package imports
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+// Views
+import 'package:club_steam_app/views/login.dart';
+import 'package:club_steam_app/views/home.dart';
+
+// Controllers
+import 'package:club_steam_app/controllers/auth_controller.dart';
+
+// Utilities
 import 'package:club_steam_app/utils/icons.dart';
 import 'package:club_steam_app/utils/strings_app.dart';
 import 'package:club_steam_app/utils/validation.dart';
 import 'package:club_steam_app/utils/dropdown_items.dart';
+import 'package:club_steam_app/utils/navigation_utils.dart';
+import 'package:club_steam_app/utils/strings/FirebaseAuthError.dart';
+
+// Widgets
 import 'package:club_steam_app/widgets/dropdownFormField.dart';
 import 'package:club_steam_app/widgets/passwordFormField.dart';
 import 'package:club_steam_app/widgets/sizableButtom.dart';
 import 'package:club_steam_app/widgets/customFormField.dart';
-import 'package:club_steam_app/controllers/auth_controller.dart';
-import 'package:club_steam_app/views/home.dart';
-import 'package:club_steam_app/utils/navigation_utils.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -50,15 +62,30 @@ class _RegisterFormState extends State<RegisterForm> {
       String? email = _emailController.text.trim();
       String? password = _passwordController.text.trim();
 
-      // Firabase Message
-      String message = await AuthController().registerUser(email, password);
+      try {
+        // Register the user
+        bool result = await AuthController()
+            .registerUser(email: email, password: password);
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message)),
-      );
+        // Sends the user to the Loginview
+        if (result && context.mounted) {
+          navigateAndClearStack(context, LoginView());
+        }
+      } on FirebaseAuthException catch (e) {
+        // Handle Firebase authentication error
+        FirebaseAuthErrorHandler.setRegisterErrorMessage(e.code);
+        String errorMessage = FirebaseAuthErrorHandler.getErrorMessage();
 
-      if (message == FormFieldMessage.sucessfulRegistration) {
-        navigateAndClearStack(context, LoginView());
+        // Show the error message as a toast using fluttertoast
+        Fluttertoast.showToast(
+          msg: errorMessage,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 2, // Duration for iOS web
+          backgroundColor: Colors.black87,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       }
     }
   }

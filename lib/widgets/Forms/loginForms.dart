@@ -34,6 +34,7 @@ class _LoginFormState extends State<LoginForm> {
       try {
         bool result = await AuthController()
             .signInUsingEmail(email: email, password: password);
+
         // Sends the user to the homeview
         if (result && context.mounted) {
           Navigator.pushReplacement(
