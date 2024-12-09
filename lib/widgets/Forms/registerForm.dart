@@ -1,7 +1,12 @@
 // Flutter package imports
+import 'package:club_steam_app/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+// Model
+import 'package:club_steam_app/models/user_model.dart';
+import 'package:club_steam_app/models/user_form_data.dart';
 
 // Views
 import 'package:club_steam_app/views/login.dart';
@@ -9,6 +14,9 @@ import 'package:club_steam_app/views/home.dart';
 
 // Controllers
 import 'package:club_steam_app/controllers/auth_controller.dart';
+
+// Services
+import 'package:club_steam_app/services/Firestores_DB/userQueries.dart';
 
 // Utilities
 import 'package:club_steam_app/utils/icons.dart';
@@ -35,22 +43,11 @@ class _RegisterFormState extends State<RegisterForm> {
   // Key to identify the form and perform validation
   final _formKey = GlobalKey<FormState>();
 
-  // Controllers to retrieve the values of text fields]
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _lastFatherNameController =
-      TextEditingController();
-  final TextEditingController _lastMotherNameController =
-      TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _cellPhoneNumberController =
-      TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
-  final TextEditingController _userTypeController = TextEditingController();
-  final TextEditingController _unitController = TextEditingController();
-  final TextEditingController _controlNumberController =
-      TextEditingController();
+  // Object to handle controller values of the text fields
+  UserFormData userFormData = UserFormData();
+
+  // Instance of the user controller
+  UserController userController = UserController();
 
   // Variables to hold selected dropdown values
   String? _selectedUserType;
@@ -59,17 +56,31 @@ class _RegisterFormState extends State<RegisterForm> {
   // Method to check if the form is valid.
   void _submitForm(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      String? email = _emailController.text.trim();
-      String? password = _passwordController.text.trim();
+      String? email = userFormData.email;
+      String? password = userFormData.passwordController.text.trim();
+      String? usertype = userFormData.userTypeController.text.trim();
 
       try {
-        // Register the user
+        // Register the user in Firebase Auth
         bool result = await AuthController()
             .registerUser(email: email, password: password);
 
+        // Save data in Firestore
+
+        // Pass the form data to the UserController
+        userController.setUserFormData(userFormData);
+        userController.setSelectedUserType(usertype);
+
+        //await userController.addUserDataBase(userController.generateUserToRegister());
+        await userController
+            .addUserDataBase(userController.generateUserToRegister());
+
+        // Clean data in memory of the fields
+        //userFormData.clearFields();
+
         // Sends the user to the Loginview
         if (result && context.mounted) {
-          navigateAndClearStack(context, LoginView());
+          //navigateAndClearStack(context, LoginView());
         }
       } on FirebaseAuthException catch (e) {
         // Handle Firebase authentication error
@@ -100,7 +111,7 @@ class _RegisterFormState extends State<RegisterForm> {
             icon: AppIcons.engineeringIcon,
             items: ingenieriaOptions,
             value: _selectedUnit,
-            controller: _unitController,
+            controller: userFormData.unitController,
             validator: (value) =>
                 isValidField(value, "Por favor, seleccione una opción"),
           ),
@@ -109,7 +120,7 @@ class _RegisterFormState extends State<RegisterForm> {
             CustomFormField(
               labelText: 'Número de Control',
               icon: AppIcons.controlNumIcon,
-              controller: _controlNumberController,
+              controller: userFormData.controlNumberController,
               validator: (value) => isValidControlNumber(value),
             )
         ],
@@ -121,7 +132,7 @@ class _RegisterFormState extends State<RegisterForm> {
         icon: AppIcons.unidadAdminIcon,
         items: unidadAdministrativaOptions,
         value: _selectedUnit,
-        controller: _unitController,
+        controller: userFormData.unitController,
         validator: (value) =>
             isValidField(value, 'Por favor, seleccione una opción'),
       );
@@ -138,35 +149,35 @@ class _RegisterFormState extends State<RegisterForm> {
         children: [
           // Name field
           CustomFormField(
-              controller: _nameController,
+              controller: userFormData.nameController,
               labelText: "Nombres",
               icon: AppIcons.personIcon,
               validator: (value) =>
                   isValidField(value, FormFieldMessage.noNullFields)),
           // Father Last name
           CustomFormField(
-              controller: _lastFatherNameController,
+              controller: userFormData.lastFatherNameController,
               labelText: "Apellido Paterno",
               icon: AppIcons.personIcon,
               validator: (value) =>
                   isValidField(value, FormFieldMessage.noNullFields)),
           // Mother Last name
           CustomFormField(
-              controller: _lastMotherNameController,
+              controller: userFormData.lastMotherNameController,
               labelText: "Apellido Materno",
               icon: AppIcons.personIcon,
               validator: (value) =>
                   isValidField(value, FormFieldMessage.noNullFields)),
           // Email field
           CustomFormField(
-              controller: _emailController,
+              controller: userFormData.emailController,
               labelText: "Correo",
               icon: AppIcons.emailIcon,
               validator: (value) => isValidEmail(value)),
 
           // Cell phone number field
           CustomFormField(
-              controller: _cellPhoneNumberController,
+              controller: userFormData.cellPhoneNumberController,
               labelText: "Número de Celular",
               icon: AppIcons.phoneIcon,
               validator: (value) => isValidPhoneNumber(value)),
@@ -177,7 +188,7 @@ class _RegisterFormState extends State<RegisterForm> {
             icon: AppIcons.typeUserIcon,
             items: userTypes,
             value: _selectedUserType,
-            controller: _userTypeController,
+            controller: userFormData.userTypeController,
             validator: (value) =>
                 isValidField(value, FormFieldMessage.selectOption),
             onChanged: (value) {
@@ -190,14 +201,15 @@ class _RegisterFormState extends State<RegisterForm> {
           _renderContentFields(_selectedUserType),
           // Password field
           PasswordFormField(
-              controller: _passwordController,
+              controller: userFormData.passwordController,
               labelText: "Contraseña",
               validator: (value) => isValidPassword(value)),
           PasswordFormField(
-              controller: _confirmPasswordController,
+              controller: userFormData.confirmPasswordController,
               labelText: "Confirmar Contraseña",
               validator: (value) => validatePasswords(
-                  _passwordController.text, _confirmPasswordController.text)),
+                  userFormData.passwordController.text,
+                  userFormData.confirmPasswordController.text)),
           SizedBox(height: 24),
           SizableButtom(
             onPressed: () {
