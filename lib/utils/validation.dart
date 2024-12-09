@@ -2,9 +2,17 @@
  various fields are consistently and effectively validated. */
 
 // General validation fields
-String? isValidField(String? value, String message) {
+String? isValidField(String? value) {
   if (value == null || value.isEmpty) {
-    return message;
+    return 'Por favor, no deje este campo vacio';
+  }
+  return null;
+}
+
+// Multioption validation fields
+String? isValidMultiOptionField(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Por favor, seleccione una opción';
   }
   return null;
 }

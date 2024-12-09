@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:club_steam_app/services/Firestores_DB/userQueries.dart';
 import 'package:club_steam_app/models/user_model.dart';
 import 'package:club_steam_app/models/user_form_data.dart';
-import 'package:club_steam_app/services/Firestores_DB/userQueries.dart';
-import 'package:flutter/material.dart';
+import 'package:club_steam_app/exceptions/user_exceptions.dart';
 
 class UserController {
   // Variable that handles the User object creation based on its type.
@@ -65,16 +63,8 @@ class UserController {
             proyectos: [],
             unidadAdministrativa: userFormData.unit);
       default:
-        return Colaborador(
-            nombres: 'Hola',
-            apellidoPaterno: 'Hola',
-            apellidoMaterno: 'Hola',
-            correoElectronico: 'Hola',
-            numeroCelular: 'Hola',
-            tipoUsuario: 'Hola',
-            fotoPerfil: "",
-            proyectos: [],
-            unidadAdministrativa: 'Hola');
+        throw InvalidUserTypeException(
+            "The user type '$selectedUserType' is not recognized.");
     }
   }
 

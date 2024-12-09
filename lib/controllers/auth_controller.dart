@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:club_steam_app/utils/strings_app.dart';
-import 'package:club_steam_app/utils/strings/FirebaseAuthError.dart';
+import 'package:club_steam_app/exceptions/FirebaseAuthError.dart';
 import 'package:flutter/foundation.dart';
 
 //import 'package:club_steam_app/views/home.dart';

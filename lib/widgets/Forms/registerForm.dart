@@ -20,11 +20,10 @@ import 'package:club_steam_app/services/Firestores_DB/userQueries.dart';
 
 // Utilities
 import 'package:club_steam_app/utils/icons.dart';
-import 'package:club_steam_app/utils/strings_app.dart';
 import 'package:club_steam_app/utils/validation.dart';
 import 'package:club_steam_app/utils/dropdown_items.dart';
 import 'package:club_steam_app/utils/navigation_utils.dart';
-import 'package:club_steam_app/utils/strings/FirebaseAuthError.dart';
+import 'package:club_steam_app/exceptions/FirebaseAuthError.dart';
 
 // Widgets
 import 'package:club_steam_app/widgets/dropdownFormField.dart';
@@ -61,19 +60,17 @@ class _RegisterFormState extends State<RegisterForm> {
       String? usertype = userFormData.userTypeController.text.trim();
 
       try {
-        // Register the user in Firebase Auth
-        bool result = await AuthController()
-            .registerUser(email: email, password: password);
-
-        // Save data in Firestore
-
         // Pass the form data to the UserController
         userController.setUserFormData(userFormData);
         userController.setSelectedUserType(usertype);
 
-        //await userController.addUserDataBase(userController.generateUserToRegister());
+        // Save data in Firestore first
         await userController
             .addUserDataBase(userController.generateUserToRegister());
+
+        // If Firestore operation is successful, register the user in Firebase Auth
+        bool result = await AuthController()
+            .registerUser(email: email, password: password);
 
         // Clean data in memory of the fields
         //userFormData.clearFields();
@@ -97,6 +94,17 @@ class _RegisterFormState extends State<RegisterForm> {
           textColor: Colors.white,
           fontSize: 16.0,
         );
+      } on Exception catch (e) {
+        // Handle Firestore saving errors
+        Fluttertoast.showToast(
+          msg: "Error saving user data: ${e.toString()}",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       }
     }
   }
@@ -112,8 +120,7 @@ class _RegisterFormState extends State<RegisterForm> {
             items: ingenieriaOptions,
             value: _selectedUnit,
             controller: userFormData.unitController,
-            validator: (value) =>
-                isValidField(value, "Por favor, seleccione una opción"),
+            validator: (value) => isValidMultiOptionField(value),
           ),
           // Just the Estudiantes request their control number
           if (userType == 'Estudiante')
@@ -133,12 +140,17 @@ class _RegisterFormState extends State<RegisterForm> {
         items: unidadAdministrativaOptions,
         value: _selectedUnit,
         controller: userFormData.unitController,
-        validator: (value) =>
-            isValidField(value, 'Por favor, seleccione una opción'),
+        validator: (value) => isValidMultiOptionField(value),
       );
     }
     return SizedBox.shrink();
   }
+
+  /*
+  =========================
+  USER INTERFACE
+  =========================
+  */
 
   @override
   Widget build(BuildContext context) {
@@ -152,22 +164,19 @@ class _RegisterFormState extends State<RegisterForm> {
               controller: userFormData.nameController,
               labelText: "Nombres",
               icon: AppIcons.personIcon,
-              validator: (value) =>
-                  isValidField(value, FormFieldMessage.noNullFields)),
+              validator: (value) => isValidField(value)),
           // Father Last name
           CustomFormField(
               controller: userFormData.lastFatherNameController,
               labelText: "Apellido Paterno",
               icon: AppIcons.personIcon,
-              validator: (value) =>
-                  isValidField(value, FormFieldMessage.noNullFields)),
+              validator: (value) => isValidField(value)),
           // Mother Last name
           CustomFormField(
               controller: userFormData.lastMotherNameController,
               labelText: "Apellido Materno",
               icon: AppIcons.personIcon,
-              validator: (value) =>
-                  isValidField(value, FormFieldMessage.noNullFields)),
+              validator: (value) => isValidField(value)),
           // Email field
           CustomFormField(
               controller: userFormData.emailController,
@@ -189,8 +198,7 @@ class _RegisterFormState extends State<RegisterForm> {
             items: userTypes,
             value: _selectedUserType,
             controller: userFormData.userTypeController,
-            validator: (value) =>
-                isValidField(value, FormFieldMessage.selectOption),
+            validator: (value) => isValidMultiOptionField(value),
             onChanged: (value) {
               setState(() {
                 _selectedUserType = value;
