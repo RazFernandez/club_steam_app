@@ -52,7 +52,7 @@ class _HomeViewState extends State<HomeView> {
           // Home page
           Center(
             child: Text(
-              'Home',
+              'Bienvenido Colaborador',
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),

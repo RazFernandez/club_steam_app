@@ -1,12 +1,12 @@
 import 'package:club_steam_app/views/login.dart';
 import 'package:club_steam_app/views/home.dart';
-import 'package:club_steam_app/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'utils/util.dart';
 import 'utils/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'services/firebase_options.dart';
+import 'package:club_steam_app/controllers/auth_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,8 +43,11 @@ class MyApp extends StatelessWidget {
     );
   }
 
+// Correct this properly
+
+// Move to another method
   Widget _checkUserLogin() {
-    if (UserController().currentUser != null) {
+    if (AuthController().checkUserLogin() == true) {
       return HomeView();
     } else {
       return LoginView();
