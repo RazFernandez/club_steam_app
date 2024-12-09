@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:club_steam_app/widgets/Forms/loginForms.dart';
 import 'package:club_steam_app/views/register.dart';
-import 'package:club_steam_app/widgets/redirectTextButton.dart';
+import 'package:club_steam_app/widgets/Buttons/redirectTextButton.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});

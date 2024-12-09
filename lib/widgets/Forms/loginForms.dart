@@ -5,9 +5,9 @@ import 'package:club_steam_app/controllers/auth_controller.dart';
 import 'package:club_steam_app/utils/icons.dart';
 import 'package:club_steam_app/utils/validation.dart';
 import 'package:club_steam_app/exceptions/FirebaseAuthError.dart';
-import 'package:club_steam_app/widgets/passwordFormField.dart';
-import 'package:club_steam_app/widgets/sizableButtom.dart';
-import 'package:club_steam_app/widgets/customFormField.dart';
+import 'package:club_steam_app/widgets/TextFields/passwordFormField.dart';
+import 'package:club_steam_app/widgets/Buttons/sizableButtom.dart';
+import 'package:club_steam_app/widgets/TextFields/customFormField.dart';
 import 'package:club_steam_app/views/home.dart';
 
 class LoginForm extends StatefulWidget {

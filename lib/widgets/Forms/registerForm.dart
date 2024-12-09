@@ -26,10 +26,10 @@ import 'package:club_steam_app/utils/navigation_utils.dart';
 import 'package:club_steam_app/exceptions/FirebaseAuthError.dart';
 
 // Widgets
-import 'package:club_steam_app/widgets/dropdownFormField.dart';
-import 'package:club_steam_app/widgets/passwordFormField.dart';
-import 'package:club_steam_app/widgets/sizableButtom.dart';
-import 'package:club_steam_app/widgets/customFormField.dart';
+import 'package:club_steam_app/widgets/TextFields/dropdownFormField.dart';
+import 'package:club_steam_app/widgets/TextFields/passwordFormField.dart';
+import 'package:club_steam_app/widgets/Buttons/sizableButtom.dart';
+import 'package:club_steam_app/widgets/TextFields/customFormField.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
