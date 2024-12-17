@@ -4,10 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:club_steam_app/controllers/auth_controller.dart';
 import 'package:club_steam_app/utils/icons.dart';
 import 'package:club_steam_app/utils/validation.dart';
-import 'package:club_steam_app/utils/strings/FirebaseAuthError.dart';
-import 'package:club_steam_app/widgets/passwordFormField.dart';
-import 'package:club_steam_app/widgets/sizableButtom.dart';
-import 'package:club_steam_app/widgets/customFormField.dart';
+import 'package:club_steam_app/exceptions/FirebaseAuthException.dart';
+import 'package:club_steam_app/widgets/TextFields/passwordFormField.dart';
+import 'package:club_steam_app/widgets/Buttons/sizableButtom.dart';
+import 'package:club_steam_app/widgets/TextFields/customFormField.dart';
 import 'package:club_steam_app/views/home.dart';
 
 class LoginForm extends StatefulWidget {
@@ -42,8 +42,8 @@ class _LoginFormState extends State<LoginForm> {
         }
       } on FirebaseAuthException catch (e) {
         // Handle Firebase authentication error
-        FirebaseAuthErrorHandler.setLoginErrorMessage(e.code);
-        String errorMessage = FirebaseAuthErrorHandler.getErrorMessage();
+        FirebaseAuthExceptionHandler.setLoginErrorMessage(e.code);
+        String errorMessage = FirebaseAuthExceptionHandler.getErrorMessage();
 
         // Show the error message as a toast using fluttertoast
         Fluttertoast.showToast(

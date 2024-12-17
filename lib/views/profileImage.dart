@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:club_steam_app/views/login.dart';
-import 'package:club_steam_app/widgets/redirectTextButton.dart';
+import 'package:club_steam_app/widgets/Buttons/redirectTextButton.dart';
 
 // Assuming renderProfileImagePage is in the same file.
 // If it's in another file, make sure to import it correctly.

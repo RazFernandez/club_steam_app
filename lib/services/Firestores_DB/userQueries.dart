@@ -6,7 +6,7 @@ class UserQueries {
   final db = FirebaseFirestore.instance;
 
   // Add a user to Firestore
-  Future<void> addUser(User user) async {
-    db.collection("users").add(user.toFirestore());
+  Future<void> addUser(UserClubSteam user, String uid) async {
+    await db.collection("users").doc(uid).set(user.toFirestore());
   }
 }

@@ -1,7 +1,7 @@
 // Flutter package imports
 import 'package:club_steam_app/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 // Model
@@ -10,27 +10,28 @@ import 'package:club_steam_app/models/user_form_data.dart';
 
 // Views
 import 'package:club_steam_app/views/login.dart';
-import 'package:club_steam_app/views/home.dart';
 
 // Controllers
 import 'package:club_steam_app/controllers/auth_controller.dart';
 
 // Services
-import 'package:club_steam_app/services/Firestores_DB/userQueries.dart';
+
+// Exception
+import 'package:club_steam_app/exceptions/FormException.dart';
 
 // Utilities
 import 'package:club_steam_app/utils/icons.dart';
-import 'package:club_steam_app/utils/strings_app.dart';
 import 'package:club_steam_app/utils/validation.dart';
 import 'package:club_steam_app/utils/dropdown_items.dart';
 import 'package:club_steam_app/utils/navigation_utils.dart';
-import 'package:club_steam_app/utils/strings/FirebaseAuthError.dart';
+import 'package:club_steam_app/exceptions/FirebaseAuthException.dart';
 
 // Widgets
-import 'package:club_steam_app/widgets/dropdownFormField.dart';
-import 'package:club_steam_app/widgets/passwordFormField.dart';
-import 'package:club_steam_app/widgets/sizableButtom.dart';
-import 'package:club_steam_app/widgets/customFormField.dart';
+import 'package:club_steam_app/widgets/TextFields/dropdownFormField.dart';
+import 'package:club_steam_app/widgets/TextFields/passwordFormField.dart';
+import 'package:club_steam_app/widgets/Buttons/sizableButtom.dart';
+import 'package:club_steam_app/widgets/TextFields/customFormField.dart';
+import 'package:club_steam_app/widgets/Popups/toastMessagge.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -56,52 +57,87 @@ class _RegisterFormState extends State<RegisterForm> {
   // Method to check if the form is valid.
   void _submitForm(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
+      // Retrieve the data from the user data form
       String? email = userFormData.email;
       String? password = userFormData.passwordController.text.trim();
       String? usertype = userFormData.userTypeController.text.trim();
 
+      // Pass the form data to the UserController
+      userController.setUserFormData(userFormData);
+
+      // Select the user type of object to be created
+      userController.setSelectedUserType(usertype);
+
+      // Create an user object based on its type of user selected
+      UserClubSteam userMapObject = userController.generateUserToRegister();
+
+      // Variable to save user UID
+      String? userUID;
+
+      // First Try to create the user account
       try {
-        // Register the user in Firebase Auth
-        bool result = await AuthController()
+        // Save the variables to verify results
+        bool? resultAuth;
+        bool? resultDataBase;
+
+        // First create the user in firabase
+        resultAuth = await AuthController()
             .registerUser(email: email, password: password);
 
-        // Save data in Firestore
+        if (!resultAuth) {
+          throw FirebaseAuthException(code: 'email-already-in-use');
+        }
 
-        // Pass the form data to the UserController
-        userController.setUserFormData(userFormData);
-        userController.setSelectedUserType(usertype);
+        // Save UID in a local variable
+        userUID = AuthController().currentUserUID;
+        if (userUID == null) {
+          throw Exception('Error al intentar obtener el UID del usuario');
+        }
 
-        //await userController.addUserDataBase(userController.generateUserToRegister());
-        await userController
-            .addUserDataBase(userController.generateUserToRegister());
+        // Save data in Firestore first
+        resultDataBase =
+            await userController.addUserDataBase(userMapObject, userUID);
 
-        // Clean data in memory of the fields
-        //userFormData.clearFields();
+        if (!resultDataBase) {
+          throw FormExceptionHandler(code: 'data-not-saved');
+        }
 
         // Sends the user to the Loginview
-        if (result && context.mounted) {
-          //navigateAndClearStack(context, LoginView());
+        if (resultAuth && resultDataBase && context.mounted) {
+          navigateAndClearStack(context, LoginView());
         }
       } on FirebaseAuthException catch (e) {
         // Handle Firebase authentication error
-        FirebaseAuthErrorHandler.setRegisterErrorMessage(e.code);
-        String errorMessage = FirebaseAuthErrorHandler.getErrorMessage();
+        // Translates the exception message
+        FirebaseAuthExceptionHandler.setRegisterErrorMessage(e.code);
+        String errorMessage = FirebaseAuthExceptionHandler.getErrorMessage();
 
-        // Show the error message as a toast using fluttertoast
-        Fluttertoast.showToast(
-          msg: errorMessage,
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 2, // Duration for iOS web
-          backgroundColor: Colors.black87,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
+        if (context.mounted) {
+          ToastManager.error(context, errorMessage).show();
+        }
+      } catch (e) {
+        // Mananges any type of Exception
+        if (context.mounted) {
+          ToastManager.error(context, e.toString()).show();
+        }
+
+        // Delete the user account in case something go wrong in another process
+        // For example if user data is not saved in Firestore
+        // or google cloud don't save the user profile image
+        await AuthController()
+            .signInUsingEmail(email: email, password: password);
+        await AuthController().deleteUser();
+
+        debugPrint('Account Deleteded Due to data not saved');
       }
     }
   }
 
-  // Method to render textfields according to the user type
+  /*
+  =========================
+  Method to render textfields according to the user type
+  =========================
+  */
   Widget _renderContentFields(String? userType) {
     if (userType == 'Docente' || userType == 'Estudiante') {
       return Column(
@@ -112,8 +148,7 @@ class _RegisterFormState extends State<RegisterForm> {
             items: ingenieriaOptions,
             value: _selectedUnit,
             controller: userFormData.unitController,
-            validator: (value) =>
-                isValidField(value, "Por favor, seleccione una opción"),
+            validator: (value) => isValidMultiOptionField(value),
           ),
           // Just the Estudiantes request their control number
           if (userType == 'Estudiante')
@@ -133,12 +168,17 @@ class _RegisterFormState extends State<RegisterForm> {
         items: unidadAdministrativaOptions,
         value: _selectedUnit,
         controller: userFormData.unitController,
-        validator: (value) =>
-            isValidField(value, 'Por favor, seleccione una opción'),
+        validator: (value) => isValidMultiOptionField(value),
       );
     }
     return SizedBox.shrink();
   }
+
+  /*
+  =========================
+  USER INTERFACE
+  =========================
+  */
 
   @override
   Widget build(BuildContext context) {
@@ -152,22 +192,19 @@ class _RegisterFormState extends State<RegisterForm> {
               controller: userFormData.nameController,
               labelText: "Nombres",
               icon: AppIcons.personIcon,
-              validator: (value) =>
-                  isValidField(value, FormFieldMessage.noNullFields)),
+              validator: (value) => isValidField(value)),
           // Father Last name
           CustomFormField(
               controller: userFormData.lastFatherNameController,
               labelText: "Apellido Paterno",
               icon: AppIcons.personIcon,
-              validator: (value) =>
-                  isValidField(value, FormFieldMessage.noNullFields)),
+              validator: (value) => isValidField(value)),
           // Mother Last name
           CustomFormField(
               controller: userFormData.lastMotherNameController,
               labelText: "Apellido Materno",
               icon: AppIcons.personIcon,
-              validator: (value) =>
-                  isValidField(value, FormFieldMessage.noNullFields)),
+              validator: (value) => isValidField(value)),
           // Email field
           CustomFormField(
               controller: userFormData.emailController,
@@ -189,8 +226,7 @@ class _RegisterFormState extends State<RegisterForm> {
             items: userTypes,
             value: _selectedUserType,
             controller: userFormData.userTypeController,
-            validator: (value) =>
-                isValidField(value, FormFieldMessage.selectOption),
+            validator: (value) => isValidMultiOptionField(value),
             onChanged: (value) {
               setState(() {
                 _selectedUserType = value;
