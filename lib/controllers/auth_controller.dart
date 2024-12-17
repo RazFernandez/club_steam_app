@@ -1,6 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:club_steam_app/exceptions/FirebaseAuthError.dart';
-import 'package:flutter/foundation.dart';
 
 //import 'package:club_steam_app/views/home.dart';
 
@@ -10,7 +8,7 @@ class AuthController {
   static User? currentUser;
 
   // Getter for currentUser
-  User? getCurrenUser() {
+  User? get getCurrenUser {
     return currentUser;
   }
 
@@ -19,17 +17,28 @@ class AuthController {
     currentUser = _auth.currentUser;
   }
 
-  // This function creates new users
+  // Getter for retrieving the UID of currentUser
+  String? get currentUserUID {
+    return currentUser?.uid;
+  }
+
+// This function creates new users
   Future<bool> registerUser(
       {required String email, required String password}) async {
-    await _auth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+    try {
+      await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-    setCurrentUser();
+      // Save the current user logged in
+      setCurrentUser();
 
-    return true;
+      return true;
+    } catch (e) {
+      // Returning false on any exception
+      return false;
+    }
   }
 
   // Verify the account of the user
@@ -44,6 +53,11 @@ class AuthController {
   // Logout the user
   Future<void> logoutUser() async {
     await _auth.signOut();
+  }
+
+  // Delete a user.
+  Future<void> deleteUser() async {
+    await currentUser?.delete();
   }
 
   // Correct this properly

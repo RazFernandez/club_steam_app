@@ -1,4 +1,4 @@
-class FirebaseAuthErrorHandler {
+class FirebaseAuthExceptionHandler {
   // Login-specific error message constants
   static const String loginInvalidEmailMessage = 'El correo no es válido.';
   static const String loginUserDisabledMessage =

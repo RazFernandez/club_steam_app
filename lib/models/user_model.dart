@@ -1,4 +1,4 @@
-class User {
+class UserClubSteam {
   final String nombres;
   final String apellidoPaterno;
   final String apellidoMaterno;
@@ -9,7 +9,7 @@ class User {
   final List<String> proyectos; // Array of project IDs
 
   // Constructor
-  User({
+  UserClubSteam({
     required this.nombres,
     required this.apellidoPaterno,
     required this.apellidoMaterno,
@@ -35,8 +35,8 @@ class User {
   }
 
   // Create a User object from Firestore data
-  static User fromFirestore(Map<String, dynamic> data) {
-    return User(
+  static UserClubSteam fromFirestore(Map<String, dynamic> data) {
+    return UserClubSteam(
       nombres: data['nombres'],
       apellidoPaterno: data['apellidoPaterno'],
       apellidoMaterno: data['apellidoMaterno'],
@@ -50,7 +50,7 @@ class User {
 }
 
 // Subclass: Docente
-class Docente extends User {
+class Docente extends UserClubSteam {
   final String ingenieria;
 
   Docente({
@@ -88,7 +88,7 @@ class Docente extends User {
 }
 
 // Subclass: Estudiante
-class Estudiante extends User {
+class Estudiante extends UserClubSteam {
   final String ingenieria;
   final String numeroControl;
 
@@ -130,7 +130,7 @@ class Estudiante extends User {
 }
 
 // Subclass: Colaborador
-class Colaborador extends User {
+class Colaborador extends UserClubSteam {
   final String unidadAdministrativa;
 
   Colaborador({

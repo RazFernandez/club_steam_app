@@ -1,7 +1,7 @@
 import 'package:club_steam_app/services/Firestores_DB/userQueries.dart';
 import 'package:club_steam_app/models/user_model.dart';
 import 'package:club_steam_app/models/user_form_data.dart';
-import 'package:club_steam_app/exceptions/user_exceptions.dart';
+import 'package:club_steam_app/exceptions/FormException.dart';
 
 class UserController {
   // Variable that handles the User object creation based on its type.
@@ -24,7 +24,7 @@ class UserController {
   }
 
   // Setter method to assign a new user
-  User generateUserToRegister() {
+  UserClubSteam generateUserToRegister() {
     // Select the type of user to create
     switch (selectedUserType) {
       case 'Docente':
@@ -63,13 +63,20 @@ class UserController {
             proyectos: [],
             unidadAdministrativa: userFormData.unit);
       default:
-        throw InvalidUserTypeException(
-            "The user type '$selectedUserType' is not recognized.");
+        throw FormExceptionHandler(
+            code: 'invalid-user-type',
+            message: 'El tipo de usuario $selectedUserType no existe');
     }
   }
 
-  // This function creates a new user in the database
-  Future<void> addUserDataBase(User user) async {
-    await userQueries.addUser(user);
+// This function creates a new user in the database
+  Future<bool> addUserDataBase(UserClubSteam user, String uid) async {
+    try {
+      await userQueries.addUser(user, uid);
+      return true;
+    } catch (e) {
+      // Returning false on any exception
+      return false;
+    }
   }
 }
