@@ -75,6 +75,7 @@ flutter:
     - lib/assets/icon/club-steam-logo.png
     - lib/assets/icon/google_icon.png
     - lib/assets/imgs/Upload_File_Icon.png
+    - lib/assets/imgs/Profile_Icon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

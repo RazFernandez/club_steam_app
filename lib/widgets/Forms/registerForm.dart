@@ -20,7 +20,7 @@ import 'package:club_steam_app/controllers/auth_controller.dart';
 import 'package:club_steam_app/exceptions/FormException.dart';
 
 // Utilities
-import 'package:club_steam_app/utils/icons.dart';
+import 'package:club_steam_app/widgets/Graphics/icons.dart';
 import 'package:club_steam_app/utils/validation.dart';
 import 'package:club_steam_app/utils/dropdown_items.dart';
 import 'package:club_steam_app/utils/navigation_utils.dart';
