@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:club_steam_app/views/login.dart';
 import 'package:club_steam_app/widgets/Forms/registerForm.dart';
 import 'package:club_steam_app/widgets/Graphics/avatarImageProfile.dart';
+import 'package:club_steam_app/widgets/Graphics/EditableAvatarImageProfile.dart';
 import 'package:club_steam_app/widgets/Buttons/redirectTextButton.dart';
 
 class ProfileImageView extends StatefulWidget {
@@ -23,7 +24,7 @@ class _ProfileImageViewState extends State<ProfileImageView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AvatarImageProfile.createFromDefaultImage(radiusImage: 200.0),
+            Editableavatarimageprofile(),
             SizedBox(height: 16),
             // Register Text
             Row(
