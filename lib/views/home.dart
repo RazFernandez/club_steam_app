@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:club_steam_app/views/profile.dart';
+import 'package:club_steam_app/views/login_workflow/registration_email/profile.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
