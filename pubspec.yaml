@@ -47,6 +47,7 @@ dependencies:
   provider: ^6.1.2
   flutter_launcher_icons: ^0.14.1
   fluttertoast: ^8.2.8
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:
@@ -75,6 +76,7 @@ flutter:
     - lib/assets/icon/club-steam-logo.png
     - lib/assets/icon/google_icon.png
     - lib/assets/imgs/Upload_File_Icon.png
+    - lib/assets/imgs/Profile_Icon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
