@@ -247,13 +247,13 @@ class _RegisterFormState extends State<RegisterForm> {
                   userFormData.passwordController.text,
                   userFormData.confirmPasswordController.text)),
           SizedBox(height: 24),
-          SizableButtom(
-            onPressed: () {
-              _submitForm(context);
-            },
-            text: "Crear Cuenta",
-            width: 250,
-          ),
+          SizableButton(
+              onPressed: () {
+                _submitForm(context);
+              },
+              text: "Crear Cuenta",
+              width: 250,
+              typeOfButton: ButtonType.outlinedButton),
         ],
       ),
     );

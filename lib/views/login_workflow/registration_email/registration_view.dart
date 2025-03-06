@@ -42,9 +42,13 @@ class _RegisterFormViewState extends State<RegisterFormView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizableButtom(onPressed: () {}, text: "Anterior", width: 100),
+                  SizableButton(
+                      onPressed: () {},
+                      text: "Anterior",
+                      width: 120,
+                      typeOfButton: ButtonType.outlinedButton)
                   //ElevatedButton(onPressed: () {}, child: Text('Anterior')),
-                  ElevatedButton(onPressed: () {}, child: Text('Siguiente'))
+                  //ElevatedButton(onPressed: () {}, child: Text('Siguiente'))
                 ],
               ),
             ],
