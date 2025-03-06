@@ -5,12 +5,12 @@ class SizableButtom extends StatelessWidget {
   final String text;
   final double width;
 
-  const SizableButtom({
-    super.key,
-    required this.onPressed,
-    required this.text,
-    required this.width,
-  });
+  const SizableButtom(
+      {super.key,
+      required this.onPressed,
+      required this.text,
+      required this.width,
+      required});
 
   @override
   Widget build(BuildContext context) {
