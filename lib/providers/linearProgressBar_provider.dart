@@ -16,6 +16,13 @@ class LinearProgressBarProvider with ChangeNotifier {
     }
   }
 
+  void decrementStep() {
+    if (_currentStep > 0) {
+      _currentStep--;
+      notifyListeners();
+    }
+  }
+
   void resetSteps() {
     _currentStep = 0;
     notifyListeners();

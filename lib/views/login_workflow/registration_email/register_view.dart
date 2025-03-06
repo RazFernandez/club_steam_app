@@ -25,6 +25,7 @@ class _RegisterViewState extends State<RegisterView> {
         title: Text('Registro'),
       ),
       body: ChangeNotifierProvider(
+        // Create the provider and set the steps in the LinearProgressBarProvider
         create: (context) => LinearProgressBarProvider(2),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -41,6 +42,7 @@ class _RegisterViewState extends State<RegisterView> {
                   child: IndexedStack(
                     index: indexView,
                     children: <Widget>[
+                      // Register Form View
                       Column(
                         children: [
                           RegisterForm(),
@@ -66,6 +68,7 @@ class _RegisterViewState extends State<RegisterView> {
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               RedirectTextButton(
                                 navigationMode: 1,
@@ -78,8 +81,51 @@ class _RegisterViewState extends State<RegisterView> {
                           ),
                         ],
                       ),
-                      Editableavatarimageprofile(),
-                      SizedBox(height: 16),
+                      // Profile Image View
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Editableavatarimageprofile(),
+                          SizedBox(height: 16),
+                          Builder(builder: (context) {
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                OutlinedButton(
+                                  onPressed: () {
+                                    // Call the decrementStep method from the LinearProgressBar
+                                    Provider.of<LinearProgressBarProvider>(
+                                            context,
+                                            listen: false)
+                                        .decrementStep();
+
+                                    setState(() {
+                                      indexView = 0;
+                                    });
+                                  },
+                                  child: Text("Anterior"),
+                                ),
+                                SizedBox(width: 20),
+                                FilledButton(
+                                    onPressed: () {},
+                                    child: Text("Crear Cuenta"))
+                              ],
+                            );
+                          }),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              RedirectTextButton(
+                                navigationMode: 1,
+                                labelText: "¿Ya tienes una cuenta?",
+                                context: context,
+                                targetView: LoginView(),
+                                buttonText: "Iniciar Sesión",
+                              ),
+                            ],
+                          )
+                        ],
+                      )
                     ],
                   ),
                 ),
