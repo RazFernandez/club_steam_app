@@ -14,6 +14,57 @@ class RegisterFormView extends StatefulWidget {
 class _RegisterFormViewState extends State<RegisterFormView> {
   // Index of the view to be displayed
   int indexView = 0;
+  final int totalSteps = 4;
+
+  // Size of the buttons
+  final double largeButtonSize = 250;
+  final double mediumButtonsSize = 150;
+  final double smallButtonsSize = 120;
+
+  // Visibility of the buttons (Initial state)
+  bool isButtonAnteriorVisible = false;
+  bool isButtonSiguienteVisible = true;
+  bool isButtonCrearCuentaVisible = false;
+
+  // Method to set the visibility of the buttons
+  void _setButtonVisibility() {
+    setState(() {
+      if (indexView == 0) {
+        isButtonAnteriorVisible = false;
+        isButtonSiguienteVisible = true;
+        isButtonCrearCuentaVisible = false;
+      } else if (indexView > 0 && indexView < totalSteps - 1) {
+        isButtonAnteriorVisible = true;
+        isButtonSiguienteVisible = true;
+        isButtonCrearCuentaVisible = false;
+      } else if (indexView == totalSteps - 1) {
+        isButtonAnteriorVisible = true;
+        isButtonSiguienteVisible = false;
+        isButtonCrearCuentaVisible = true;
+      } else {
+        isButtonAnteriorVisible = true;
+        isButtonSiguienteVisible = false;
+      }
+    });
+  }
+
+  // Method to increase the index of the view
+  void _nextIndexView() {
+    setState(() {
+      if (indexView < totalSteps - 1) {
+        indexView++;
+      }
+    });
+  }
+
+  // Method to decrease the index of the view
+  void _previousIndexView() {
+    setState(() {
+      if (indexView > 0) {
+        indexView--;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +74,7 @@ class _RegisterFormViewState extends State<RegisterFormView> {
       ),
       body: ChangeNotifierProvider(
           // Create the provider and set the steps in the LinearProgressBarProvider
-          create: (context) => LinearProgressBarProvider(4),
+          create: (context) => LinearProgressBarProvider(totalSteps),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -39,18 +90,58 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                   children: <Widget>[],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizableButton(
-                      onPressed: () {},
-                      text: "Anterior",
-                      width: 120,
-                      typeOfButton: ButtonType.outlinedButton)
-                  //ElevatedButton(onPressed: () {}, child: Text('Anterior')),
-                  //ElevatedButton(onPressed: () {}, child: Text('Siguiente'))
-                ],
-              ),
+              Builder(builder: (context) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    // Display the buttons according to the index of the view
+                    if (isButtonAnteriorVisible)
+                      SizableButton(
+                          onPressed: () {
+                            // Call the decrementStep method from the LinearProgressBar
+                            Provider.of<LinearProgressBarProvider>(context,
+                                    listen: false)
+                                .decrementStep();
+                            _previousIndexView();
+                            _setButtonVisibility();
+                            debugPrint(indexView.toString());
+                          },
+                          text: "Anterior",
+                          width: smallButtonsSize,
+                          typeOfButton: ButtonType.outlinedButton),
+                    if (isButtonSiguienteVisible)
+                      SizableButton(
+                          onPressed: () {
+                            // Call the addStep method  from the LinearProgressBar
+                            Provider.of<LinearProgressBarProvider>(context,
+                                    listen: false)
+                                .incrementStep();
+                            _nextIndexView();
+                            _setButtonVisibility();
+                            debugPrint(indexView.toString());
+                          },
+                          text: "Siguiente",
+                          width: indexView == 0
+                              ? largeButtonSize
+                              : smallButtonsSize,
+                          typeOfButton: ButtonType.filledButton),
+                    if (isButtonCrearCuentaVisible)
+                      SizableButton(
+                          onPressed: () {
+                            // Call the addStep method  from the LinearProgressBar
+                            // Provider.of<LinearProgressBarProvider>(context,
+                            //         listen: false)
+                            //     .incrementStep();
+                            // _nextIndexView();
+                            // _setButtonVisibility();
+                            debugPrint(indexView.toString());
+                          },
+                          text: "Crear Cuenta",
+                          width: mediumButtonsSize,
+                          typeOfButton: ButtonType.filledButton),
+                  ],
+                );
+              }),
             ],
           )),
     );
