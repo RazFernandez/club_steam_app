@@ -6,6 +6,8 @@ import 'package:club_steam_app/widgets/TextFields/dropdownFormField.dart';
 import 'package:club_steam_app/utils/dropdown_items.dart';
 import 'package:club_steam_app/controllers/user_controller.dart';
 import 'package:club_steam_app/models/user_form_data.dart';
+import 'package:club_steam_app/widgets/PlainText/titleText.dart';
+import 'package:club_steam_app/widgets/PlainText/descriptionText.dart';
 
 class UserTypeForm extends StatefulWidget {
   const UserTypeForm({super.key});
@@ -27,6 +29,11 @@ class _UserTypeFormState extends State<UserTypeForm> {
 
   // Instance of the user controller
   UserController userController = UserController();
+
+  // Variables to hold the text for the form labels and descriptions
+  final String _formTitle = "Tu rol en Club STEAM";
+  final String _formDescription =
+      "Elige el tipo de usuario que mejor te describa.";
 
   /*
   =========================
@@ -76,6 +83,11 @@ class _UserTypeFormState extends State<UserTypeForm> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          SizedBox(height: 8),
+          TitleText(text: _formTitle),
+          SizedBox(height: 16),
+          DescriptionText(text: _formDescription),
+          SizedBox(height: 16),
           // Type of user field
           DropdownFormField<String>(
             labelText: 'Tipo de usuario',
