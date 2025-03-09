@@ -3,6 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:club_steam_app/providers/linearProgressBar_provider.dart';
 import 'package:club_steam_app/widgets/Graphics/linearProgressBar.dart';
 import 'package:club_steam_app/widgets/Buttons/sizableButtom.dart';
+import 'package:club_steam_app/widgets/Forms/registerForms/fullNameForm.dart';
+import 'package:club_steam_app/widgets/Forms/registerForms/accountContactForm.dart';
+import 'package:club_steam_app/widgets/Forms/registerForms/passwordSetupForm.dart';
+import 'package:club_steam_app/widgets/Forms/registerForms/userTypeForm.dart';
 
 class RegisterFormView extends StatefulWidget {
   const RegisterFormView({super.key});
@@ -17,8 +21,8 @@ class _RegisterFormViewState extends State<RegisterFormView> {
   final int totalSteps = 4;
 
   // Size of the buttons
-  final double largeButtonSize = 250;
-  final double mediumButtonsSize = 150;
+  final double largeButtonSize = 248;
+  final double mediumButtonsSize = 144;
   final double smallButtonsSize = 120;
 
   // Visibility of the buttons (Initial state)
@@ -75,74 +79,83 @@ class _RegisterFormViewState extends State<RegisterFormView> {
       body: ChangeNotifierProvider(
           // Create the provider and set the steps in the LinearProgressBarProvider
           create: (context) => LinearProgressBarProvider(totalSteps),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Keep progress bar at the top
-              LinearProgressBar.material(
-                minHeight: 5.0,
-                context: context,
-              ),
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: IndexedStack(
-                  index: indexView,
-                  children: <Widget>[],
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Keep progress bar at the top
+                LinearProgressBar.material(
+                  minHeight: 5.0,
+                  context: context,
                 ),
-              ),
-              Builder(builder: (context) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    // Display the buttons according to the index of the view
-                    if (isButtonAnteriorVisible)
-                      SizableButton(
-                          onPressed: () {
-                            // Call the decrementStep method from the LinearProgressBar
-                            Provider.of<LinearProgressBarProvider>(context,
-                                    listen: false)
-                                .decrementStep();
-                            _previousIndexView();
-                            _setButtonVisibility();
-                            debugPrint(indexView.toString());
-                          },
-                          text: "Anterior",
-                          width: smallButtonsSize,
-                          typeOfButton: ButtonType.outlinedButton),
-                    if (isButtonSiguienteVisible)
-                      SizableButton(
-                          onPressed: () {
-                            // Call the addStep method  from the LinearProgressBar
-                            Provider.of<LinearProgressBarProvider>(context,
-                                    listen: false)
-                                .incrementStep();
-                            _nextIndexView();
-                            _setButtonVisibility();
-                            debugPrint(indexView.toString());
-                          },
-                          text: "Siguiente",
-                          width: indexView == 0
-                              ? largeButtonSize
-                              : smallButtonsSize,
-                          typeOfButton: ButtonType.filledButton),
-                    if (isButtonCrearCuentaVisible)
-                      SizableButton(
-                          onPressed: () {
-                            // Call the addStep method  from the LinearProgressBar
-                            // Provider.of<LinearProgressBarProvider>(context,
-                            //         listen: false)
-                            //     .incrementStep();
-                            // _nextIndexView();
-                            // _setButtonVisibility();
-                            debugPrint(indexView.toString());
-                          },
-                          text: "Crear Cuenta",
-                          width: mediumButtonsSize,
-                          typeOfButton: ButtonType.filledButton),
-                  ],
-                );
-              }),
-            ],
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: IndexedStack(
+                    index: indexView,
+                    children: <Widget>[
+                      Fullnameform(),
+                      AccountContactForm(),
+                      UserTypeForm(),
+                      PasswordSetupForm(),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 24),
+                Builder(builder: (context) {
+                  // Buttons to navigate between the views
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      // Display the buttons according to the index of the view
+                      if (isButtonAnteriorVisible)
+                        SizableButton(
+                            onPressed: () {
+                              // Call the decrementStep method from the LinearProgressBar
+                              Provider.of<LinearProgressBarProvider>(context,
+                                      listen: false)
+                                  .decrementStep();
+                              _previousIndexView();
+                              _setButtonVisibility();
+                              debugPrint(indexView.toString());
+                            },
+                            text: "Anterior",
+                            width: smallButtonsSize,
+                            typeOfButton: ButtonType.outlinedButton),
+                      if (isButtonSiguienteVisible)
+                        SizableButton(
+                            onPressed: () {
+                              // Call the addStep method  from the LinearProgressBar
+                              Provider.of<LinearProgressBarProvider>(context,
+                                      listen: false)
+                                  .incrementStep();
+                              _nextIndexView();
+                              _setButtonVisibility();
+                              debugPrint(indexView.toString());
+                            },
+                            text: "Siguiente",
+                            width: indexView == 0
+                                ? largeButtonSize
+                                : smallButtonsSize,
+                            typeOfButton: ButtonType.filledButton),
+                      if (isButtonCrearCuentaVisible)
+                        SizableButton(
+                            onPressed: () {
+                              // Call the addStep method  from the LinearProgressBar
+                              // Provider.of<LinearProgressBarProvider>(context,
+                              //         listen: false)
+                              //     .incrementStep();
+                              // _nextIndexView();
+                              // _setButtonVisibility();
+                              debugPrint(indexView.toString());
+                            },
+                            text: "Crear Cuenta",
+                            width: mediumButtonsSize,
+                            typeOfButton: ButtonType.filledButton),
+                    ],
+                  );
+                }),
+              ],
+            ),
           )),
     );
   }
