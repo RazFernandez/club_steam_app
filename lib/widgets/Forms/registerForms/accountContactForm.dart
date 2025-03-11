@@ -4,17 +4,20 @@ import 'package:club_steam_app/widgets/Graphics/icons.dart';
 import 'package:club_steam_app/utils/validation.dart';
 import 'package:club_steam_app/widgets/PlainText/titleText.dart';
 import 'package:club_steam_app/widgets/PlainText/descriptionText.dart';
+import 'package:club_steam_app/models/registration_user_form_data.dart';
 
 class AccountContactForm extends StatefulWidget {
-  const AccountContactForm({super.key});
+  final GlobalKey<FormState> formKey;
+  const AccountContactForm({super.key, required this.formKey});
 
   @override
   State<AccountContactForm> createState() => _AccountContactFormState();
 }
 
 class _AccountContactFormState extends State<AccountContactForm> {
-  // Key to identify the form and perform validation
-  final _formKey = GlobalKey<FormState>();
+  // Object to handle controller values of the text fields
+  RegistrationUserFormData registrationUserFormData =
+      RegistrationUserFormData();
 
   // Variables to hold the text for the form labels and descriptions
   final String _formTitle = "Datos de contacto";
@@ -26,7 +29,7 @@ class _AccountContactFormState extends State<AccountContactForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
+      key: widget.formKey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -37,11 +40,13 @@ class _AccountContactFormState extends State<AccountContactForm> {
           SizedBox(height: 16),
           // Email field
           CustomFormField(
+              controller: registrationUserFormData.emailController,
               labelText: _emailLabel,
               icon: AppIcons.emailIcon,
               validator: (value) => isValidEmail(value)),
           // Cell phone number field
           CustomFormField(
+              controller: registrationUserFormData.cellPhoneNumberController,
               labelText: _cellphoneNumberLabel,
               icon: AppIcons.phoneIcon,
               validator: (value) => isValidPhoneNumber(value)),

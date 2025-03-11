@@ -8,27 +8,24 @@ import 'package:club_steam_app/controllers/user_controller.dart';
 import 'package:club_steam_app/models/user_form_data.dart';
 import 'package:club_steam_app/widgets/PlainText/titleText.dart';
 import 'package:club_steam_app/widgets/PlainText/descriptionText.dart';
+import 'package:club_steam_app/models/registration_user_form_data.dart';
 
 class UserTypeForm extends StatefulWidget {
-  const UserTypeForm({super.key});
+  final GlobalKey<FormState> formKey;
+  const UserTypeForm({super.key, required this.formKey});
 
   @override
   State<UserTypeForm> createState() => _UserTypeFormState();
 }
 
 class _UserTypeFormState extends State<UserTypeForm> {
-  // Key to identify the form and perform validation
-  final _formKey = GlobalKey<FormState>();
+  // Object to handle controller values of the text fields
+  RegistrationUserFormData registrationUserFormData =
+      RegistrationUserFormData();
 
   // Variables to hold selected dropdown values
   String? _selectedUserType;
   String? _selectedUnit;
-
-  // Object to handle controller values of the text fields
-  UserFormData userFormData = UserFormData();
-
-  // Instance of the user controller
-  UserController userController = UserController();
 
   // Variables to hold the text for the form labels and descriptions
   final String _formTitle = "Tu rol en Club STEAM";
@@ -49,7 +46,7 @@ class _UserTypeFormState extends State<UserTypeForm> {
             icon: AppIcons.engineeringIcon,
             items: ingenieriaOptions,
             value: _selectedUnit,
-            controller: userFormData.unitController,
+            controller: registrationUserFormData.unitController,
             validator: (value) => isValidMultiOptionField(value),
           ),
           // Just the Estudiantes request their control number
@@ -57,7 +54,7 @@ class _UserTypeFormState extends State<UserTypeForm> {
             CustomFormField(
               labelText: 'Número de Control',
               icon: AppIcons.controlNumIcon,
-              controller: userFormData.controlNumberController,
+              controller: registrationUserFormData.controlNumberController,
               validator: (value) => isValidControlNumber(value),
             )
         ],
@@ -69,7 +66,7 @@ class _UserTypeFormState extends State<UserTypeForm> {
         icon: AppIcons.unidadAdminIcon,
         items: unidadAdministrativaOptions,
         value: _selectedUnit,
-        controller: userFormData.unitController,
+        controller: registrationUserFormData.unitController,
         validator: (value) => isValidMultiOptionField(value),
       );
     }
@@ -79,7 +76,7 @@ class _UserTypeFormState extends State<UserTypeForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
+      key: widget.formKey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -94,7 +91,7 @@ class _UserTypeFormState extends State<UserTypeForm> {
             icon: AppIcons.typeUserIcon,
             items: userTypes,
             value: _selectedUserType,
-            controller: userFormData.userTypeController,
+            controller: registrationUserFormData.userTypeController,
             validator: (value) => isValidMultiOptionField(value),
             onChanged: (value) {
               setState(() {

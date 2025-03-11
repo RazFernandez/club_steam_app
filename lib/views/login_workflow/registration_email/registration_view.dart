@@ -7,6 +7,7 @@ import 'package:club_steam_app/widgets/Forms/registerForms/fullNameForm.dart';
 import 'package:club_steam_app/widgets/Forms/registerForms/accountContactForm.dart';
 import 'package:club_steam_app/widgets/Forms/registerForms/passwordSetupForm.dart';
 import 'package:club_steam_app/widgets/Forms/registerForms/userTypeForm.dart';
+import 'package:club_steam_app/models/registration_user_form_data.dart';
 
 class RegisterFormView extends StatefulWidget {
   const RegisterFormView({super.key});
@@ -16,6 +17,11 @@ class RegisterFormView extends StatefulWidget {
 }
 
 class _RegisterFormViewState extends State<RegisterFormView> {
+  // Test
+  // Object to handle controller values of the text fields
+  RegistrationUserFormData registrationUserFormData =
+      RegistrationUserFormData();
+
   // Index of the view to be displayed
   int indexView = 0;
   final int totalSteps = 4;
@@ -29,6 +35,12 @@ class _RegisterFormViewState extends State<RegisterFormView> {
   bool isButtonAnteriorVisible = false;
   bool isButtonSiguienteVisible = true;
   bool isButtonCrearCuentaVisible = false;
+
+  // GlobalKeys for each form
+  final GlobalKey<FormState> _fullnameFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _accountContactFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _userTypeFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _passwordSetupFormKey = GlobalKey<FormState>();
 
   // Method to set the visibility of the buttons
   void _setButtonVisibility() {
@@ -70,6 +82,22 @@ class _RegisterFormViewState extends State<RegisterFormView> {
     });
   }
 
+  // Method to validate the current form
+  bool _validateCurrentForm() {
+    switch (indexView) {
+      case 0:
+        return _fullnameFormKey.currentState?.validate() ?? false;
+      case 1:
+        return _accountContactFormKey.currentState?.validate() ?? false;
+      case 2:
+        return _userTypeFormKey.currentState?.validate() ?? false;
+      case 3:
+        return _passwordSetupFormKey.currentState?.validate() ?? false;
+      default:
+        return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,10 +121,16 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                   child: IndexedStack(
                     index: indexView,
                     children: <Widget>[
-                      Fullnameform(),
-                      AccountContactForm(),
-                      UserTypeForm(),
-                      PasswordSetupForm(),
+                      Fullnameform(formKey: _fullnameFormKey),
+                      AccountContactForm(
+                        formKey: _accountContactFormKey,
+                      ),
+                      UserTypeForm(
+                        formKey: _userTypeFormKey,
+                      ),
+                      PasswordSetupForm(
+                        formKey: _passwordSetupFormKey,
+                      ),
                     ],
                   ),
                 ),
@@ -124,13 +158,19 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                       if (isButtonSiguienteVisible)
                         SizableButton(
                             onPressed: () {
-                              // Call the addStep method  from the LinearProgressBar
-                              Provider.of<LinearProgressBarProvider>(context,
-                                      listen: false)
-                                  .incrementStep();
-                              _nextIndexView();
-                              _setButtonVisibility();
-                              debugPrint(indexView.toString());
+                              if (_validateCurrentForm()) {
+                                // Call the addStep method  from the LinearProgressBar
+                                Provider.of<LinearProgressBarProvider>(context,
+                                        listen: false)
+                                    .incrementStep();
+                                _nextIndexView();
+                                _setButtonVisibility();
+                                debugPrint(indexView.toString());
+                                debugPrint(registrationUserFormData.name);
+                                debugPrint(registrationUserFormData.email);
+                                debugPrint(registrationUserFormData.password);
+                                debugPrint(registrationUserFormData.userType);
+                              }
                             },
                             text: "Siguiente",
                             width: indexView == 0
@@ -146,7 +186,9 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                               //     .incrementStep();
                               // _nextIndexView();
                               // _setButtonVisibility();
-                              debugPrint(indexView.toString());
+                              if (_validateCurrentForm()) {
+                                debugPrint(indexView.toString());
+                              }
                             },
                             text: "Crear Cuenta",
                             width: mediumButtonsSize,
