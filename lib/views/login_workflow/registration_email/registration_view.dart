@@ -1,3 +1,4 @@
+import 'package:club_steam_app/models/user_clubsteam_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:club_steam_app/providers/linearProgressBar_provider.dart';
@@ -8,6 +9,7 @@ import 'package:club_steam_app/widgets/Forms/registerForms/accountContactForm.da
 import 'package:club_steam_app/widgets/Forms/registerForms/passwordSetupForm.dart';
 import 'package:club_steam_app/widgets/Forms/registerForms/userTypeForm.dart';
 import 'package:club_steam_app/models/registration_user_form_data.dart';
+import 'package:club_steam_app/services/Firestores_DB/user_creation_service.dart';
 
 class RegisterFormView extends StatefulWidget {
   const RegisterFormView({super.key});
@@ -21,6 +23,8 @@ class _RegisterFormViewState extends State<RegisterFormView> {
   // Object to handle controller values of the text fields
   RegistrationUserFormData registrationUserFormData =
       RegistrationUserFormData();
+
+  UserCreationService userCreationService = UserCreationService();
 
   // Index of the view to be displayed
   int indexView = 0;
@@ -168,8 +172,8 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                                 debugPrint(indexView.toString());
                                 debugPrint(registrationUserFormData.name);
                                 debugPrint(registrationUserFormData.email);
-                                debugPrint(registrationUserFormData.password);
                                 debugPrint(registrationUserFormData.userType);
+                                debugPrint(registrationUserFormData.password);
                               }
                             },
                             text: "Siguiente",
@@ -188,6 +192,17 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                               // _setButtonVisibility();
                               if (_validateCurrentForm()) {
                                 debugPrint(indexView.toString());
+                                userCreationService.setSelectedUserType(
+                                    registrationUserFormData.userType);
+                                userCreationService.testUserData();
+
+                                // // Process to create the user in the database
+                                // UserClubSteam user = userCreationService
+                                //     .generateUserToRegister();
+                                // userCreationService.addUserDataBase(user, 'xd');
+                                userCreationService.createUserInFirebaseAuth(
+                                    registrationUserFormData.email,
+                                    registrationUserFormData.password);
                               }
                             },
                             text: "Crear Cuenta",

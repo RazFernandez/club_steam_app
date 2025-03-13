@@ -1,5 +1,5 @@
 import 'package:club_steam_app/services/Firestores_DB/userQueries.dart';
-import 'package:club_steam_app/models/user_model.dart';
+import 'package:club_steam_app/models/user_clubsteam_model.dart';
 import 'package:club_steam_app/models/user_form_data.dart';
 import 'package:club_steam_app/exceptions/FormException.dart';
 

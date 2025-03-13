@@ -85,6 +85,22 @@ class Docente extends UserClubSteam {
       ingenieria: data['ingenieria'],
     );
   }
+
+  // Method to convert the object to a string
+  String toDetailedString() {
+    return '''
+    Docente {
+      nombres: $nombres,
+      apellidoPaterno: $apellidoPaterno,
+      apellidoMaterno: $apellidoMaterno,
+      correoElectronico: $correoElectronico,
+      numeroCelular: $numeroCelular,
+      tipoUsuario: $tipoUsuario,
+      fotoPerfil: $fotoPerfil,
+      proyectos: $proyectos,
+      ingenieria: $ingenieria
+    }''';
+  }
 }
 
 // Subclass: Estudiante
@@ -127,6 +143,23 @@ class Estudiante extends UserClubSteam {
       numeroControl: data['numeroControl'],
     );
   }
+
+  // Method to convert the object to a string
+  String toDetailedString() {
+    return '''
+    Estudiante {
+      nombres: $nombres,
+      apellidoPaterno: $apellidoPaterno,
+      apellidoMaterno: $apellidoMaterno,
+      correoElectronico: $correoElectronico,
+      numeroCelular: $numeroCelular,
+      tipoUsuario: $tipoUsuario,
+      fotoPerfil: $fotoPerfil,
+      proyectos: $proyectos,
+      ingenieria: $ingenieria,
+      numeroControl: $numeroControl
+    }''';
+  }
 }
 
 // Subclass: Colaborador
@@ -164,5 +197,21 @@ class Colaborador extends UserClubSteam {
       proyectos: List<String>.from(data['proyectos']),
       unidadAdministrativa: data['unidadAdministrativa'],
     );
+  }
+
+  // Method to convert the object to a string
+  String toDetailedString() {
+    return '''
+    Colaborador {
+      nombres: $nombres,
+      apellidoPaterno: $apellidoPaterno,
+      apellidoMaterno: $apellidoMaterno,
+      correoElectronico: $correoElectronico,
+      numeroCelular: $numeroCelular,
+      tipoUsuario: $tipoUsuario,
+      fotoPerfil: $fotoPerfil,
+      proyectos: $proyectos,
+      unidadAdministrativa: $unidadAdministrativa
+    }''';
   }
 }

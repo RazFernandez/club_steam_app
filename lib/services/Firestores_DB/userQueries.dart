@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:club_steam_app/models/user_model.dart';
+import 'package:club_steam_app/models/user_clubsteam_model.dart';
 
 // This class contains the queries to the Firestore database for the user
 // collection
