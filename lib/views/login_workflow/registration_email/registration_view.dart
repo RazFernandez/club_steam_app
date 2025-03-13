@@ -12,6 +12,8 @@ import 'package:club_steam_app/widgets/Forms/registerForms/passwordSetupForm.dar
 import 'package:club_steam_app/widgets/Forms/registerForms/userTypeForm.dart';
 import 'package:club_steam_app/models/registration_user_form_data.dart';
 import 'package:club_steam_app/services/Firestores_DB/user_creationDB_service.dart';
+import 'package:club_steam_app/widgets/Buttons/redirectTextButton.dart';
+import 'package:club_steam_app/views/login_workflow/login.dart';
 
 class RegisterFormView extends StatefulWidget {
   const RegisterFormView({super.key});
@@ -114,6 +116,9 @@ class _RegisterFormViewState extends State<RegisterFormView> {
 
     if (user != null) {
       log("Usuario creado con éxito");
+
+      // Send email verification
+      await authService.sendEmailVerification();
 
       // Create the user in the database
       userCreationService
@@ -232,6 +237,21 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                     ],
                   );
                 }),
+                // Register Text
+                SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    RedirectTextButton(
+                      navigationMode: 1,
+                      labelText: "¿Ya tienes una cuenta?",
+                      context: context,
+                      targetView: LoginView(),
+                      buttonText: "Iniciar Sesión",
+                    ),
+                  ],
+                ),
               ],
             ),
           )),

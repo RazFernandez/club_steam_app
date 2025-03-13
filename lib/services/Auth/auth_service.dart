@@ -30,6 +30,16 @@ class AuthService {
     return null;
   }
 
+  // Method to send email verification
+  Future<void> sendEmailVerification() async {
+    try {
+      final user = _auth.currentUser;
+      await user?.sendEmailVerification();
+    } catch (e) {
+      log("Something went wrong");
+    }
+  }
+
   // Method to sign out
   Future<void> signout() async {
     try {
