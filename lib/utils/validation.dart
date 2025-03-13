@@ -1,6 +1,13 @@
 /* This file centralizes all validation functions to ensure user inputs across
  various fields are consistently and effectively validated. */
 
+// List of valid email domains
+const List<String> validEmailDomains = [
+  'itscarrillopuerto.edu.mx',
+  'gmail.com',
+  'outlook.com',
+];
+
 // General validation fields
 String? isValidField(String? value) {
   if (value == null || value.isEmpty) {
@@ -23,8 +30,18 @@ String? isValidEmail(String? value) {
     return 'Por favor, introduzca un correo institucional valido';
   }
 
-  final RegExp regex = RegExp(r'^[\w-\.]+@itscarrillopuerto.edu.mx$');
-  if (!regex.hasMatch(value)) {
+  // Extract the domain from the email
+  final RegExp regex = RegExp(r'^[\w-\.]+@([\w-]+\.[\w-]+)$');
+  final match = regex.firstMatch(value);
+  if (match == null) {
+    return 'Por favor, introduzca un correo con el dominio correcto';
+  }
+
+  // Extract the domain from the email
+  final String domain = match.group(1)!;
+
+  // Check if the domain is in the list of valid email domains
+  if (!validEmailDomains.contains(domain)) {
     return 'Por favor, introduzca un correo con el dominio correcto';
   }
 
