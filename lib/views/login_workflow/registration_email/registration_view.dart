@@ -1,4 +1,5 @@
 import 'package:club_steam_app/models/user_clubsteam_model.dart';
+import 'package:club_steam_app/services/Auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:club_steam_app/providers/linearProgressBar_provider.dart';
@@ -25,6 +26,9 @@ class _RegisterFormViewState extends State<RegisterFormView> {
       RegistrationUserFormData();
 
   UserCreationService userCreationService = UserCreationService();
+
+  // Instance of the authentication service
+  AuthService authService = AuthService();
 
   // Index of the view to be displayed
   int indexView = 0;
@@ -147,6 +151,8 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                       // Display the buttons according to the index of the view
                       if (isButtonAnteriorVisible)
                         SizableButton(
+                            text: "Anterior",
+                            width: smallButtonsSize,
                             onPressed: () {
                               // Call the decrementStep method from the LinearProgressBar
                               Provider.of<LinearProgressBarProvider>(context,
@@ -156,11 +162,13 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                               _setButtonVisibility();
                               debugPrint(indexView.toString());
                             },
-                            text: "Anterior",
-                            width: smallButtonsSize,
                             typeOfButton: ButtonType.outlinedButton),
                       if (isButtonSiguienteVisible)
                         SizableButton(
+                            text: "Siguiente",
+                            width: indexView == 0
+                                ? largeButtonSize
+                                : smallButtonsSize,
                             onPressed: () {
                               if (_validateCurrentForm()) {
                                 // Call the addStep method  from the LinearProgressBar
@@ -176,13 +184,11 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                                 debugPrint(registrationUserFormData.password);
                               }
                             },
-                            text: "Siguiente",
-                            width: indexView == 0
-                                ? largeButtonSize
-                                : smallButtonsSize,
                             typeOfButton: ButtonType.filledButton),
                       if (isButtonCrearCuentaVisible)
                         SizableButton(
+                            text: "Crear Cuenta",
+                            width: mediumButtonsSize,
                             onPressed: () {
                               // Call the addStep method  from the LinearProgressBar
                               // Provider.of<LinearProgressBarProvider>(context,
@@ -192,21 +198,23 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                               // _setButtonVisibility();
                               if (_validateCurrentForm()) {
                                 debugPrint(indexView.toString());
+                                // create the user in the database
                                 userCreationService.setSelectedUserType(
                                     registrationUserFormData.userType);
                                 userCreationService.testUserData();
 
-                                // // Process to create the user in the database
-                                // UserClubSteam user = userCreationService
-                                //     .generateUserToRegister();
-                                // userCreationService.addUserDataBase(user, 'xd');
-                                userCreationService.createUserInFirebaseAuth(
-                                    registrationUserFormData.email,
-                                    registrationUserFormData.password);
+                                authService.createUserWithEmailAndPassword(
+                                    "miguelraz2002@gmail.com", "123456789");
+
+                                // // // Process to create the user in the database
+                                // // UserClubSteam user = userCreationService
+                                // //     .generateUserToRegister();
+                                // // userCreationService.addUserDataBase(user, 'xd');
+                                // userCreationService.createUserInFirebaseAuth(
+                                //     registrationUserFormData.email,
+                                //     registrationUserFormData.password);
                               }
                             },
-                            text: "Crear Cuenta",
-                            width: mediumButtonsSize,
                             typeOfButton: ButtonType.filledButton),
                     ],
                   );
