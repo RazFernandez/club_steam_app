@@ -79,12 +79,13 @@ class _LoginFormState extends State<LoginForm> {
             validator: (value) => isValidPassword(value),
           ),
           SizedBox(height: 24),
-          SizableButtom(
+          SizableButton(
             onPressed: () {
               _submitForm(context);
             },
             text: "Iniciar Sesión",
             width: 250,
+            typeOfButton: ButtonType.filledButton,
           ),
         ],
       ),

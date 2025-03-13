@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 // Model
-import 'package:club_steam_app/models/user_model.dart';
+import 'package:club_steam_app/models/user_clubsteam_model.dart';
 import 'package:club_steam_app/models/user_form_data.dart';
 
 // Views
@@ -247,13 +247,13 @@ class _RegisterFormState extends State<RegisterForm> {
                   userFormData.passwordController.text,
                   userFormData.confirmPasswordController.text)),
           SizedBox(height: 24),
-          SizableButtom(
-            onPressed: () {
-              _submitForm(context);
-            },
-            text: "Crear Cuenta",
-            width: 250,
-          ),
+          SizableButton(
+              onPressed: () {
+                _submitForm(context);
+              },
+              text: "Crear Cuenta",
+              width: 250,
+              typeOfButton: ButtonType.outlinedButton),
         ],
       ),
     );

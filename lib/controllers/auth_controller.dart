@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-//import 'package:club_steam_app/views/home.dart';
+// This class handles the authentication of the user in the app
 
 class AuthController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
