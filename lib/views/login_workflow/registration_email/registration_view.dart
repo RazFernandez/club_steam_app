@@ -1,6 +1,7 @@
 import 'package:club_steam_app/models/user_clubsteam_model.dart';
 import 'package:club_steam_app/services/Auth/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'dart:developer';
 import 'package:provider/provider.dart';
 import 'package:club_steam_app/providers/linearProgressBar_provider.dart';
 import 'package:club_steam_app/widgets/Graphics/linearProgressBar.dart';
@@ -10,7 +11,7 @@ import 'package:club_steam_app/widgets/Forms/registerForms/accountContactForm.da
 import 'package:club_steam_app/widgets/Forms/registerForms/passwordSetupForm.dart';
 import 'package:club_steam_app/widgets/Forms/registerForms/userTypeForm.dart';
 import 'package:club_steam_app/models/registration_user_form_data.dart';
-import 'package:club_steam_app/services/Firestores_DB/user_creation_service.dart';
+import 'package:club_steam_app/services/Firestores_DB/user_creationDB_service.dart';
 
 class RegisterFormView extends StatefulWidget {
   const RegisterFormView({super.key});
@@ -20,11 +21,11 @@ class RegisterFormView extends StatefulWidget {
 }
 
 class _RegisterFormViewState extends State<RegisterFormView> {
-  // Test
   // Object to handle controller values of the text fields
   RegistrationUserFormData registrationUserFormData =
       RegistrationUserFormData();
 
+  // Instance of the user creation service
   UserCreationService userCreationService = UserCreationService();
 
   // Instance of the authentication service
@@ -103,6 +104,32 @@ class _RegisterFormViewState extends State<RegisterFormView> {
         return _passwordSetupFormKey.currentState?.validate() ?? false;
       default:
         return false;
+    }
+  }
+
+  // Method to create the user in the authentication service
+  _signup() async {
+    final user = await authService.createUserWithEmailAndPassword(
+        registrationUserFormData.email, registrationUserFormData.password);
+
+    if (user != null) {
+      log("Usuario creado con éxito");
+
+      // Create the user in the database
+      userCreationService
+          .setSelectedUserType(registrationUserFormData.userType);
+
+      // Save the user id to be the index of the user in the database
+      String userID = user.uid;
+
+      // Create the user object to be saved in the database
+      userCreationService
+          .setSelectedUserType(registrationUserFormData.userType);
+      UserClubSteam? userToSave = userCreationService.generateUserToRegister();
+      if (userToSave != null) {
+        userCreationService.addUserDataBase(userToSave, userID);
+        log("Usuario guardado en la base de datos");
+      }
     }
   }
 
@@ -190,12 +217,6 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                             text: "Crear Cuenta",
                             width: mediumButtonsSize,
                             onPressed: () {
-                              // Call the addStep method  from the LinearProgressBar
-                              // Provider.of<LinearProgressBarProvider>(context,
-                              //         listen: false)
-                              //     .incrementStep();
-                              // _nextIndexView();
-                              // _setButtonVisibility();
                               if (_validateCurrentForm()) {
                                 debugPrint(indexView.toString());
                                 // create the user in the database
@@ -203,16 +224,8 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                                     registrationUserFormData.userType);
                                 userCreationService.testUserData();
 
-                                authService.createUserWithEmailAndPassword(
-                                    "miguelraz2002@gmail.com", "123456789");
-
-                                // // // Process to create the user in the database
-                                // // UserClubSteam user = userCreationService
-                                // //     .generateUserToRegister();
-                                // // userCreationService.addUserDataBase(user, 'xd');
-                                // userCreationService.createUserInFirebaseAuth(
-                                //     registrationUserFormData.email,
-                                //     registrationUserFormData.password);
+                                // Process to create the user in the authentication service
+                                _signup();
                               }
                             },
                             typeOfButton: ButtonType.filledButton),

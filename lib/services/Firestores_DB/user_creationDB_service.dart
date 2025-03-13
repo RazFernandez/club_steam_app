@@ -23,7 +23,7 @@ class UserCreationService {
   }
 
   // Method to generate a user to register according to user type
-  UserClubSteam generateUserToRegister() {
+  UserClubSteam? generateUserToRegister() {
     switch (selectedUserType) {
       case 'Docente':
         return Docente(
@@ -61,9 +61,10 @@ class UserCreationService {
             proyectos: [],
             unidadAdministrativa: registrationUserFormData.unit);
       default:
-        throw FormExceptionHandler(
-            code: 'invalid-user-type',
-            message: 'El tipo de usuario $selectedUserType no existe');
+        return null;
+      // throw FormExceptionHandler(
+      //     code: 'invalid-user-type',
+      //     message: 'El tipo de usuario $selectedUserType no existe');
     }
   }
 
@@ -86,16 +87,16 @@ class UserCreationService {
     }
   }
 
-// This function creates a new user in firebase authentication
-  Future<bool> createUserInFirebaseAuth(String email, String password) async {
-    try {
-      await AuthController().registerUser(email: email, password: password);
-      return true;
-    } catch (e) {
-      // Returning false on any exception
-      return false;
-    }
-  }
+// // This function creates a new user in firebase authentication
+//   Future<bool> createUserInFirebaseAuth(String email, String password) async {
+//     try {
+//       await AuthController().registerUser(email: email, password: password);
+//       return true;
+//     } catch (e) {
+//       // Returning false on any exception
+//       return false;
+//     }
+//   }
 
 // This function creates a new user in the database
   Future<bool> addUserDataBase(UserClubSteam user, String uid) async {
