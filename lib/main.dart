@@ -4,6 +4,7 @@ import 'package:club_steam_app/views/login_workflow/registration_email/registrat
 import 'package:club_steam_app/views/login_workflow/registration_email/profileImage.dart';
 import 'package:club_steam_app/views/login_workflow/registration_email/register.dart';
 import 'package:club_steam_app/widgets/Forms/registerForm.dart';
+import 'package:club_steam_app/views/login_workflow/registration_email/verificationEmail_view.dart';
 import 'package:flutter/material.dart';
 import 'utils/util.dart';
 import 'utils/theme.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Club Steam',
       theme: brightness == Brightness.light ? theme.light() : theme.dark(),
-      home: RegisterFormView(),
+      home: VerificationemailView(),
     );
   }
 
