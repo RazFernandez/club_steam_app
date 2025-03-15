@@ -235,6 +235,7 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                                 _signup();
                                 navigateAndClearStack(
                                     context, VerificationemailView());
+                                registrationUserFormData.clearFields();
                               }
                             },
                             typeOfButton: ButtonType.filledButton),

@@ -57,7 +57,7 @@ class _LoginFormState extends State<LoginForm> {
 
           // if it's validated redirect them to home view
           if (emailValidated && context.mounted) {
-            navigateTo(context, HomeView());
+            navigateAndClearStack(context, HomeView());
             log("Account verified");
           } else {
             // otherwise, redirect them to verification email view

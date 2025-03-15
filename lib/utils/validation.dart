@@ -31,7 +31,9 @@ String? isValidEmail(String? value) {
   }
 
   // Extract the domain from the email
-  final RegExp regex = RegExp(r'^[\w-\.]+@([\w-]+\.[\w-]+)$');
+  // final RegExp regex = RegExp(r'^[\w-\.]+@([\w-]+\.[\w-]+)$');
+  final RegExp regex = RegExp(r'^[\w-\.]+@([\w.-]+)$');
+
   final match = regex.firstMatch(value);
   if (match == null) {
     return 'Por favor, introduzca un correo con el dominio correcto';
