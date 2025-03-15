@@ -10,7 +10,8 @@ import 'package:club_steam_app/widgets/Graphics/InfoCard.dart';
 import 'package:club_steam_app/utils/navigation_utils.dart';
 
 class VerificationemailView extends StatefulWidget {
-  const VerificationemailView({super.key});
+  final int? indexView;
+  const VerificationemailView({super.key, this.indexView});
 
   @override
   State<VerificationemailView> createState() => _VerificationemailViewState();
@@ -27,6 +28,12 @@ class _VerificationemailViewState extends State<VerificationemailView> {
 
   // Index of the view to be displayed
   int indexView = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    indexView = widget.indexView ?? 0;
+  }
 
   // Instance of the authentication service
   AuthService authService = AuthService();
