@@ -22,45 +22,28 @@ class _VerificationemailViewState extends State<VerificationemailView> {
   // Index of the view to be displayed
   int indexView = 0;
 
-  // Visibility of the buttons (Initial state)
-  bool isButtonValidarCuentaVisible = true;
-  bool isButtonIniciarSesionVisible = false;
-  bool isButtonReenviarCorreoVisible = false;
-
-  // Widgets to be displayed (Images)
-  final Widget emailIcon =
-      Image.asset('lib/assets/imgs/Email_Icon.png', height: 200);
-
-  final Widget checkIcon =
-      Image.asset('lib/assets/imgs/Check_Icon.png', height: 200);
-
-  final Widget errorIcon =
-      Image.asset('lib/assets/imgs/Error_Icon.png', height: 200);
-
-  // Method to set the visibility of the images
-
-  // Method to set the visibility of the buttons
-  void _setButtonVisibility() {
+  // Method to increase the index of the view
+  void _nextIndexView() {
     setState(() {
-      switch (indexView) {
-        case 0:
-          isButtonValidarCuentaVisible = true;
-          isButtonIniciarSesionVisible = false;
-          isButtonReenviarCorreoVisible = false;
-          break;
-        case 1:
-          isButtonValidarCuentaVisible = false;
-          isButtonIniciarSesionVisible = true;
-          isButtonReenviarCorreoVisible = false;
-          break;
-        case 2:
-          isButtonValidarCuentaVisible = false;
-          isButtonIniciarSesionVisible = false;
-          isButtonReenviarCorreoVisible = true;
-          break;
-        default:
-          log("The index is not valid");
+      if (indexView < 2) {
+        indexView++;
       }
+    });
+  }
+
+  // Method to decrease the index of the view
+  void _previousIndexView() {
+    setState(() {
+      if (indexView > 0) {
+        indexView--;
+      }
+    });
+  }
+
+  // Method to restart the index of the view
+  void _restartIndexView() {
+    setState(() {
+      indexView = 0;
     });
   }
 
@@ -76,22 +59,50 @@ class _VerificationemailViewState extends State<VerificationemailView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              IndexedStack(
-                index: indexView,
+              if (indexView == 0)
+                Infocard(
+                    title: emailVerificationTitle,
+                    iconImageAsset: 'lib/assets/imgs/Email_Icon.png',
+                    description: emailVerificationDescription),
+              if (indexView == 1)
+                Infocard(
+                    title: accountVerifiedTitle,
+                    iconImageAsset: 'lib/assets/imgs/Check_Icon.png',
+                    description: accountVerifiedDescription),
+              if (indexView == 2)
+                Infocard(
+                    title: accountNotVerifiedTitle,
+                    iconImageAsset: 'lib/assets/imgs/Error_Icon.png',
+                    description: accountNotVerifiedDescription),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Infocard(
-                      title: 'Correo Enviado',
-                      iconImageAsset: 'lib/assets/imgs/Email_Icon.png',
-                      description: emailVerificationDescription),
-                  checkIcon,
-                  errorIcon,
+                  if (indexView == 0)
+                    SizableButton(
+                        onPressed: () {
+                          _nextIndexView();
+                        },
+                        text: "Validar cuenta",
+                        width: largeButtonSize,
+                        typeOfButton: ButtonType.filledButton)
+                  else if (indexView == 1)
+                    SizableButton(
+                        onPressed: () {
+                          _nextIndexView();
+                        },
+                        text: "Iniciar Sesión",
+                        width: largeButtonSize,
+                        typeOfButton: ButtonType.filledButton)
+                  else if (indexView == 2)
+                    SizableButton(
+                        onPressed: () {
+                          _restartIndexView();
+                        },
+                        text: "Reenviar correo",
+                        width: largeButtonSize,
+                        typeOfButton: ButtonType.filledButton)
                 ],
-              ),
-              SizableButton(
-                  onPressed: () {},
-                  text: "Reenviar correo",
-                  width: largeButtonSize,
-                  typeOfButton: ButtonType.filledButton),
+              )
             ],
           ),
         ),

@@ -21,6 +21,7 @@ class Infocard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         if (title != null) TitleText(text: title!),
         SizedBox(height: 24),
