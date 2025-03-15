@@ -14,6 +14,8 @@ import 'package:club_steam_app/models/registration_user_form_data.dart';
 import 'package:club_steam_app/services/Firestores_DB/user_creationDB_service.dart';
 import 'package:club_steam_app/widgets/Buttons/redirectTextButton.dart';
 import 'package:club_steam_app/views/login_workflow/login.dart';
+import 'package:club_steam_app/utils/navigation_utils.dart';
+import 'package:club_steam_app/views/login_workflow/registration_email/verificationEmail_view.dart';
 
 class RegisterFormView extends StatefulWidget {
   const RegisterFormView({super.key});
@@ -231,6 +233,8 @@ class _RegisterFormViewState extends State<RegisterFormView> {
 
                                 // Process to create the user in the authentication service
                                 _signup();
+                                navigateAndClearStack(
+                                    context, VerificationemailView());
                               }
                             },
                             typeOfButton: ButtonType.filledButton),
