@@ -4,12 +4,14 @@ import 'package:club_steam_app/views/login_workflow/registration_email/registrat
 import 'package:club_steam_app/views/login_workflow/registration_email/profileImage.dart';
 import 'package:club_steam_app/views/login_workflow/registration_email/register.dart';
 import 'package:club_steam_app/widgets/Forms/registerForm.dart';
+import 'package:club_steam_app/views/login_workflow/registration_email/verificationEmail_view.dart';
 import 'package:flutter/material.dart';
 import 'utils/util.dart';
 import 'utils/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'services/firebase_options.dart';
+import 'package:club_steam_app/services/Auth/auth_service.dart';
 import 'package:club_steam_app/controllers/auth_controller.dart';
 
 void main() async {
@@ -28,6 +30,8 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  //final AuthService authService = AuthService();
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -35,26 +39,30 @@ class MyApp extends StatelessWidget {
 
     // Retrieves the default theme for the platform
     //TextTheme textTheme = Theme.of(context).textTheme;
+    // bool userlogged = _isUserLogged();
 
     // Use with Google Fonts package to use downloadable fonts
     TextTheme textTheme = createTextTheme(context, "Open Sans", "Montserrat");
 
     MaterialTheme theme = MaterialTheme(textTheme);
+
+    bool isUserLogged = AuthService().checkUserLoggedIn();
+
     return MaterialApp(
       title: 'Club Steam',
       theme: brightness == Brightness.light ? theme.light() : theme.dark(),
-      home: RegisterFormView(),
+      home: isUserLogged ? HomeView() : LoginView(),
     );
   }
 
 // Correct this properly
 
-// Move to another method
-  Widget _checkUserLogin() {
-    if (AuthController().checkUserLogin() == true) {
-      return HomeView();
-    } else {
-      return LoginView();
-    }
-  }
+// // Move to another method
+//   Widget _checkUserLogin() {
+//     if (AuthController().checkUserLogin() == true) {
+//       return HomeView();
+//     } else {
+//       return LoginView();
+//     }
+//   }
 }

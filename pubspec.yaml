@@ -77,6 +77,9 @@ flutter:
     - lib/assets/icon/google_icon.png
     - lib/assets/imgs/Upload_File_Icon.png
     - lib/assets/imgs/Profile_Icon.png
+    - lib/assets/imgs/Email_Icon.png
+    - lib/assets/imgs/Check_Icon.png
+    - lib/assets/imgs/Error_Icon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
