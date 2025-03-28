@@ -152,8 +152,6 @@ class _RegisterFormViewState extends State<RegisterFormView> {
     } catch (e) {
       log("Error during signup: $e");
       isSignupSuccessful = false; // Set the value to false if an error occurs
-
-      //ToastManager.error(context, "message");
     }
 
     return isSignupSuccessful; // Return the value after the try-catch block
@@ -259,6 +257,13 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                                       context, VerificationemailView());
                                 } else {
                                   log("Error during signup process");
+                                  if (context.mounted) {
+                                    ToastManager.error(
+                                            context,
+                                            FirebaseAuthExceptionHandler
+                                                .getErrorMessage())
+                                        .show();
+                                  }
                                 }
 
                                 //registrationUserFormData.clearFields();
