@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:developer';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:club_steam_app/controllers/auth_controller.dart';
 import 'package:club_steam_app/views/login_workflow/registration_email/verificationEmail_view.dart';
 import 'package:club_steam_app/widgets/Graphics/icons.dart';
 import 'package:club_steam_app/utils/validation.dart';

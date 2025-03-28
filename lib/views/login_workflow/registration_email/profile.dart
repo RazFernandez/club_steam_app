@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:club_steam_app/controllers/auth_controller.dart';
 import 'package:club_steam_app/views/login_workflow/login.dart';
+import 'package:club_steam_app/services/Auth/auth_service.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -12,7 +12,8 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   // Log out the user and redirect it into the login view
   void _logout() async {
-    await AuthController().logoutUser();
+    AuthService authService = AuthService();
+    await authService.signout();
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

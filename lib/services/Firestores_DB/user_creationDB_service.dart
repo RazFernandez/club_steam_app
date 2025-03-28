@@ -2,7 +2,6 @@ import 'package:club_steam_app/models/user_clubsteam_model.dart';
 import 'package:club_steam_app/models/registration_user_form_data.dart';
 import 'package:club_steam_app/services/Firestores_DB/userQueries.dart';
 import 'package:club_steam_app/exceptions/FormException.dart';
-import 'package:club_steam_app/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
 
 class UserCreationService {

@@ -136,7 +136,12 @@ class _RegisterFormViewState extends State<RegisterFormView> {
       if (userToSave != null) {
         userCreationService.addUserDataBase(userToSave, userID);
         log("Usuario guardado en la base de datos");
+      } else {
+        log("Error al guardar el usuario en la base de datos");
       }
+
+      // Logout the user to ensure it's not logged in
+      await authService.signout();
     }
   }
 
@@ -230,12 +235,13 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                                 userCreationService.setSelectedUserType(
                                     registrationUserFormData.userType);
                                 userCreationService.testUserData();
+                                log("User created in the database");
 
                                 // Process to create the user in the authentication service
                                 _signup();
                                 navigateAndClearStack(
                                     context, VerificationemailView());
-                                registrationUserFormData.clearFields();
+                                //registrationUserFormData.clearFields();
                               }
                             },
                             typeOfButton: ButtonType.filledButton),

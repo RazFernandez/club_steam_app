@@ -2,8 +2,6 @@ import 'package:club_steam_app/views/login_workflow/login.dart';
 import 'package:club_steam_app/views/home.dart';
 import 'package:club_steam_app/views/login_workflow/registration_email/registration_view.dart';
 import 'package:club_steam_app/views/login_workflow/registration_email/profileImage.dart';
-import 'package:club_steam_app/views/login_workflow/registration_email/register.dart';
-import 'package:club_steam_app/widgets/Forms/registerForm.dart';
 import 'package:club_steam_app/views/login_workflow/registration_email/verificationEmail_view.dart';
 import 'package:flutter/material.dart';
 import 'utils/util.dart';
@@ -12,7 +10,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'services/firebase_options.dart';
 import 'package:club_steam_app/services/Auth/auth_service.dart';
-import 'package:club_steam_app/controllers/auth_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
