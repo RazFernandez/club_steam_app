@@ -17,6 +17,7 @@ import 'package:club_steam_app/views/login_workflow/login.dart';
 import 'package:club_steam_app/utils/navigation_utils.dart';
 import 'package:club_steam_app/views/login_workflow/registration_email/verificationEmail_view.dart';
 import 'package:club_steam_app/exceptions/FirebaseAuthException.dart';
+import 'package:club_steam_app/widgets/Popups/toastMessagge.dart';
 
 class RegisterFormView extends StatefulWidget {
   const RegisterFormView({super.key});
@@ -151,6 +152,8 @@ class _RegisterFormViewState extends State<RegisterFormView> {
     } catch (e) {
       log("Error during signup: $e");
       isSignupSuccessful = false; // Set the value to false if an error occurs
+
+      //ToastManager.error(context, "message");
     }
 
     return isSignupSuccessful; // Return the value after the try-catch block
