@@ -16,6 +16,7 @@ import 'package:club_steam_app/widgets/Buttons/redirectTextButton.dart';
 import 'package:club_steam_app/views/login_workflow/login.dart';
 import 'package:club_steam_app/utils/navigation_utils.dart';
 import 'package:club_steam_app/views/login_workflow/registration_email/verificationEmail_view.dart';
+import 'package:club_steam_app/exceptions/FirebaseAuthException.dart';
 
 class RegisterFormView extends StatefulWidget {
   const RegisterFormView({super.key});
@@ -112,32 +113,47 @@ class _RegisterFormViewState extends State<RegisterFormView> {
   }
 
   // Method to create the user in the authentication service
-  _signup() async {
-    final user = await authService.createUserWithEmailAndPassword(
-        registrationUserFormData.email, registrationUserFormData.password);
+  Future<bool> _signup() async {
+    bool isSignupSuccessful = false;
 
-    if (user != null) {
-      log("Usuario creado con éxito");
+    try {
+      final user = await authService.createUserWithEmailAndPassword(
+          registrationUserFormData.email, registrationUserFormData.password);
 
-      // Send email verification
-      await authService.sendEmailVerification();
+      if (user != null) {
+        log("Usuario creado con éxito");
 
-      // Create the user in the database
-      userCreationService
-          .setSelectedUserType(registrationUserFormData.userType);
+        // Send email verification
+        await authService.sendEmailVerification();
 
-      // Save the user id to be the index of the user in the database
-      String userID = user.uid;
+        // Create the user in the database
+        userCreationService
+            .setSelectedUserType(registrationUserFormData.userType);
 
-      // Create the user object to be saved in the database
-      userCreationService
-          .setSelectedUserType(registrationUserFormData.userType);
-      UserClubSteam? userToSave = userCreationService.generateUserToRegister();
-      if (userToSave != null) {
-        userCreationService.addUserDataBase(userToSave, userID);
-        log("Usuario guardado en la base de datos");
+        // Save the user id to be the index of the user in the database
+        String userID = user.uid;
+
+        // Create the user object to be saved in the database
+        UserClubSteam? userToSave =
+            userCreationService.generateUserToRegister();
+        if (userToSave != null) {
+          userCreationService.addUserDataBase(userToSave, userID);
+          log("Usuario guardado en la base de datos");
+          isSignupSuccessful =
+              true; // Set the value to true if signup is successful
+        } else {
+          log("Error al guardar el usuario en la base de datos");
+        }
+
+        // Logout the user to ensure it's not logged in
+        await authService.signout();
       }
+    } catch (e) {
+      log("Error during signup: $e");
+      isSignupSuccessful = false; // Set the value to false if an error occurs
     }
+
+    return isSignupSuccessful; // Return the value after the try-catch block
   }
 
   @override
@@ -223,19 +239,26 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                         SizableButton(
                             text: "Crear Cuenta",
                             width: mediumButtonsSize,
-                            onPressed: () {
+                            onPressed: () async {
                               if (_validateCurrentForm()) {
                                 debugPrint(indexView.toString());
-                                // create the user in the database
+                                // Method to set the user type selected to create the object
+                                // to be saved in the database
                                 userCreationService.setSelectedUserType(
                                     registrationUserFormData.userType);
                                 userCreationService.testUserData();
+                                log("User created in the database");
 
                                 // Process to create the user in the authentication service
-                                _signup();
-                                navigateAndClearStack(
-                                    context, VerificationemailView());
-                                registrationUserFormData.clearFields();
+                                bool isSignupSuccessful = await _signup();
+                                if (isSignupSuccessful && context.mounted) {
+                                  navigateAndClearStack(
+                                      context, VerificationemailView());
+                                } else {
+                                  log("Error during signup process");
+                                }
+
+                                //registrationUserFormData.clearFields();
                               }
                             },
                             typeOfButton: ButtonType.filledButton),
