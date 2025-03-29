@@ -4,7 +4,7 @@ class FirebaseAuthExceptionHandler {
   static const String loginUserDisabledMessage =
       'El usuario ha sido deshabilitado.';
   static const String loginUserNotFoundMessage =
-      'No existe ningún usuario correspondiente al correo proporcionado.';
+      'No existe ningún usuario asociado al correo proporcionado.';
   static const String loginWrongPasswordMessage = 'La contraseña es inválida.';
   static const String loginTooManyRequestsMessage =
       'Demasiadas solicitudes al mismo tiempo. Por favor, intente más tarde.';
@@ -13,7 +13,7 @@ class FirebaseAuthExceptionHandler {
   static const String loginNetworkRequestFailedMessage =
       'Error de conexión a internet.';
   static const String loginInvalidLoginCredentialsMessage =
-      'La contraseña es inválida, o la cuenta no tiene una contraseña establecida.';
+      'La contraseña o correo es inválida';
   static const String loginOperationNotAllowedMessage =
       'Las cuentas de correo/contraseña no están habilitadas.';
   static const String loginUnknownErrorMessage =

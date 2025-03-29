@@ -20,13 +20,6 @@ class AuthService {
     return null;
   }
 
-  ///////
-///////
-  // add FirebaseAuthExceptionHandler to the login method
-///////
-//////////
-//////////
-  ///
   // Method to sign in with email and password
   Future<User?> loginUserWithEmailAndPassword(
       String email, String password) async {
@@ -34,8 +27,10 @@ class AuthService {
       final cred = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       return cred.user;
-    } catch (e) {
-      log("Something went wrong: ${e.toString()}");
+    } on FirebaseAuthException catch (e) {
+      // Save the error message to the FirebaseAuthExceptionHandler
+      FirebaseAuthExceptionHandler.setLoginErrorMessage(e.code);
+      log("Something went wrong ${e.code}");
     }
     return null;
   }
