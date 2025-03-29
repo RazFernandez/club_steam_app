@@ -12,6 +12,7 @@ import 'package:club_steam_app/widgets/TextFields/passwordFormField.dart';
 import 'package:club_steam_app/widgets/Buttons/sizableButtom.dart';
 import 'package:club_steam_app/widgets/TextFields/customFormField.dart';
 import 'package:club_steam_app/views/home.dart';
+import 'package:club_steam_app/widgets/Popups/toastMessagge.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -37,64 +38,66 @@ class _LoginFormState extends State<LoginForm> {
     return emailValidated;
   }
 
-  // Method to ensure
+  // Method to login the user
+  // This method will be called when the user submits the form
 
-  // Method to check if the form is valid.
-  void _submitForm(BuildContext context) async {
+  Future<bool> _loginUser() async {
     String? email = _emailController.text.trim();
     String? password = _passwordController.text.trim();
 
-    if (_formKey.currentState!.validate()) {
-      try {
-        // First try to login the user
-        User? user =
-            await authService.loginUserWithEmailAndPassword(email, password);
+    bool isLoginSuccessful = false;
 
-        // Check if the login was successful
-        if (user != null) {
-          bool emailValidated = await _validateEmail();
+    try {
+      // First try to login the user
+      User? user =
+          await authService.loginUserWithEmailAndPassword(email, password);
 
-          // if it's validated redirect them to home view
-          if (emailValidated && context.mounted) {
-            navigateAndClearStack(context, HomeView());
-            log("Account verified");
-          } else {
-            // otherwise, redirect them to verification email view
-            if (context.mounted) {
-              navigateTo(context, VerificationemailView(indexView: 2));
-              log("Account not verified");
-            }
-          }
-        }
-      } catch (e) {
-        log("The user doesn't exit: ${e.toString()}");
+      // Check if the login was successful
+      if (user != null) {
+        isLoginSuccessful = true;
+      } else {
+        isLoginSuccessful = false;
       }
-      // // Login the user
-      // try {
-      //   bool result = await AuthController()
-      //       .signInUsingEmail(email: email, password: password);
+    } catch (e) {
+      isLoginSuccessful = false;
+      log("Error in login process: ${e.toString()}");
+    }
 
-      //   // Sends the user to the homeview
-      //   if (result && context.mounted) {
-      //     Navigator.pushReplacement(
-      //         context, MaterialPageRoute(builder: (context) => HomeView()));
-      //   }
-      // } on FirebaseAuthException catch (e) {
-      //   // Handle Firebase authentication error
-      //   FirebaseAuthExceptionHandler.setLoginErrorMessage(e.code);
-      //   String errorMessage = FirebaseAuthExceptionHandler.getErrorMessage();
+    return isLoginSuccessful;
+  }
 
-      //   // Show the error message as a toast using fluttertoast
-      //   Fluttertoast.showToast(
-      //     msg: errorMessage,
-      //     toastLength: Toast.LENGTH_SHORT,
-      //     gravity: ToastGravity.BOTTOM,
-      //     timeInSecForIosWeb: 2, // Duration for iOS web
-      //     backgroundColor: Colors.black87,
-      //     textColor: Colors.white,
-      //     fontSize: 16.0,
-      //   );
-      // }
+  // Method to check if the email is valid
+  Future<bool> _isEmailValid() async {
+    bool isEmailValid = await authService.checkEmailVerification();
+    if (isEmailValid) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // Method to check if the form is valid.
+  void _submitForm(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      bool isLoginSuccessful = await _loginUser();
+      bool isEmailValid = await _isEmailValid();
+
+      // Check if the login was successful and the email is validated
+      if (isLoginSuccessful && isEmailValid && context.mounted) {
+        navigateAndClearStack(context, HomeView());
+        log("Account verified");
+      }
+      // Check if the login was successful but the email is not validated
+      else if (isLoginSuccessful && !isEmailValid && context.mounted) {
+        navigateTo(context, VerificationemailView(indexView: 2));
+        log("Account not verified");
+      }
+      // Check if the login was not successful
+      else if (!isLoginSuccessful && context.mounted) {
+        String errorMessage = FirebaseAuthExceptionHandler.getErrorMessage();
+        ToastManager.error(context, errorMessage).show();
+        log("Login failed");
+      }
     }
   }
 

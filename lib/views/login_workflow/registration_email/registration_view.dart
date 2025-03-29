@@ -17,6 +17,7 @@ import 'package:club_steam_app/views/login_workflow/login.dart';
 import 'package:club_steam_app/utils/navigation_utils.dart';
 import 'package:club_steam_app/views/login_workflow/registration_email/verificationEmail_view.dart';
 import 'package:club_steam_app/exceptions/FirebaseAuthException.dart';
+import 'package:club_steam_app/widgets/Popups/toastMessagge.dart';
 
 class RegisterFormView extends StatefulWidget {
   const RegisterFormView({super.key});
@@ -149,7 +150,6 @@ class _RegisterFormViewState extends State<RegisterFormView> {
         await authService.signout();
       }
     } catch (e) {
-      log("Error during signup: $e");
       isSignupSuccessful = false; // Set the value to false if an error occurs
     }
 
@@ -249,13 +249,22 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                                 userCreationService.testUserData();
                                 log("User created in the database");
 
-                                // Process to create the user in the authentication service
+                                // Ensure the account is created in Firebase
                                 bool isSignupSuccessful = await _signup();
                                 if (isSignupSuccessful && context.mounted) {
                                   navigateAndClearStack(
                                       context, VerificationemailView());
                                 } else {
                                   log("Error during signup process");
+                                  // Show error message using ToastManager
+                                  String errorMessage =
+                                      FirebaseAuthExceptionHandler
+                                          .getErrorMessage();
+
+                                  if (context.mounted) {
+                                    ToastManager.error(context, errorMessage)
+                                        .show();
+                                  }
                                 }
 
                                 //registrationUserFormData.clearFields();

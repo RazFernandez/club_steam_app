@@ -14,7 +14,15 @@ class ToastManager {
       : this._(
           message,
           Theme.of(context).colorScheme.error,
-          Colors.white,
+          Theme.of(context).colorScheme.onError,
+        );
+
+  /// Constructor for success messages
+  ToastManager.success(BuildContext context, String message)
+      : this._(
+          message,
+          Theme.of(context).colorScheme.primary,
+          Theme.of(context).colorScheme.onPrimary,
         );
 
   /// Constructor for informational messages
@@ -22,7 +30,7 @@ class ToastManager {
       : this._(
           message,
           Theme.of(context).colorScheme.secondary,
-          Colors.white,
+          Theme.of(context).colorScheme.onSecondary,
         );
 
   /// Show the toast message

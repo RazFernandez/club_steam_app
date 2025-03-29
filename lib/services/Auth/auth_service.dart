@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:club_steam_app/exceptions/FirebaseAuthException.dart';
 
 class AuthService {
   final _auth = FirebaseAuth.instance;
@@ -11,8 +12,10 @@ class AuthService {
       final cred = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       return cred.user;
-    } catch (e) {
-      log("Something went wrong ${e.toString()}");
+    } on FirebaseAuthException catch (e) {
+      // Save the error message to the FirebaseAuthExceptionHandler
+      FirebaseAuthExceptionHandler.setRegisterErrorMessage(e.code);
+      log("Something went wrong ${e.code}");
     }
     return null;
   }
@@ -24,8 +27,10 @@ class AuthService {
       final cred = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       return cred.user;
-    } catch (e) {
-      log("Something went wrong: ${e.toString()}");
+    } on FirebaseAuthException catch (e) {
+      // Save the error message to the FirebaseAuthExceptionHandler
+      FirebaseAuthExceptionHandler.setLoginErrorMessage(e.code);
+      log("Something went wrong ${e.code}");
     }
     return null;
   }
