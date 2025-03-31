@@ -7,7 +7,7 @@ Following this guide ensures clarity, consistency, and better collaboration.
 </br>
 
 ## 📃 Table of contents
-[xd](link-to-commit-specification)
+1. [📌 Link to Commit Specification](#-commit-structure)
 
 </br>
 
