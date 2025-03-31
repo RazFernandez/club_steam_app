@@ -7,8 +7,14 @@ Following this guide ensures clarity, consistency, and better collaboration.
 </br>
 
 ## 📃 Table of contents
-1. [📌 Link to Commit Specification](#-commit-structure)
-
+1. [📌 Link to Commit Specification](#-link-to-commit-specification)
+2. [✨ Commit Structure](#-commit-structure)
+   - [🔔 Commit Subject Prefix](#-commit-subject-prefix)
+   - [✅ Allowed Footers](#-allowed-footers)
+3. [📖 List of type of commits](#-list-of-type-of-commits)
+4. [📝 Examples](#-examples)
+   - [✏️ Types of commits](#%EF%B8%8F-types-of-commits)
+   - [📄 Full commit messagess](#-full-commit-messages)
 </br>
 
 ## 📌 Link to Commit Specification
@@ -76,59 +82,60 @@ To ensure clarity and consistency, these are allowed footers for commit messages
 | 🔧 | `chore` | Used for maintenance tasks that do not affect the source code, such as renaming files, minor repository cleanup, or updating package versions without functional changes. |
 | ⚙️ | `ci` | Used for changes related to CI/CD configuration, such as modifying GitHub Actions, Jenkins, or pipeline scripts. |
 | ⏪ | `revert` | Used when reverting a previous commit that introduced an issue or is no longer needed. |
+| 🚨 | `breaking` | Used when introducing a breaking change that requires modifications in dependent parts of the system. Requires a `BREAKING CHANGE:` note in the commit body. |
 
 </br>
 
 ## 📝 Examples
+
 ### ✏️ Types of commits
 1. **Feature addition**:
 ```md
-⭐ Added(LoginForm): Support for biometric authentication
+⭐ feat(LoginForm): Added support for biometric authentication
 ```
 2. **Bug fix:**
 ```md
-🐛 Fixed(API): Null pointer exception on user data fetch
+🐛 fix(API): Fixed null pointer exception on user data fetch
 ```
 3. **Documentation update:**
 ```md
-📚 Updated(README): Setup instructions
+📚 docs(README): Updated setup instructions
 ```
 4. **Refactoring:**
 ```md
-♻️ Refactored(InfoCard): Improve readability of widget tree
+♻️ refact(InfoCard): Refactored widget tree for better readability
 ```
 5. **Performance improvement:**
 ```md
-⚡ Optimized(Database): Query performance for faster load times
+⚡ perf(Database): Optimized query performance for faster load times
 ```
 6. **Testing update:**
 ```md
-🧪 Added(AuthService): Unit tests for login validation
+🧪 test(AuthService): Added unit tests for login validation
 ```
 7. **CI/CD change:**
 ```md
-🚀 Updated(GitHub Actions): Deployment script
+🚀 ci(GitHub Actions): Updated deployment script
 ```
-
 8. **Build system update:**
 ```md
-🛠️ Updated(Gradle): Upgrade dependencies to latest versions
+🛠️ build(Gradle): Updated dependencies to latest versions
 ```
 9. **Reverting a change**:
 ```md
-⏪ Reverted(LoginForm): Biometric authentication feature
+⏪ revert(LoginForm): Removed biometric authentication feature
 ```
 10. **Configuration file update**:
 ```md
-⚙️ Updated(gitignore): Add logs directory to ignored files
+⚙️ config(gitignore): Updated ignored files to include logs directory
 ```
 
 </br>
 
-### 📝 Full commit messages
+### 📄 Full commit messages
 
 ```md
-⭐ feat(Auth): Implement biometric authentication  
+⭐ feat(Auth): Added biometric authentication  
 
 Added support for fingerprint and face recognition in the login screen.  
 
@@ -136,7 +143,7 @@ Co-authored-by: John Doe <johndoe@example.com>
 ```
 
 ```md
-🐛 fix(Database): Resolve null pointer exception when fetching user data  
+🐛 fix(Database): Fixed null pointer exception when fetching user data  
 
 Fixed a crash occurring when the user data response was empty.  
 
@@ -144,7 +151,7 @@ Fixes: #123
 ```
 
 ```md
-📚 docs(README): Add installation guide for new contributors  
+📚 docs(README): Added installation guide for new contributors  
 
 Updated the README file with step-by-step setup instructions.  
 
@@ -152,7 +159,7 @@ Acked-by: Miguel Fernandez
 ```
 
 ```md
-🚀 ci(GitHub Actions): Fix deployment script for production  
+🚀 ci(GitHub Actions): Fixed deployment script for production  
 
 Updated the workflow file to correctly deploy to Firebase Hosting.  
 
@@ -160,15 +167,15 @@ Signed-off-by: Miguel Fernandez <miguel@example.com>
 ```
 
 ```md
-🚨 feat(API)!: Change authentication flow to token-based system  
+🚨 feat(API)!: Changed authentication flow to token-based system  
 
 Refactored authentication to use JWT instead of session cookies.  
 
-BREAKING CHANGE: All users must re-authenticate due to the new token system.
+BREAKING CHANGE: All users must re-authenticate due to the new token system.  
 ```
 
 ```md
-⏪ revert(Auth): Revert biometric authentication feature  
+⏪ revert(Auth): Removed biometric authentication feature  
 
 The feature was causing compatibility issues with certain devices.  
 
