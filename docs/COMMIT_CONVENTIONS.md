@@ -4,10 +4,19 @@ This guide defines a standard for writing commit messages in the **Club Steam** 
 
 Following this guide ensures clarity, consistency, and better collaboration.
 
+</br>
+
+## 📃 Table of contents
+[xd](link-to-commit-specification)
+
+</br>
+
 ## 📌 Link to Commit Specification
 
 - [Conventional Commits Specification](https://github.com/RazFernandez/club_steam_app)  
-- [Gitmoji](https://gitmoji.dev)  
+- [Gitmoji](https://gitmoji.dev)
+
+</br>
 
 ## ✨ Commit Structure
 
@@ -28,7 +37,9 @@ Each commit message should follow this format:
 - `[optional body]`: A more detailed description of the change to add context. **(why)**
 - `[optional footer(s)]`: Add metadata info about the commit such as BREAKING CHANGE or author.
 
-### Commit Subject Prefix
+</br>
+
+### 🔔 Commit Subject Prefix
 To ensure clarity and consistency, commit subjects should use these prefixes:
 - `Added`: New functionality or files.
 - `Updated`: Modifications that do not add or fix behavior (e.g., dependencies, documentation).
@@ -36,14 +47,18 @@ To ensure clarity and consistency, commit subjects should use these prefixes:
 - `Removed`: Deletions of files or code that are no longer necessary.
 - `Refactored`: Structural changes that do not alter existing functionality.
 
-### Allowed Footers
+</br>
+
+### ✅ Allowed Footers
 To ensure clarity and consistency, these are allowed footers for commit messages:
 - `Acked-by`: Indicates who reviewed and approved the change.
 - `Co-authored-by`: Specifies additional contributors to the commit.
 - `Signed-off-by`: Used to certify that the committer has the right to submit the change.  
 - `BREAKING CHANGE`: Highlights breaking changes that require attention.
 - `Fixes`: References an issue that the commit resolves.
-- `Closes`: Marks an issue as completed when the commit is merged.  
+- `Closes`: Marks an issue as completed when the commit is merged.
+
+</br>
   
 ## 📖 List of type of commits
 
@@ -62,8 +77,9 @@ To ensure clarity and consistency, these are allowed footers for commit messages
 | ⚙️ | `ci` | Used for changes related to CI/CD configuration, such as modifying GitHub Actions, Jenkins, or pipeline scripts. |
 | ⏪ | `revert` | Used when reverting a previous commit that introduced an issue or is no longer needed. |
 
-## 📝 Examples
+</br>
 
+## 📝 Examples
 ### ✏️ Types of commits
 1. **Feature addition**:
 ```md
@@ -106,6 +122,9 @@ To ensure clarity and consistency, these are allowed footers for commit messages
 ```md
 ⚙️ Updated(gitignore): Add logs directory to ignored files
 ```
+
+</br>
+
 ### 📝 Full commit messages
 
 ```md
