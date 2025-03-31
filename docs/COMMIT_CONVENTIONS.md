@@ -36,6 +36,15 @@ To ensure clarity and consistency, commit subjects should use these prefixes:
 - `Removed`: Deletions of files or code that are no longer necessary.
 - `Refactored`: Structural changes that do not alter existing functionality.
 
+### Allowed Footers
+To ensure clarity and consistency, these are allowed footers for commit messages:
+- `Acked-by`: Indicates who reviewed and approved the change.
+- `Co-authored-by`: Specifies additional contributors to the commit.
+- `Signed-off-by`: Used to certify that the committer has the right to submit the change.  
+- `BREAKING CHANGE`: Highlights breaking changes that require attention.
+- `Fixes`: References an issue that the commit resolves.
+- `Closes`: Marks an issue as completed when the commit is merged.  
+  
 ## 📖 List of type of commits
 
 | Emoji | type | Description|
@@ -55,7 +64,95 @@ To ensure clarity and consistency, commit subjects should use these prefixes:
 
 ## 📝 Examples
 
+### ✏️ Types of commits
+1. **Feature addition**:
+```md
+⭐ Added(LoginForm): Support for biometric authentication
+```
+2. **Bug fix:**
+```md
+🐛 Fixed(API): Null pointer exception on user data fetch
+```
+3. **Documentation update:**
+```md
+📚 Updated(README): Setup instructions
+```
+4. **Refactoring:**
+```md
+♻️ Refactored(InfoCard): Improve readability of widget tree
+```
+5. **Performance improvement:**
+```md
+⚡ Optimized(Database): Query performance for faster load times
+```
+6. **Testing update:**
+```md
+🧪 Added(AuthService): Unit tests for login validation
+```
+7. **CI/CD change:**
+```md
+🚀 Updated(GitHub Actions): Deployment script
+```
 
+8. **Build system update:**
+```md
+🛠️ Updated(Gradle): Upgrade dependencies to latest versions
+```
+9. **Reverting a change**:
+```md
+⏪ Reverted(LoginForm): Biometric authentication feature
+```
+10. **Configuration file update**:
+```md
+⚙️ Updated(gitignore): Add logs directory to ignored files
+```
+### 📝 Full commit messages
 
+```md
+⭐ feat(Auth): Implement biometric authentication  
 
+Added support for fingerprint and face recognition in the login screen.  
+
+Co-authored-by: John Doe <johndoe@example.com>  
+```
+
+```md
+🐛 fix(Database): Resolve null pointer exception when fetching user data  
+
+Fixed a crash occurring when the user data response was empty.  
+
+Fixes: #123  
+```
+
+```md
+📚 docs(README): Add installation guide for new contributors  
+
+Updated the README file with step-by-step setup instructions.  
+
+Acked-by: Miguel Fernandez  
+```
+
+```md
+🚀 ci(GitHub Actions): Fix deployment script for production  
+
+Updated the workflow file to correctly deploy to Firebase Hosting.  
+
+Signed-off-by: Miguel Fernandez <miguel@example.com>  
+```
+
+```md
+🚨 feat(API)!: Change authentication flow to token-based system  
+
+Refactored authentication to use JWT instead of session cookies.  
+
+BREAKING CHANGE: All users must re-authenticate due to the new token system.
+```
+
+```md
+⏪ revert(Auth): Revert biometric authentication feature  
+
+The feature was causing compatibility issues with certain devices.  
+
+Closes: #456  
+```
 
