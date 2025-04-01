@@ -2,20 +2,14 @@ name: Bug report 🐛
 description: Report a bug to help us improve
 labels: ['bug']
 assignees: 
-  - orhun
+projects: Club STEAM App
+title: "# [🐛 Bug] Report - "
 body:
   - type: markdown
     attributes:
       value: |
         Thanks for taking the time to fill out this bug report!
-  - type: checkboxes
-    id: new-bug
-    attributes:
-      label: Is there an existing issue for this?
-      description: Please search to see if an issue already exists for the bug you encountered.
-      options:
-        - label: I have searched the existing issues
-          required: true
+
   - type: textarea
     id: bug-description
     attributes:
