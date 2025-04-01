@@ -8,17 +8,34 @@ body:
     attributes:
       value: |
         Thanks for taking the time to fill out this bug report!
+        
   - type: textarea
-    id: observed-description
+    id: expected-behavior-description
     attributes:
-      label: "# Description of the bug 🐛"
-      description: Tell us what bug you encountered and what should have happened
+      label: "# Expected behavior ✅"
+      description: | 
+        What was the expected behavior?
+      placeholder: |
+        # Eoooooo!!!!
+        ### xddddd
+        - xd
+        [xd](https://google.com)
+      
+  - type: textarea
+    id: actual-behavior-description
+    attributes:
+      label: "# Actual behavior 🐞"
+      description: | 
+        What was the observed behavior?
+      value: |
+        # 
+        
     validations:
       required: true
   - type: textarea
     id: steps-to-reproduce
     attributes:
-      label: Steps To Reproduce
+      label: "# Steps To Reproduce 📝"
       description: Steps to reproduce the behavior.
       placeholder: |
         Please tell us how to reproduce this bug, for example:
