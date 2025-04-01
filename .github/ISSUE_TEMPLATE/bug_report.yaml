@@ -2,17 +2,16 @@ name: Bug report 🐛
 description: Report a bug to help us improve
 labels: ['bug']
 projects: Club STEAM App
-title: "# [🐛 Bug] Report - "
+title: "[🐛 Bug] Report - "
 body:
   - type: markdown
     attributes:
       value: |
         Thanks for taking the time to fill out this bug report!
-
   - type: textarea
-    id: bug-description
+    id: observed-description
     attributes:
-      label: Description of the bug
+      label: "# Description of the bug 🐛"
       description: Tell us what bug you encountered and what should have happened
     validations:
       required: true
