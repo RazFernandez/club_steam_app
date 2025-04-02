@@ -8,7 +8,6 @@ body:
     attributes:
       value: |
         Thanks for taking the time to fill out this bug report!
-        
   - type: textarea
     id: expected-behavior-description
     attributes:
@@ -16,11 +15,11 @@ body:
       description: | 
         What was the expected behavior?
       placeholder: |
-        # Eoooooo!!!!
-        ### xddddd
-        - xd
-        [xd](https://google.com)
-      
+        ## Please, provide a concise description, for example:
+
+        The login UI was expected to give me access to home view.
+    validations:
+      required: true
   - type: textarea
     id: actual-behavior-description
     attributes:
@@ -28,8 +27,9 @@ body:
       description: | 
         What was the observed behavior?
       value: |
-        # 
-        
+        ## Please, provide a concise description, for example:
+
+        When login button was pressed, it redirected me to email validation view.
     validations:
       required: true
   - type: textarea
@@ -46,17 +46,9 @@ body:
     validations:
       required: true
   - type: textarea
-    id: expected-behavior
-    attributes:
-      label: Expected behavior
-      description: What should be the expected behavior.
-      placeholder: A clear and concise description of what you expected to happen.
-    validations:
-      required: true
-  - type: textarea
     id: screenshots
     attributes:
-      label: Screenshots / Logs
+      label: "# Screenshots / Logs 🖼️"
       description: If applicable, add screenshots to help explain your problem.
       placeholder: Paste your screenshots here.
   - type: textarea
@@ -64,15 +56,17 @@ body:
     attributes:
       label: Software information
       description: Please provide the following information about your environment.
-      value: |
+      placeholder:: |
         - Operating system:
-        - Rust version:
-        - Project version:
+        - Flutter version (`flutter doctor -v`):
+        - Device version (`flutter devices`):
+        - Dependencies (`flutter pub deps`):
+        - Build method (`flutter run --verbose` or `flutter build <target>`):
     validations:
       required: true
   - type: textarea
     id: additional-context
     attributes:
-      label: Additional context
+      label: "# Additional context ℹ️"
       description: Do you want to share any additional context about this bug?
       placeholder: Add any other context about the problem here.
