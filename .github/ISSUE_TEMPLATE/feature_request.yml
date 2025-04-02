@@ -19,8 +19,6 @@ body:
         - Add a library
         - Refactor a method
         - DevOps stuff
-      validations:
-        required: true
   - type: textarea
     id: feature-description
     attributes:
