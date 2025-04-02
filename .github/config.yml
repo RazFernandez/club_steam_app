@@ -1,0 +1,21 @@
+# Configuration file for pull request and issue templates
+
+# Set default assignees for issues and PRs
+assignees:
+  - RazFernandez
+  
+#  Deny users to create blank issues
+issue:
+  - blank_issues_enabled: false
+
+# Deny users to create blank pull requests
+pull_request:
+  - blank_issues_enabled: false
+
+# Define custom issue templates directory
+issue_templates:
+  - directory: .github/ISSUE_TEMPLATES
+
+# Define custom PR templates directory
+pr_templates:
+  - directory: .github/PULL_REQUEST_TEMPLATES
