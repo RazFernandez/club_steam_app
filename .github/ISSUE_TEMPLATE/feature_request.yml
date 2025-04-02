@@ -6,19 +6,21 @@ title: "[⭐ feat] Request - "
 body:
   - type: markdown
     attributes:
-      value: Thank you for suggesting this feature! The more information you provide, the more likely it is that it will be picked up.
+      value: |
+        Thank you for suggesting this feature!  
+        The more information you provide, the more likely it is that it will be picked up.
   - type: dropdown
     id: type-of-feature
     attributes:
-      label: "What kind of feature you want to suggest?"
+      label: "What kind of feature do you want to suggest?"
       options:
         - New Widget
         - Improve UI 
         - Add a library
         - Refactor a method
         - DevOps stuff
-  validations:
-    required: true
+      validations:
+        required: true
   - type: textarea
     id: feature-description
     attributes:
@@ -27,15 +29,14 @@ body:
       placeholder: | 
         A description may be:
 
-        I suggest to add a password recovery workflow when users forget their password account.
+        I suggest adding a password recovery workflow when users forget their account password.
     validations:
       required: true
   - type: textarea
     id: desired-solution
     attributes:
       label: Desired solution
-      description: "Describe the solution you'd like"
+      description: "Describe the solution you'd like."
       placeholder: "A clear and concise description of what you want to happen."
     validations:
       required: true
- 
