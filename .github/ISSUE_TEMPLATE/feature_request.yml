@@ -25,7 +25,7 @@ body:
     id: feature-description
     attributes:
       label: Feature description
-      description: Please, be concise when describing your new feature:
+      description: "Please, be concise when describing your new feature:"
       placeholder: | 
         A description may be:
 
