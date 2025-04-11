@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:club_steam_app/utils/navigation_utils.dart';
+import 'package:go_router/go_router.dart';
+
+enum NavigationType { stack, clearStack }
 
 class RedirectTextButton extends StatelessWidget {
   final String labelText; // The text before the button
-  final BuildContext context; // The current context
-  final Widget targetView; // The view to navigate to
+  final String targetRoute; // The view to navigate to
   final String buttonText; // The text on the button
-  final int navigationMode; // 0 for stacking views, 1 for clearing the stack
+  final NavigationType navigationMode; // Enum for navigation mode
 
   const RedirectTextButton({
     super.key,
     required this.labelText,
-    required this.context,
-    required this.targetView,
+    required this.targetRoute,
     required this.buttonText,
-    this.navigationMode = 0, // Default is stacking views
+    this.navigationMode = NavigationType.stack, // Default is stacking views
   });
 
   @override
@@ -26,12 +26,13 @@ class RedirectTextButton extends StatelessWidget {
         TextButton(
           onPressed: () {
             // Check the navigationMode to decide the navigation method
-            if (navigationMode == 1) {
+            if (navigationMode == NavigationType.clearStack) {
               // Clear stack and navigate to the target view
-              navigateAndClearStack(context, targetView);
+              //navigateAndClearStack(context, targetView);
+              context.go(targetRoute);
             } else {
               // Stack the views with regular push
-              navigateTo(context, targetView);
+              context.push(targetRoute);
             }
           },
           child: Text(

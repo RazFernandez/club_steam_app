@@ -9,15 +9,15 @@ import 'package:club_steam_app/views/login_workflow/login.dart';
 import 'package:club_steam_app/widgets/Graphics/InfoCard.dart';
 import 'package:club_steam_app/utils/navigation_utils.dart';
 
-class VerificationemailView extends StatefulWidget {
+class VerificationEmailView extends StatefulWidget {
   final int? indexView;
-  const VerificationemailView({super.key, this.indexView});
+  const VerificationEmailView({super.key, this.indexView});
 
   @override
-  State<VerificationemailView> createState() => _VerificationemailViewState();
+  State<VerificationEmailView> createState() => _VerificationEmailViewState();
 }
 
-class _VerificationemailViewState extends State<VerificationemailView> {
+class _VerificationEmailViewState extends State<VerificationEmailView> {
   // Add a coldown to resend varification emails
   // add a paremeter to set the initial indexView
 

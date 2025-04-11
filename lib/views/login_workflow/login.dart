@@ -1,4 +1,3 @@
-import 'package:club_steam_app/views/login_workflow/registration_email/registration_view.dart';
 import 'package:flutter/material.dart';
 import 'package:club_steam_app/widgets/Forms/loginForms.dart';
 import 'package:club_steam_app/widgets/Buttons/redirectTextButton.dart';
@@ -57,8 +56,7 @@ class _LoginViewState extends State<LoginView> {
                 children: [
                   RedirectTextButton(
                       labelText: "¿No tienes una cuenta?",
-                      context: context,
-                      targetView: RegisterFormView(),
+                      targetRoute: "/register",
                       buttonText: "Registrate")
                 ],
               ),

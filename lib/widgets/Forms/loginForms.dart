@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'dart:developer';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:club_steam_app/views/login_workflow/registration_email/verificationEmail_view.dart';
 import 'package:club_steam_app/widgets/Graphics/icons.dart';
 import 'package:club_steam_app/utils/validation.dart';
-import 'package:club_steam_app/utils/navigation_utils.dart';
 import 'package:club_steam_app/services/Auth/auth_service.dart';
 import 'package:club_steam_app/exceptions/FirebaseAuthException.dart';
 import 'package:club_steam_app/widgets/TextFields/passwordFormField.dart';
 import 'package:club_steam_app/widgets/Buttons/sizableButtom.dart';
 import 'package:club_steam_app/widgets/TextFields/customFormField.dart';
-import 'package:club_steam_app/views/home.dart';
+
 import 'package:club_steam_app/widgets/Popups/toastMessagge.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -84,12 +82,14 @@ class _LoginFormState extends State<LoginForm> {
 
       // Check if the login was successful and the email is validated
       if (isLoginSuccessful && isEmailValid && context.mounted) {
-        navigateAndClearStack(context, HomeView());
+        //navigateAndClearStack(context, HomeView());
+        context.go("/home");
         log("Account verified");
       }
       // Check if the login was successful but the email is not validated
       else if (isLoginSuccessful && !isEmailValid && context.mounted) {
-        navigateTo(context, VerificationemailView(indexView: 2));
+        //navigateTo(context, VerificationEmailView(indexView: 2));
+        context.push("/verify-email");
         log("Account not verified");
       }
       // Check if the login was not successful

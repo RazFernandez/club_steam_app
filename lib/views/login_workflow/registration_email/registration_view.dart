@@ -13,11 +13,9 @@ import 'package:club_steam_app/widgets/Forms/registerForms/userTypeForm.dart';
 import 'package:club_steam_app/models/registration_user_form_data.dart';
 import 'package:club_steam_app/services/Firestores_DB/user_creationDB_service.dart';
 import 'package:club_steam_app/widgets/Buttons/redirectTextButton.dart';
-import 'package:club_steam_app/views/login_workflow/login.dart';
-import 'package:club_steam_app/utils/navigation_utils.dart';
-import 'package:club_steam_app/views/login_workflow/registration_email/verificationEmail_view.dart';
 import 'package:club_steam_app/exceptions/FirebaseAuthException.dart';
 import 'package:club_steam_app/widgets/Popups/toastMessagge.dart';
+import 'package:go_router/go_router.dart';
 
 class RegisterFormView extends StatefulWidget {
   const RegisterFormView({super.key});
@@ -252,8 +250,7 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                                 // Ensure the account is created in Firebase
                                 bool isSignupSuccessful = await _signup();
                                 if (isSignupSuccessful && context.mounted) {
-                                  navigateAndClearStack(
-                                      context, VerificationemailView());
+                                  context.go("/verify-email");
                                 } else {
                                   log("Error during signup process");
                                   // Show error message using ToastManager
@@ -281,10 +278,9 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     RedirectTextButton(
-                      navigationMode: 1,
+                      navigationMode: NavigationType.clearStack,
                       labelText: "¿Ya tienes una cuenta?",
-                      context: context,
-                      targetView: LoginView(),
+                      targetRoute: "/login",
                       buttonText: "Iniciar Sesión",
                     ),
                   ],

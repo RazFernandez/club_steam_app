@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:club_steam_app/views/login_workflow/login.dart';
 import 'package:club_steam_app/widgets/Graphics/EditableAvatarImageProfile.dart';
 import 'package:club_steam_app/widgets/Buttons/redirectTextButton.dart';
-import 'package:club_steam_app/widgets/Graphics/linearProgressBar.dart';
 
 class ProfileImageView extends StatefulWidget {
   const ProfileImageView({super.key});
@@ -42,10 +40,9 @@ class _ProfileImageViewState extends State<ProfileImageView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       RedirectTextButton(
-                        navigationMode: 1,
+                        navigationMode: NavigationType.clearStack,
                         labelText: "¿Ya tienes una cuenta?",
-                        context: context,
-                        targetView: LoginView(),
+                        targetRoute: "/login",
                         buttonText: "Iniciar Sesión",
                       ),
                     ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:club_steam_app/views/login_workflow/login.dart';
 import 'package:club_steam_app/services/Auth/auth_service.dart';
 import 'package:club_steam_app/widgets/Popups/toastMessagge.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -16,18 +16,9 @@ class _ProfileViewState extends State<ProfileView> {
     AuthService authService = AuthService();
     await authService.signout();
     if (mounted) {
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text("Has cerrado sesión exitosamente"),
-      //   ),
-      // );
+      // Show a toast message to inform the user that they have logged out successfully
       ToastManager.info(context, "Has cerrado sesión exitosamente").show();
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => LoginView(),
-        ),
-      );
+      context.go("/login");
     }
   }
 
