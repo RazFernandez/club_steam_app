@@ -9,7 +9,7 @@ import 'package:club_steam_app/routes/app_router.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    name: 'club-steam',
+    name: 'club-steam-abd01',
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
