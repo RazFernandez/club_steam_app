@@ -1,3 +1,4 @@
+import 'package:club_steam_app/routes/auth_routes.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer';
 import 'package:club_steam_app/widgets/Buttons/sizableButtom.dart';
@@ -8,6 +9,7 @@ import 'package:club_steam_app/widgets/PlainText/titleText.dart';
 import 'package:club_steam_app/views/login_workflow/login.dart';
 import 'package:club_steam_app/widgets/Graphics/InfoCard.dart';
 import 'package:club_steam_app/utils/navigation_utils.dart';
+import 'package:go_router/go_router.dart';
 
 class VerificationEmailView extends StatefulWidget {
   final int? indexView;
@@ -127,7 +129,8 @@ class _VerificationEmailViewState extends State<VerificationEmailView> {
                     SizableButton(
                         onPressed: () {
                           //_nextIndexView();
-                          navigateAndClearStack(context, LoginView());
+                          //navigateAndClearStack(context, LoginView());
+                          context.go("/login");
                           log('You did it!!!');
                         },
                         text: "Iniciar Sesión",

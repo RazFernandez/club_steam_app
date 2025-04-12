@@ -41,48 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAgsug3pWPdGJ1h_fdkGjfYyxfvSk7Si74',
-    appId: '1:941224322500:web:1112d4cc43df2abeadf091',
-    messagingSenderId: '941224322500',
-    projectId: 'club-steam',
-    authDomain: 'club-steam.firebaseapp.com',
-    storageBucket: 'club-steam.firebasestorage.app',
-    measurementId: 'G-RDLLH3SPCB',
+    apiKey: 'AIzaSyAmZqT-gkot6i3D0jOnZRE-H-5p3JekhNg',
+    appId: '1:24996529957:web:d83f7ab149d75276e57ccc',
+    messagingSenderId: '24996529957',
+    projectId: 'club-steam-abd01',
+    authDomain: 'club-steam-abd01.firebaseapp.com',
+    storageBucket: 'club-steam-abd01.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyB2Dhc4nqHloJNIIk9PvHHv7g_DryzMiRk',
-    appId: '1:941224322500:android:7572fe6bae0f0b31adf091',
-    messagingSenderId: '941224322500',
-    projectId: 'club-steam',
-    storageBucket: 'club-steam.firebasestorage.app',
+    apiKey: 'AIzaSyDFLkdm14ZEfH__-o1Pp5xumg-eQ8aKnLk',
+    appId: '1:24996529957:android:ec4f019b328dccc9e57ccc',
+    messagingSenderId: '24996529957',
+    projectId: 'club-steam-abd01',
+    storageBucket: 'club-steam-abd01.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyALd_ZqbYODb0NTjWH7yMUEzQxPvr4QeSY',
-    appId: '1:941224322500:ios:b891a05fb1fd899cadf091',
-    messagingSenderId: '941224322500',
-    projectId: 'club-steam',
-    storageBucket: 'club-steam.firebasestorage.app',
+    apiKey: 'AIzaSyB6tz59LoQVNqarXI-hHCai3ysnCBLr0NM',
+    appId: '1:24996529957:ios:1c29210039010815e57ccc',
+    messagingSenderId: '24996529957',
+    projectId: 'club-steam-abd01',
+    storageBucket: 'club-steam-abd01.firebasestorage.app',
     iosBundleId: 'com.example.clubSteamApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyALd_ZqbYODb0NTjWH7yMUEzQxPvr4QeSY',
-    appId: '1:941224322500:ios:b891a05fb1fd899cadf091',
-    messagingSenderId: '941224322500',
-    projectId: 'club-steam',
-    storageBucket: 'club-steam.firebasestorage.app',
+    apiKey: 'AIzaSyB6tz59LoQVNqarXI-hHCai3ysnCBLr0NM',
+    appId: '1:24996529957:ios:1c29210039010815e57ccc',
+    messagingSenderId: '24996529957',
+    projectId: 'club-steam-abd01',
+    storageBucket: 'club-steam-abd01.firebasestorage.app',
     iosBundleId: 'com.example.clubSteamApp',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAgsug3pWPdGJ1h_fdkGjfYyxfvSk7Si74',
-    appId: '1:941224322500:web:8c67bc2549788a1badf091',
-    messagingSenderId: '941224322500',
-    projectId: 'club-steam',
-    authDomain: 'club-steam.firebaseapp.com',
-    storageBucket: 'club-steam.firebasestorage.app',
-    measurementId: 'G-HYXDDKVGZ8',
+    apiKey: 'AIzaSyAmZqT-gkot6i3D0jOnZRE-H-5p3JekhNg',
+    appId: '1:24996529957:web:15c88de738a0ed5be57ccc',
+    messagingSenderId: '24996529957',
+    projectId: 'club-steam-abd01',
+    authDomain: 'club-steam-abd01.firebaseapp.com',
+    storageBucket: 'club-steam-abd01.firebasestorage.app',
   );
+
 }

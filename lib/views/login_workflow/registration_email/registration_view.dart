@@ -125,7 +125,7 @@ class _RegisterFormViewState extends State<RegisterFormView> {
         // Send email verification
         await authService.sendEmailVerification();
 
-        // Create the user in the database
+        // Create the user object
         userCreationService
             .setSelectedUserType(registrationUserFormData.userType);
 
@@ -136,7 +136,7 @@ class _RegisterFormViewState extends State<RegisterFormView> {
         UserClubSteam? userToSave =
             userCreationService.generateUserToRegister();
         if (userToSave != null) {
-          userCreationService.addUserDataBase(userToSave, userID);
+          //userCreationService.addUserDataBase(userToSave, userID);
           log("Usuario guardado en la base de datos");
           isSignupSuccessful =
               true; // Set the value to true if signup is successful

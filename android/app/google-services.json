@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "941224322500",
-    "project_id": "club-steam",
-    "storage_bucket": "club-steam.firebasestorage.app"
+    "project_number": "24996529957",
+    "project_id": "club-steam-abd01",
+    "storage_bucket": "club-steam-abd01.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:941224322500:android:7572fe6bae0f0b31adf091",
+        "mobilesdk_app_id": "1:24996529957:android:ec4f019b328dccc9e57ccc",
         "android_client_info": {
           "package_name": "com.example.club_steam_app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB2Dhc4nqHloJNIIk9PvHHv7g_DryzMiRk"
+          "current_key": "AIzaSyDFLkdm14ZEfH__-o1Pp5xumg-eQ8aKnLk"
         }
       ],
       "services": {
