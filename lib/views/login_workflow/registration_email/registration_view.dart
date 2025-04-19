@@ -17,6 +17,7 @@ import 'package:club_steam_app/exceptions/FirebaseAuthException.dart';
 import 'package:club_steam_app/widgets/Popups/toastMessagge.dart';
 import 'package:go_router/go_router.dart';
 import 'package:club_steam_app/controllers/auth_controller.dart';
+import 'package:club_steam_app/services/firebase_functions/createUserService.dart';
 
 class RegisterFormView extends StatefulWidget {
   const RegisterFormView({super.key});
@@ -123,7 +124,8 @@ class _RegisterFormViewState extends State<RegisterFormView> {
 
       final user = await authService.createUserWithEmailAndPassword(
           registrationUserFormData.email, registrationUserFormData.password);
-
+      CloudFunctionsCreateUserFirestore.sendUserData(
+          registrationUserFormData.email, registrationUserFormData.password);
       // if (user != null) {
       //   log("Usuario creado con éxito");
 
@@ -195,16 +197,6 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                   ),
                 ),
                 SizedBox(height: 24),
-                // SizableButton(
-                //     onPressed: () async {
-                //       final controller = AuthController();
-                //       await controller.registerUser(
-                //           "miguelraz2002@gmail.com", "R4z13L_2002");
-                //     },
-                //     text: "Test",
-                //     width: mediumButtonsSize,
-                //     typeOfButton: ButtonType.filledButton),
-
                 Builder(builder: (context) {
                   // Buttons to navigate between the views
                   return Row(
