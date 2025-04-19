@@ -195,6 +195,16 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                   ),
                 ),
                 SizedBox(height: 24),
+                // SizableButton(
+                //     onPressed: () async {
+                //       final controller = AuthController();
+                //       await controller.registerUser(
+                //           "miguelraz2002@gmail.com", "R4z13L_2002");
+                //     },
+                //     text: "Test",
+                //     width: mediumButtonsSize,
+                //     typeOfButton: ButtonType.filledButton),
+
                 Builder(builder: (context) {
                   // Buttons to navigate between the views
                   return Row(

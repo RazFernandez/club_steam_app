@@ -1,28 +1,22 @@
 import 'dart:developer';
-import 'package:cloud_functions/cloud_functions.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class AuthFunctionsService {
-  final HttpsCallable _createUserCallable =
-      FirebaseFunctions.instance.httpsCallable("createUserDB");
+class CloudFunctionsCreateUserDB {
+  static Future<void> addUser() async {
+    // Database URL API to add users
+    final url = 'http://10.0.2.2:5001/club-steam-abd01/us-central1/addUser';
 
-  Future<Map<String, dynamic>> createUserWithFunction({
-    required String email,
-    required String password,
-  }) async {
     try {
-      final result = await _createUserCallable.call({
-        'email': email,
-        'password': password,
-      });
+      final response = await http.get(Uri.parse(url));
 
-      final data = Map<String, dynamic>.from(result.data);
-      return data;
-    } on FirebaseFunctionsException catch (e) {
-      // You could handle specific Firebase errors here
-      throw Exception("Function error: ${e.message}");
+      if (response.statusCode == 200) {
+        log('User created sucessfully');
+      } else {
+        log('Error: ${response.body}');
+      }
     } catch (e) {
-      throw Exception("Unexpected error: $e");
+      log("Excepción: $e");
     }
   }
 }

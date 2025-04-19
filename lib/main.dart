@@ -5,7 +5,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'services/firebase_options.dart';
 import 'package:club_steam_app/routes/app_router.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
@@ -21,10 +20,6 @@ void main() async {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Connect to the emulators
-  //FirebaseFunctions.instance.useFunctionsEmulator('localhost', 5001);
-  //FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
 
   runApp(const MyApp());
 }

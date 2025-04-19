@@ -46,6 +46,7 @@ dependencies:
   fluttertoast: ^8.2.8
   path_provider: ^2.1.5
   cloud_functions: ^5.4.0
+  http: ^1.2.2
 
 dev_dependencies:
   flutter_test:
