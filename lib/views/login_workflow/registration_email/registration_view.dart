@@ -16,6 +16,8 @@ import 'package:club_steam_app/widgets/Buttons/redirectTextButton.dart';
 import 'package:club_steam_app/exceptions/FirebaseAuthException.dart';
 import 'package:club_steam_app/widgets/Popups/toastMessagge.dart';
 import 'package:go_router/go_router.dart';
+import 'package:club_steam_app/controllers/auth_controller.dart';
+import 'package:club_steam_app/services/firebase_functions/createUserService.dart';
 
 class RegisterFormView extends StatefulWidget {
   const RegisterFormView({super.key});
@@ -116,37 +118,41 @@ class _RegisterFormViewState extends State<RegisterFormView> {
     bool isSignupSuccessful = false;
 
     try {
+      // final controller = AuthController();
+      // await controller.registerUser(
+      //     registrationUserFormData.email, registrationUserFormData.password);
+
       final user = await authService.createUserWithEmailAndPassword(
           registrationUserFormData.email, registrationUserFormData.password);
+      CloudFunctionsCreateUserFirestore.sendUserData(
+          registrationUserFormData.email, registrationUserFormData.password);
+      // if (user != null) {
+      //   log("Usuario creado con éxito");
 
-      if (user != null) {
-        log("Usuario creado con éxito");
+      //   // Send email verification
+      //   await authService.sendEmailVerification();
 
-        // Send email verification
-        await authService.sendEmailVerification();
+      //   // Create the user object
+      //   userCreationService
+      //       .setSelectedUserType(registrationUserFormData.userType);
 
-        // Create the user object
-        userCreationService
-            .setSelectedUserType(registrationUserFormData.userType);
+      //   // Save the user id to be the index of the user in the database
+      //   String userID = user.uid;
 
-        // Save the user id to be the index of the user in the database
-        String userID = user.uid;
-
-        // Create the user object to be saved in the database
-        UserClubSteam? userToSave =
-            userCreationService.generateUserToRegister();
-        if (userToSave != null) {
-          //userCreationService.addUserDataBase(userToSave, userID);
-          log("Usuario guardado en la base de datos");
-          isSignupSuccessful =
-              true; // Set the value to true if signup is successful
-        } else {
-          log("Error al guardar el usuario en la base de datos");
-        }
-
-        // Logout the user to ensure it's not logged in
-        await authService.signout();
-      }
+      //   // Create the user object to be saved in the database
+      //   UserClubSteam? userToSave =
+      //       userCreationService.generateUserToRegister();
+      //   if (userToSave != null) {
+      //     //userCreationService.addUserDataBase(userToSave, userID);
+      //     log("Usuario guardado en la base de datos");
+      //     isSignupSuccessful =
+      //         true; // Set the value to true if signup is successful
+      //   } else {
+      //     log("Error al guardar el usuario en la base de datos");
+      //   }
+      // }
+      // // Logout the user to ensure it's not logged in
+      await authService.signout();
     } catch (e) {
       isSignupSuccessful = false; // Set the value to false if an error occurs
     }
