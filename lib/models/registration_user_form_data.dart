@@ -60,6 +60,21 @@ class RegistrationUserFormData {
   String get unit => _unitController.text;
   String get controlNumber => _controlNumberController.text;
 
+  // returns true if any of the text fields
+  // contain data, and false if they are all empty.
+  bool hasAnyDataFilled() {
+    return name.isNotEmpty ||
+        lastFatherName.isNotEmpty ||
+        lastMotherName.isNotEmpty ||
+        email.isNotEmpty ||
+        cellPhoneNumber.isNotEmpty ||
+        password.isNotEmpty ||
+        confirmPassword.isNotEmpty ||
+        userType.isNotEmpty ||
+        unit.isNotEmpty ||
+        controlNumber.isNotEmpty;
+  }
+
   // Clear data saved in textfields variables in memory
   void clearFields() {
     _nameController.clear();
