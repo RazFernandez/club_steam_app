@@ -128,10 +128,13 @@ class _VerificationEmailViewState extends State<VerificationEmailView> {
                         typeOfButton: ButtonType.filledButton)
                   else if (indexView == 1)
                     SizableButton(
-                        onPressed: () {
+                        onPressed: () async {
                           //_nextIndexView();
                           //navigateAndClearStack(context, LoginView());
-                          context.go("/login");
+                          await authService.signout();
+                          if (context.mounted) {
+                            context.go("/login");
+                          }
                           log('You did it!!!');
                         },
                         text: "Iniciar Sesión",

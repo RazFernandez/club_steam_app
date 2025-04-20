@@ -136,7 +136,7 @@ class _RegisterFormViewState extends State<RegisterFormView> {
         userCreationdbService.sendUserData(
             userCreationdbService.generateUserToRegister()!, user.uid);
 
-        await authService.signout();
+        //await authService.signout();
 
         return isSignupSuccessful = true;
       }
