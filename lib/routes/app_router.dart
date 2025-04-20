@@ -4,24 +4,34 @@ import 'package:club_steam_app/services/Auth/auth_service.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/login',
-  redirect: (context, state) {
-    final isUserLogged = AuthService().checkUserLoggedIn();
+  redirect: (context, state) async {
+    final authService = AuthService();
     final path = state.matchedLocation;
 
-    // Add recover-password if needed
     final publicRoutes = [
       '/login',
       '/register',
       '/verify-email',
     ];
 
+    final isUserLogged = authService.checkUserLoggedIn();
+    final isEmailVerified = await authService.checkEmailVerification();
     final isPublicRoute = publicRoutes.contains(path);
 
-    // If not logged in and trying to access private route → send to login
-    if (!isUserLogged && !isPublicRoute) return '/login';
+    // Not logged in → allow only public routes
+    if (!isUserLogged && !isPublicRoute) {
+      return '/login';
+    }
 
-    // If logged in and trying to access a public route (like login or register) → send to home
-    if (isUserLogged && isPublicRoute) return '/home';
+    // Logged in but not verified → always go to verify-email
+    if (isUserLogged && !isEmailVerified && path != '/verify-email') {
+      return '/verify-email';
+    }
+
+    // Logged in and trying to access public route → send to home
+    if (isUserLogged && isEmailVerified && isPublicRoute) {
+      return '/home';
+    }
 
     // All good, allow navigation
     return null;
