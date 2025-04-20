@@ -1,5 +1,6 @@
 import 'package:club_steam_app/models/user_clubsteam_model.dart';
 import 'package:club_steam_app/services/Auth/auth_service.dart';
+import 'package:club_steam_app/services/firebase_functions/create_user_service.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer';
 import 'package:provider/provider.dart';
@@ -16,7 +17,6 @@ import 'package:club_steam_app/widgets/Buttons/redirectTextButton.dart';
 import 'package:club_steam_app/exceptions/FirebaseAuthException.dart';
 import 'package:club_steam_app/widgets/Popups/toastMessagge.dart';
 import 'package:go_router/go_router.dart';
-import 'package:club_steam_app/controllers/auth_controller.dart';
 import 'package:club_steam_app/services/firebase_functions/createUserService.dart';
 
 class RegisterFormView extends StatefulWidget {
@@ -32,7 +32,7 @@ class _RegisterFormViewState extends State<RegisterFormView> {
       RegistrationUserFormData();
 
   // Instance of the user creation service
-  UserCreationService userCreationService = UserCreationService();
+  UserCreationdbService userCreationService = UserCreationdbService();
 
   // Instance of the authentication service
   AuthService authService = AuthService();
@@ -118,46 +118,33 @@ class _RegisterFormViewState extends State<RegisterFormView> {
     bool isSignupSuccessful = false;
 
     try {
-      // final controller = AuthController();
-      // await controller.registerUser(
-      //     registrationUserFormData.email, registrationUserFormData.password);
-
       final user = await authService.createUserWithEmailAndPassword(
           registrationUserFormData.email, registrationUserFormData.password);
-      CloudFunctionsCreateUserFirestore.sendUserData(
-          registrationUserFormData.email, registrationUserFormData.password);
-      // if (user != null) {
-      //   log("Usuario creado con éxito");
 
-      //   // Send email verification
-      //   await authService.sendEmailVerification();
+      // If user is created in firebase auth
+      if (user != null) {
+        log("Usuario creado con éxito en Firebase Auth");
+        await authService.sendEmailVerification();
 
-      //   // Create the user object
-      //   userCreationService
-      //       .setSelectedUserType(registrationUserFormData.userType);
+        UserCreationdbService userCreationdbService = UserCreationdbService();
 
-      //   // Save the user id to be the index of the user in the database
-      //   String userID = user.uid;
+        // Retrieves and set the value of the registration controller
+        userCreationdbService
+            .setSelectedUserType(registrationUserFormData.userType);
 
-      //   // Create the user object to be saved in the database
-      //   UserClubSteam? userToSave =
-      //       userCreationService.generateUserToRegister();
-      //   if (userToSave != null) {
-      //     //userCreationService.addUserDataBase(userToSave, userID);
-      //     log("Usuario guardado en la base de datos");
-      //     isSignupSuccessful =
-      //         true; // Set the value to true if signup is successful
-      //   } else {
-      //     log("Error al guardar el usuario en la base de datos");
-      //   }
-      // }
-      // // Logout the user to ensure it's not logged in
-      await authService.signout();
+        // Method to generate a user to register according to user type
+        userCreationdbService.sendUserData(
+            userCreationdbService.generateUserToRegister()!, user.uid);
+
+        await authService.signout();
+
+        return isSignupSuccessful = true;
+      }
     } catch (e) {
       isSignupSuccessful = false; // Set the value to false if an error occurs
     }
-
-    return isSignupSuccessful; // Return the value after the try-catch block
+    // Return the value after the try-catch block
+    return isSignupSuccessful = true;
   }
 
   @override
@@ -245,16 +232,16 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                             width: mediumButtonsSize,
                             onPressed: () async {
                               if (_validateCurrentForm()) {
-                                debugPrint(indexView.toString());
-                                // Method to set the user type selected to create the object
-                                // to be saved in the database
-                                userCreationService.setSelectedUserType(
-                                    registrationUserFormData.userType);
-                                userCreationService.testUserData();
-                                log("User created in the database");
+                                // // Method to set the user type selected to create the object
+                                // // to be saved in the database
+                                // userCreationService.setSelectedUserType(
+                                //     registrationUserFormData.userType);
+                                // log("User created in the database");
 
                                 // Ensure the account is created in Firebase
                                 bool isSignupSuccessful = await _signup();
+                                log(isSignupSuccessful.toString());
+
                                 if (isSignupSuccessful && context.mounted) {
                                   context.go("/verify-email");
                                 } else {
@@ -269,8 +256,6 @@ class _RegisterFormViewState extends State<RegisterFormView> {
                                         .show();
                                   }
                                 }
-
-                                //registrationUserFormData.clearFields();
                               }
                             },
                             typeOfButton: ButtonType.filledButton),

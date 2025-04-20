@@ -1,3 +1,5 @@
+// Parent class from types of user extends to.
+
 class UserClubSteam {
   final String nombres;
   final String apellidoPaterno;
@@ -5,10 +7,9 @@ class UserClubSteam {
   final String correoElectronico;
   final String numeroCelular;
   final String tipoUsuario;
-  final String fotoPerfil; // URL to the profile picture
-  final List<String> proyectos; // Array of project IDs
+  final String fotoPerfil;
+  final List<String> proyectos;
 
-  // Constructor
   UserClubSteam({
     required this.nombres,
     required this.apellidoPaterno,
@@ -20,8 +21,7 @@ class UserClubSteam {
     required this.proyectos,
   });
 
-  // Convert a User object to Firestore-compatible map
-  Map<String, dynamic> toFirestore() {
+  Map<String, dynamic> toJson() {
     return {
       'nombres': nombres,
       'apellidoPaterno': apellidoPaterno,
@@ -34,22 +34,33 @@ class UserClubSteam {
     };
   }
 
-  // Create a User object from Firestore data
-  static UserClubSteam fromFirestore(Map<String, dynamic> data) {
-    return UserClubSteam(
-      nombres: data['nombres'],
-      apellidoPaterno: data['apellidoPaterno'],
-      apellidoMaterno: data['apellidoMaterno'],
-      correoElectronico: data['correoElectronico'],
-      numeroCelular: data['numeroCelular'],
-      tipoUsuario: data['tipoUsuario'],
-      fotoPerfil: data['fotoPerfil'],
-      proyectos: List<String>.from(data['proyectos']),
-    );
+  // Factory constructor
+  factory UserClubSteam.fromJson(Map<String, dynamic> json) {
+    switch (json['tipoUsuario']) {
+      case 'Docente':
+        return Docente.fromJson(json);
+
+      case 'Estudiante':
+        return Estudiante.fromJson(json);
+
+      case 'Colaborador':
+        return Colaborador.fromJson(json);
+
+      default:
+        return UserClubSteam(
+          nombres: json['nombres'],
+          apellidoPaterno: json['apellidoPaterno'],
+          apellidoMaterno: json['apellidoMaterno'],
+          correoElectronico: json['correoElectronico'],
+          numeroCelular: json['numeroCelular'],
+          tipoUsuario: json['tipoUsuario'],
+          fotoPerfil: json['fotoPerfil'],
+          proyectos: List<String>.from(json['proyectos']),
+        );
+    }
   }
 }
 
-// Subclass: Docente
 class Docente extends UserClubSteam {
   final String ingenieria;
 
@@ -66,44 +77,27 @@ class Docente extends UserClubSteam {
   });
 
   @override
-  Map<String, dynamic> toFirestore() {
-    final data = super.toFirestore();
+  Map<String, dynamic> toJson() {
+    final data = super.toJson();
     data['ingenieria'] = ingenieria;
     return data;
   }
 
-  static Docente fromFirestore(Map<String, dynamic> data) {
+  factory Docente.fromJson(Map<String, dynamic> json) {
     return Docente(
-      nombres: data['nombres'],
-      apellidoPaterno: data['apellidoPaterno'],
-      apellidoMaterno: data['apellidoMaterno'],
-      correoElectronico: data['correoElectronico'],
-      numeroCelular: data['numeroCelular'],
-      tipoUsuario: data['tipoUsuario'],
-      fotoPerfil: data['fotoPerfil'],
-      proyectos: List<String>.from(data['proyectos']),
-      ingenieria: data['ingenieria'],
+      nombres: json['nombres'],
+      apellidoPaterno: json['apellidoPaterno'],
+      apellidoMaterno: json['apellidoMaterno'],
+      correoElectronico: json['correoElectronico'],
+      numeroCelular: json['numeroCelular'],
+      tipoUsuario: json['tipoUsuario'],
+      fotoPerfil: json['fotoPerfil'],
+      proyectos: List<String>.from(json['proyectos']),
+      ingenieria: json['ingenieria'],
     );
-  }
-
-  // Method to convert the object to a string
-  String toDetailedString() {
-    return '''
-    Docente {
-      nombres: $nombres,
-      apellidoPaterno: $apellidoPaterno,
-      apellidoMaterno: $apellidoMaterno,
-      correoElectronico: $correoElectronico,
-      numeroCelular: $numeroCelular,
-      tipoUsuario: $tipoUsuario,
-      fotoPerfil: $fotoPerfil,
-      proyectos: $proyectos,
-      ingenieria: $ingenieria
-    }''';
   }
 }
 
-// Subclass: Estudiante
 class Estudiante extends UserClubSteam {
   final String ingenieria;
   final String numeroControl;
@@ -122,47 +116,29 @@ class Estudiante extends UserClubSteam {
   });
 
   @override
-  Map<String, dynamic> toFirestore() {
-    final data = super.toFirestore();
+  Map<String, dynamic> toJson() {
+    final data = super.toJson();
     data['ingenieria'] = ingenieria;
     data['numeroControl'] = numeroControl;
     return data;
   }
 
-  static Estudiante fromFirestore(Map<String, dynamic> data) {
+  factory Estudiante.fromJson(Map<String, dynamic> json) {
     return Estudiante(
-      nombres: data['nombres'],
-      apellidoPaterno: data['apellidoPaterno'],
-      apellidoMaterno: data['apellidoMaterno'],
-      correoElectronico: data['correoElectronico'],
-      numeroCelular: data['numeroCelular'],
-      tipoUsuario: data['tipoUsuario'],
-      fotoPerfil: data['fotoPerfil'],
-      proyectos: List<String>.from(data['proyectos']),
-      ingenieria: data['ingenieria'],
-      numeroControl: data['numeroControl'],
+      nombres: json['nombres'],
+      apellidoPaterno: json['apellidoPaterno'],
+      apellidoMaterno: json['apellidoMaterno'],
+      correoElectronico: json['correoElectronico'],
+      numeroCelular: json['numeroCelular'],
+      tipoUsuario: json['tipoUsuario'],
+      fotoPerfil: json['fotoPerfil'],
+      proyectos: List<String>.from(json['proyectos']),
+      ingenieria: json['ingenieria'],
+      numeroControl: json['numeroControl'],
     );
-  }
-
-  // Method to convert the object to a string
-  String toDetailedString() {
-    return '''
-    Estudiante {
-      nombres: $nombres,
-      apellidoPaterno: $apellidoPaterno,
-      apellidoMaterno: $apellidoMaterno,
-      correoElectronico: $correoElectronico,
-      numeroCelular: $numeroCelular,
-      tipoUsuario: $tipoUsuario,
-      fotoPerfil: $fotoPerfil,
-      proyectos: $proyectos,
-      ingenieria: $ingenieria,
-      numeroControl: $numeroControl
-    }''';
   }
 }
 
-// Subclass: Colaborador
 class Colaborador extends UserClubSteam {
   final String unidadAdministrativa;
 
@@ -179,39 +155,23 @@ class Colaborador extends UserClubSteam {
   });
 
   @override
-  Map<String, dynamic> toFirestore() {
-    final data = super.toFirestore();
+  Map<String, dynamic> toJson() {
+    final data = super.toJson();
     data['unidadAdministrativa'] = unidadAdministrativa;
     return data;
   }
 
-  static Colaborador fromFirestore(Map<String, dynamic> data) {
+  factory Colaborador.fromJson(Map<String, dynamic> json) {
     return Colaborador(
-      nombres: data['nombres'],
-      apellidoPaterno: data['apellidoPaterno'],
-      apellidoMaterno: data['apellidoMaterno'],
-      correoElectronico: data['correoElectronico'],
-      numeroCelular: data['numeroCelular'],
-      tipoUsuario: data['tipoUsuario'],
-      fotoPerfil: data['fotoPerfil'],
-      proyectos: List<String>.from(data['proyectos']),
-      unidadAdministrativa: data['unidadAdministrativa'],
+      nombres: json['nombres'],
+      apellidoPaterno: json['apellidoPaterno'],
+      apellidoMaterno: json['apellidoMaterno'],
+      correoElectronico: json['correoElectronico'],
+      numeroCelular: json['numeroCelular'],
+      tipoUsuario: json['tipoUsuario'],
+      fotoPerfil: json['fotoPerfil'],
+      proyectos: List<String>.from(json['proyectos']),
+      unidadAdministrativa: json['unidadAdministrativa'],
     );
-  }
-
-  // Method to convert the object to a string
-  String toDetailedString() {
-    return '''
-    Colaborador {
-      nombres: $nombres,
-      apellidoPaterno: $apellidoPaterno,
-      apellidoMaterno: $apellidoMaterno,
-      correoElectronico: $correoElectronico,
-      numeroCelular: $numeroCelular,
-      tipoUsuario: $tipoUsuario,
-      fotoPerfil: $fotoPerfil,
-      proyectos: $proyectos,
-      unidadAdministrativa: $unidadAdministrativa
-    }''';
   }
 }
