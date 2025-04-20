@@ -1,9 +1,11 @@
 import 'package:club_steam_app/routes/auth_routes.dart';
+import 'package:club_steam_app/services/Auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer';
 import 'package:club_steam_app/widgets/Buttons/sizableButtom.dart';
 import 'package:club_steam_app/services/Auth/auth_service.dart';
 import 'package:club_steam_app/utils/strings/verification_email_strings.dart';
+import 'package:club_steam_app/widgets/Graphics/icons.dart';
 import 'package:club_steam_app/widgets/PlainText/descriptionText.dart';
 import 'package:club_steam_app/widgets/PlainText/titleText.dart';
 import 'package:club_steam_app/views/login_workflow/login.dart';
@@ -92,6 +94,18 @@ class _VerificationEmailViewState extends State<VerificationEmailView> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Verificación de correo"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.close),
+            onPressed: () async {
+              await authService.signout();
+              if (context.mounted) {
+                context.go("/login");
+              }
+            },
+            tooltip: 'Cerrar y volver al login',
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(

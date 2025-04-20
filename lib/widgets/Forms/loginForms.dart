@@ -89,7 +89,7 @@ class _LoginFormState extends State<LoginForm> {
       // Check if the login was successful but the email is not validated
       else if (isLoginSuccessful && !isEmailValid && context.mounted) {
         //navigateTo(context, VerificationEmailView(indexView: 2));
-        context.push("/verify-email");
+        context.go("/verify-email");
         log("Account not verified");
       }
       // Check if the login was not successful

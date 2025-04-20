@@ -11,4 +11,5 @@ class AppIcons {
   static IconData lockPasswordIcon = Icons.lock;
   static IconData viewPasswordIcon = Icons.visibility;
   static IconData hidePasswordIcon = Icons.visibility_off;
+  static IconData closeIcon = Icons.close;
 }
