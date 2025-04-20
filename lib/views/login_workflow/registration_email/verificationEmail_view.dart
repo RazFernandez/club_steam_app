@@ -69,6 +69,7 @@ class _VerificationEmailViewState extends State<VerificationEmailView> {
   void _validateEmail() async {
     await authService.reloadUserData();
     bool emailValidated = await authService.checkEmailVerification();
+    log(emailValidated.toString());
     setState(() {
       if (emailValidated) {
         indexView = 1;
