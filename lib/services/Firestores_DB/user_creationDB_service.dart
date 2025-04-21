@@ -73,8 +73,7 @@ class UserCreationdbService {
   // Send user JSON to Cloud Funtion
   Future<void> sendUserData(UserClubSteam user, String uid) async {
     // Database URL API to create users
-    final url = Uri.parse(
-        'http://10.0.2.2:5001/club-steam-abd01/us-central1/createUser');
+    final url = Uri.parse('https://createuser-j7fvzwscaa-uc.a.run.app');
     try {
       final response = await http.post(
         url,
