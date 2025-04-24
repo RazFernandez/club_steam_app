@@ -9,6 +9,7 @@ class ListTitle extends StatelessWidget {
   final VoidCallback? onTap;
   final Widget? leading;
   final Widget? trailing;
+  final bool isDense;
 
   const ListTitle({
     super.key,
@@ -17,6 +18,7 @@ class ListTitle extends StatelessWidget {
     this.thirdLine,
     this.enableSubtitle = false,
     this.enableThirdLine = false,
+    this.isDense = false,
     this.onTap,
     this.leading,
     this.trailing,
@@ -39,6 +41,7 @@ class ListTitle extends StatelessWidget {
       onTap: onTap,
       leading: leading,
       trailing: trailing,
+      dense: isDense,
     );
   }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:club_steam_app/services/Auth/auth_service.dart';
 import 'package:club_steam_app/widgets/Popups/toastMessagge.dart';
+import 'package:club_steam_app/widgets/Buttons/listTitle.dart';
 import 'package:go_router/go_router.dart';
+import 'dart:developer';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -37,7 +39,61 @@ class _ProfileViewState extends State<ProfileView> {
             children: [
               Image.asset('lib/assets/icon/club-steam-logo.png', height: 200),
               SizedBox(height: 24),
-              TextButton(onPressed: () {}, child: Text("xd"))
+              ListTitle(title: '1. Solo título'),
+              ListTitle(
+                title: '2. Título + onTap',
+                onTap: () => log('Tapped 2'),
+              ),
+              ListTitle(
+                title: '3. Título + leading',
+                leading: Icon(Icons.star),
+              ),
+              ListTitle(
+                title: '4. Título + trailing',
+                trailing: Icon(Icons.chevron_right),
+              ),
+              ListTitle(
+                title: '5. Título + leading + trailing',
+                leading: Icon(Icons.folder),
+                trailing: Icon(Icons.more_vert),
+              ),
+              ListTitle(
+                title: '6. Título + subtitle',
+                subtitle: 'Este es un subtítulo',
+                enableSubtitle: true,
+                isDense: true,
+              ),
+              ListTitle(
+                title: '7. Título + subtitle + onTap',
+                subtitle: 'Este es un subtítulo',
+                enableSubtitle: true,
+                onTap: () => print('Tapped 7'),
+              ),
+              ListTitle(
+                title: '8. Título + subtitle + thirdLine',
+                subtitle: 'Este es un subtítulo',
+                thirdLine: 'Tercera línea de texto',
+                enableSubtitle: true,
+                enableThirdLine: true,
+              ),
+              ListTitle(
+                title: '9. Título + subtitle + thirdLine + leading',
+                subtitle: 'Este es un subtítulo',
+                thirdLine: 'Información adicional',
+                enableSubtitle: true,
+                enableThirdLine: true,
+                leading: Icon(Icons.info),
+              ),
+              ListTitle(
+                title: '10. Full combo',
+                subtitle: 'Proyecto completo',
+                thirdLine: 'Estado: Aprobado',
+                enableSubtitle: true,
+                enableThirdLine: true,
+                leading: Icon(Icons.assignment),
+                trailing: Icon(Icons.check_circle),
+                onTap: () => print('Tapped 10'),
+              ),
             ],
           ),
         ),
