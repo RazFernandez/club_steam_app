@@ -39,60 +39,45 @@ class _ProfileViewState extends State<ProfileView> {
             children: [
               Image.asset('lib/assets/icon/club-steam-logo.png', height: 200),
               SizedBox(height: 24),
-              ListTitle(title: '1. Solo título'),
               ListTitle(
-                title: '2. Título + onTap',
-                onTap: () => log('Tapped 2'),
-              ),
-              ListTitle(
-                title: '3. Título + leading',
-                leading: Icon(Icons.star),
-              ),
-              ListTitle(
-                title: '4. Título + trailing',
+                title: 'Cambiar Contraseña',
+                leading: Icon(Icons.key),
                 trailing: Icon(Icons.chevron_right),
+                onTap: () {
+                  log("Cambiar contra");
+                },
               ),
               ListTitle(
-                title: '5. Título + leading + trailing',
-                leading: Icon(Icons.folder),
-                trailing: Icon(Icons.more_vert),
+                title: 'Editar Información',
+                leading: Icon(Icons.edit),
+                trailing: Icon(Icons.chevron_right),
+                onTap: () {
+                  log("Cambiar contra");
+                },
               ),
               ListTitle(
-                title: '6. Título + subtitle',
-                subtitle: 'Este es un subtítulo',
-                enableSubtitle: true,
-                isDense: true,
+                title: 'Borrar Cuenta',
+                leading: Icon(Icons.delete),
+                trailing: Icon(Icons.chevron_right),
+                onTap: () {
+                  log("Cambiar contra");
+                },
               ),
               ListTitle(
-                title: '7. Título + subtitle + onTap',
-                subtitle: 'Este es un subtítulo',
-                enableSubtitle: true,
-                onTap: () => print('Tapped 7'),
+                title: 'Contactar con soporte técnico',
+                leading: Icon(Icons.email),
+                trailing: Icon(Icons.chevron_right),
+                onTap: () {
+                  log("Cambiar contra");
+                },
               ),
               ListTitle(
-                title: '8. Título + subtitle + thirdLine',
-                subtitle: 'Este es un subtítulo',
-                thirdLine: 'Tercera línea de texto',
-                enableSubtitle: true,
-                enableThirdLine: true,
-              ),
-              ListTitle(
-                title: '9. Título + subtitle + thirdLine + leading',
-                subtitle: 'Este es un subtítulo',
-                thirdLine: 'Información adicional',
-                enableSubtitle: true,
-                enableThirdLine: true,
+                title: 'Créditos',
                 leading: Icon(Icons.info),
-              ),
-              ListTitle(
-                title: '10. Full combo',
-                subtitle: 'Proyecto completo',
-                thirdLine: 'Estado: Aprobado',
-                enableSubtitle: true,
-                enableThirdLine: true,
-                leading: Icon(Icons.assignment),
-                trailing: Icon(Icons.check_circle),
-                onTap: () => print('Tapped 10'),
+                trailing: Icon(Icons.chevron_right),
+                onTap: () {
+                  log("Cambiar contra");
+                },
               ),
             ],
           ),
