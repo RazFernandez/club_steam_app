@@ -3,6 +3,7 @@ import 'package:club_steam_app/services/Auth/auth_service.dart';
 import 'package:club_steam_app/widgets/Popups/toastMessagge.dart';
 import 'package:club_steam_app/widgets/Buttons/listTitle.dart';
 import 'package:go_router/go_router.dart';
+import 'package:club_steam_app/widgets/TextWidgets/textDivider.dart';
 import 'dart:developer';
 
 class ProfileView extends StatefulWidget {
@@ -39,6 +40,10 @@ class _ProfileViewState extends State<ProfileView> {
             children: [
               Image.asset('lib/assets/icon/club-steam-logo.png', height: 200),
               SizedBox(height: 24),
+              TextWithDivider(
+                text: 'Seguridad de la cuenta',
+                textStyleType: AppTextStyleType.titleMedium,
+              ),
               ListTitle(
                 title: 'Cambiar Contraseña',
                 leading: Icon(Icons.key),
@@ -62,6 +67,11 @@ class _ProfileViewState extends State<ProfileView> {
                 onTap: () {
                   log("Cambiar contra");
                 },
+              ),
+              SizedBox(height: 24),
+              TextWithDivider(
+                text: 'Acerca de la aplicación',
+                textStyleType: AppTextStyleType.titleMedium,
               ),
               ListTitle(
                 title: 'Contactar con soporte técnico',
