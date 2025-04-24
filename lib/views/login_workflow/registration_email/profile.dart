@@ -5,6 +5,7 @@ import 'package:club_steam_app/widgets/Buttons/listTitle.dart';
 import 'package:go_router/go_router.dart';
 import 'package:club_steam_app/widgets/TextWidgets/textDivider.dart';
 import 'package:club_steam_app/widgets/Buttons/textButtonIcon.dart';
+import 'package:club_steam_app/widgets/Graphics/avatarImageProfile.dart';
 import 'dart:developer';
 
 class ProfileView extends StatefulWidget {
@@ -39,7 +40,7 @@ class _ProfileViewState extends State<ProfileView> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Image.asset('lib/assets/icon/club-steam-logo.png', height: 200),
+              AvatarImageProfile.createFromDefaultImage(radiusImage: 200.0),
               SizedBox(height: 24),
               TextButtonIcon(
                   label: "Cerrar Sesión",
