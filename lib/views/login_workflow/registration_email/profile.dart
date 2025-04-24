@@ -4,6 +4,7 @@ import 'package:club_steam_app/widgets/Popups/toastMessagge.dart';
 import 'package:club_steam_app/widgets/Buttons/listTitle.dart';
 import 'package:go_router/go_router.dart';
 import 'package:club_steam_app/widgets/TextWidgets/textDivider.dart';
+import 'package:club_steam_app/widgets/Buttons/textButtonIcon.dart';
 import 'dart:developer';
 
 class ProfileView extends StatefulWidget {
@@ -39,6 +40,16 @@ class _ProfileViewState extends State<ProfileView> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Image.asset('lib/assets/icon/club-steam-logo.png', height: 200),
+              SizedBox(height: 24),
+              TextButtonIcon(
+                  label: "Cerrar Sesión",
+                  leadingIcon: Icons.logout,
+                  onPressed: () {}),
+              SizedBox(height: 16),
+              TextWithDivider(
+                text: 'Información General',
+                textStyleType: AppTextStyleType.titleMedium,
+              ),
               SizedBox(height: 24),
               TextWithDivider(
                 text: 'Seguridad de la cuenta',
