@@ -28,10 +28,18 @@ class _ProfileViewState extends State<ProfileView> {
       appBar: AppBar(
         title: Text("Perfil"),
       ),
-      body: Center(
-        child: FilledButton(
-          onPressed: _logout,
-          child: Text("Cerrar Sesión"),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Image.asset('lib/assets/icon/club-steam-logo.png', height: 200),
+              SizedBox(height: 24),
+              TextButton(onPressed: () {}, child: Text("xd"))
+            ],
+          ),
         ),
       ),
     );
