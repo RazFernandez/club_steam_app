@@ -18,9 +18,10 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
+  AuthService authService = AuthService();
+
   // Log out the user and redirect it into the login view
   void _logout() async {
-    AuthService authService = AuthService();
     await authService.signout();
     if (mounted) {
       // Show a toast message to inform the user that they have logged out successfully
@@ -53,7 +54,8 @@ class _ProfileViewState extends State<ProfileView> {
   // Method to display general information of the user
   void retriveUserInfo() async {
     UsersCRUDService usersCRUDService = UsersCRUDService();
-    usersCRUDService.fetchUser();
+
+    usersCRUDService.fetchUser(authService.getCurrentUserUid()!);
   }
 
   @override

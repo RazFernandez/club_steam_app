@@ -87,9 +87,9 @@ class UsersCRUDService {
   }
 
   // Method to retrieve information of the user
-  Future<void> fetchUser() async {
+  Future<void> fetchUser(String uid) async {
     final url = Uri.parse(
-        'https://getuserinfo-j7fvzwscaa-uc.a.run.app?uid=LkRuLconxuP3myhk0GJntNI7z7N2'); // Sample API
+        'https://getuserinfo-j7fvzwscaa-uc.a.run.app?uid=$uid'); // Sample API
 
     try {
       final response = await http.get(url);
