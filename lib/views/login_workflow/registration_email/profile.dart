@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'package:club_steam_app/widgets/TextWidgets/textDivider.dart';
 import 'package:club_steam_app/widgets/Buttons/textButtonIcon.dart';
 import 'package:club_steam_app/widgets/Graphics/avatarImageProfile.dart';
+import 'package:club_steam_app/widgets/Popups/ConfirmationDialog.dart';
+import 'package:club_steam_app/services/Firestores_DB/users_CRUD_DB_service.dart';
 import 'dart:developer';
 
 class ProfileView extends StatefulWidget {
@@ -27,6 +29,33 @@ class _ProfileViewState extends State<ProfileView> {
     }
   }
 
+  // Method to Confirm Logout of the user
+  void shouldLogout() async {
+    final shouldLogout = await showDialog<bool>(
+      context: context,
+      builder: (context) => ConfirmationDialog(
+        title: "¿Cerrar sesión?",
+        text: "¿Estás seguro de que quieres cerrar tu sesión?'",
+        onConfirm: () {
+          Navigator.pop(context, true);
+        },
+        onCancel: () {
+          Navigator.pop(context, false);
+        },
+      ),
+    );
+
+    if (shouldLogout == true) {
+      _logout();
+    }
+  }
+
+  // Method to display general information of the user
+  void retriveUserInfo() async {
+    UsersCRUDService usersCRUDService = UsersCRUDService();
+    usersCRUDService.fetchUser();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,12 +74,20 @@ class _ProfileViewState extends State<ProfileView> {
               TextButtonIcon(
                   label: "Cerrar Sesión",
                   leadingIcon: Icons.logout,
-                  onPressed: () {}),
+                  onPressed: () {
+                    shouldLogout();
+                  }),
               SizedBox(height: 16),
               TextWithDivider(
                 text: 'Información General',
                 textStyleType: AppTextStyleType.titleMedium,
               ),
+              TextButtonIcon(
+                  label: "Recuperar info",
+                  leadingIcon: Icons.logout,
+                  onPressed: () {
+                    retriveUserInfo();
+                  }),
               SizedBox(height: 24),
               TextWithDivider(
                 text: 'Seguridad de la cuenta',

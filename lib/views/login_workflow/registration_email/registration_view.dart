@@ -12,7 +12,7 @@ import 'package:club_steam_app/widgets/Forms/registerForms/accountContactForm.da
 import 'package:club_steam_app/widgets/Forms/registerForms/passwordSetupForm.dart';
 import 'package:club_steam_app/widgets/Forms/registerForms/userTypeForm.dart';
 import 'package:club_steam_app/models/registration_user_form_data.dart';
-import 'package:club_steam_app/services/Firestores_DB/user_creationDB_service.dart';
+import 'package:club_steam_app/services/Firestores_DB/users_CRUD_DB_service.dart';
 import 'package:club_steam_app/widgets/Buttons/redirectTextButton.dart';
 import 'package:club_steam_app/exceptions/FirebaseAuthException.dart';
 import 'package:club_steam_app/widgets/Popups/toastMessagge.dart';
@@ -33,7 +33,7 @@ class _RegisterFormViewState extends State<RegisterFormView> {
       RegistrationUserFormData();
 
   // Instance of the user creation service
-  UserCreationdbService userCreationService = UserCreationdbService();
+  UsersCRUDService userCreationService = UsersCRUDService();
 
   // Instance of the authentication service
   AuthService authService = AuthService();
@@ -127,7 +127,7 @@ class _RegisterFormViewState extends State<RegisterFormView> {
         log("Usuario creado con éxito en Firebase Auth");
         await authService.sendEmailVerification();
 
-        UserCreationdbService userCreationdbService = UserCreationdbService();
+        UsersCRUDService userCreationdbService = UsersCRUDService();
 
         // Retrieves and set the value of the registration controller
         userCreationdbService

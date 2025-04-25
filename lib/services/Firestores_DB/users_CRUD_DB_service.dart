@@ -3,22 +3,14 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:club_steam_app/models/user_clubsteam_model.dart';
 import 'package:club_steam_app/models/registration_user_form_data.dart';
-import 'package:club_steam_app/services/Firestores_DB/userQueries.dart';
-import 'package:club_steam_app/exceptions/FormException.dart';
-import 'package:flutter/material.dart';
 
-class UserCreationdbService {
+class UsersCRUDService {
   // Object to handle controller values of the text fields
   RegistrationUserFormData registrationUserFormData =
       RegistrationUserFormData();
 
   // Variable that handles the User object creation based on its type.
   String? selectedUserType;
-
-  // // Retrieves the value of the registration controller
-  // userCreationService() {
-  //   selectedUserType = registrationUserFormData.userType;
-  // }
 
   // Set user type to create the JSON object
   void setSelectedUserType(String? userType) {
@@ -86,6 +78,26 @@ class UserCreationdbService {
 
       if (response.statusCode == 200) {
         log("User added: ${response.body}");
+      } else {
+        log('Error: ${response.body}');
+      }
+    } catch (e) {
+      log("Excepción: $e");
+    }
+  }
+
+  // Method to retrieve information of the user
+  Future<void> fetchUser() async {
+    final url = Uri.parse(
+        'https://getuserinfo-j7fvzwscaa-uc.a.run.app?uid=LkRuLconxuP3myhk0GJntNI7z7N2'); // Sample API
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        // If the server returns a successful response, parse the JSON
+        var data = jsonDecode(response.body);
+        log("User info fetched: $data");
       } else {
         log('Error: ${response.body}');
       }
