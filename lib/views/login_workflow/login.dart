@@ -35,31 +35,6 @@ class _LoginViewState extends State<LoginView> {
               // Recover password
               TextButton(onPressed: () {}, child: Text('Recuperar Contraseña')),
               SizedBox(height: 16),
-              // Remove, just testing code
-              ElevatedButton(
-                  onPressed: () {
-                    CloudFunctionsCreateUserDB.addUser();
-                  },
-                  child: Text('Create User')),
-
-              // Row(
-              //   children: <Widget>[
-              //     Expanded(child: Divider()),
-              //     Text('o'),
-              //     Expanded(child: Divider())
-              //   ],
-              // ),
-              // SizedBox(height: 16),
-              // Text("Inicie Sesión con"),
-              // // Google Sing-In Button
-              // IconButton(
-              //   onPressed: () {},
-              //   icon: Image.asset(
-              //     'lib/assets/icon/google_icon.png',
-              //     width: 40,
-              //     height: 40,
-              //   ),
-              // ),
               // Register Text
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

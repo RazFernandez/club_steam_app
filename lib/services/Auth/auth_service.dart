@@ -95,4 +95,10 @@ class AuthService {
       log("Something went wrong: ${e.toString()}");
     }
   }
+
+  // Method to get current user's UID
+  String? getCurrentUserUid() {
+    final user = _auth.currentUser;
+    return user?.uid;
+  }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:club_steam_app/widgets/TextFields/passwordFormField.dart';
 import 'package:club_steam_app/utils/validation.dart';
-import 'package:club_steam_app/widgets/PlainText/titleText.dart';
-import 'package:club_steam_app/widgets/PlainText/descriptionText.dart';
+import 'package:club_steam_app/widgets/TextWidgets/titleText.dart';
+import 'package:club_steam_app/widgets/TextWidgets/descriptionText.dart';
 import 'package:club_steam_app/models/registration_user_form_data.dart';
 
 class PasswordSetupForm extends StatefulWidget {

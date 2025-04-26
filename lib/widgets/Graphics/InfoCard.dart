@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:club_steam_app/utils/strings/verification_email_strings.dart';
-import 'package:club_steam_app/widgets/PlainText/descriptionText.dart';
-import 'package:club_steam_app/widgets/PlainText/titleText.dart';
+import 'package:club_steam_app/widgets/TextWidgets/descriptionText.dart';
+import 'package:club_steam_app/widgets/TextWidgets/titleText.dart';
 
 class Infocard extends StatelessWidget {
   final String? title; // Optional title

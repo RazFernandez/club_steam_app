@@ -3,22 +3,14 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:club_steam_app/models/user_clubsteam_model.dart';
 import 'package:club_steam_app/models/registration_user_form_data.dart';
-import 'package:club_steam_app/services/Firestores_DB/userQueries.dart';
-import 'package:club_steam_app/exceptions/FormException.dart';
-import 'package:flutter/material.dart';
 
-class UserCreationdbService {
+class UsersCRUDService {
   // Object to handle controller values of the text fields
   RegistrationUserFormData registrationUserFormData =
       RegistrationUserFormData();
 
   // Variable that handles the User object creation based on its type.
   String? selectedUserType;
-
-  // // Retrieves the value of the registration controller
-  // userCreationService() {
-  //   selectedUserType = registrationUserFormData.userType;
-  // }
 
   // Set user type to create the JSON object
   void setSelectedUserType(String? userType) {
@@ -73,8 +65,7 @@ class UserCreationdbService {
   // Send user JSON to Cloud Funtion
   Future<void> sendUserData(UserClubSteam user, String uid) async {
     // Database URL API to create users
-    final url = Uri.parse(
-        'http://10.0.2.2:5001/club-steam-abd01/us-central1/createUser');
+    final url = Uri.parse('https://createuser-j7fvzwscaa-uc.a.run.app');
     try {
       final response = await http.post(
         url,
@@ -92,6 +83,29 @@ class UserCreationdbService {
       }
     } catch (e) {
       log("Excepción: $e");
+    }
+  }
+
+  // Method to retrieve information of the user
+  Future<Map<String, dynamic>?> fetchUser(String uid) async {
+    final url = Uri.parse(
+        'https://getuserinfo-j7fvzwscaa-uc.a.run.app?uid=$uid'); // Sample API
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        // If the server returns a successful response, parse the JSON
+        final data = jsonDecode(response.body);
+        log("User info fetched: $data");
+        return data;
+      } else {
+        log('Error: ${response.body}');
+        return null;
+      }
+    } catch (e) {
+      log("Excepción: $e");
+      return null;
     }
   }
 }
