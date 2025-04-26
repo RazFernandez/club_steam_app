@@ -35,13 +35,6 @@ class _LoginViewState extends State<LoginView> {
               // Recover password
               TextButton(onPressed: () {}, child: Text('Recuperar Contraseña')),
               SizedBox(height: 16),
-              // Remove, just testing code
-              ElevatedButton(
-                  onPressed: () {
-                    CloudFunctionsCreateUserDB.addUser();
-                  },
-                  child: Text('Create User')),
-
               // Register Text
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -87,7 +87,7 @@ class UsersCRUDService {
   }
 
   // Method to retrieve information of the user
-  Future<void> fetchUser(String uid) async {
+  Future<Map<String, dynamic>?> fetchUser(String uid) async {
     final url = Uri.parse(
         'https://getuserinfo-j7fvzwscaa-uc.a.run.app?uid=$uid'); // Sample API
 
@@ -96,13 +96,16 @@ class UsersCRUDService {
 
       if (response.statusCode == 200) {
         // If the server returns a successful response, parse the JSON
-        var data = jsonDecode(response.body);
+        final data = jsonDecode(response.body);
         log("User info fetched: $data");
+        return data;
       } else {
         log('Error: ${response.body}');
+        return null;
       }
     } catch (e) {
       log("Excepción: $e");
+      return null;
     }
   }
 }

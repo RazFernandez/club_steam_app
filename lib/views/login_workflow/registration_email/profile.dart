@@ -8,6 +8,7 @@ import 'package:club_steam_app/widgets/Buttons/textButtonIcon.dart';
 import 'package:club_steam_app/widgets/Graphics/avatarImageProfile.dart';
 import 'package:club_steam_app/widgets/Popups/ConfirmationDialog.dart';
 import 'package:club_steam_app/services/Firestores_DB/users_CRUD_DB_service.dart';
+import 'package:club_steam_app/widgets/TextWidgets/userInformation.dart';
 import 'dart:developer';
 
 class ProfileView extends StatefulWidget {
@@ -84,12 +85,7 @@ class _ProfileViewState extends State<ProfileView> {
                 text: 'Información General',
                 textStyleType: AppTextStyleType.titleMedium,
               ),
-              TextButtonIcon(
-                  label: "Recuperar info",
-                  leadingIcon: Icons.logout,
-                  onPressed: () {
-                    retriveUserInfo();
-                  }),
+              UserInformation(uid: authService.getCurrentUserUid()!),
               SizedBox(height: 24),
               TextWithDivider(
                 text: 'Seguridad de la cuenta',
