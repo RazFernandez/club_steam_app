@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:club_steam_app/routes/auth_routes.dart';
 import 'package:club_steam_app/services/Auth/auth_service.dart';
+import 'package:club_steam_app/routes/profile_router.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/login',
@@ -38,5 +39,6 @@ final GoRouter appRouter = GoRouter(
   },
   routes: [
     ...authRoutes,
+    ...profileRoutes,
   ],
 );
