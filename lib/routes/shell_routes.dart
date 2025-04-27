@@ -19,7 +19,9 @@ StatefulShellRoute buildShellRoute() {
         routes: [
           GoRoute(
             path: '/home',
-            builder: (context, state) => const HomeView(),
+            builder: (context, state) => Center(
+              child: Text('Proyectos', style: TextStyle(fontSize: 24)),
+            ),
           ),
         ],
       ),
