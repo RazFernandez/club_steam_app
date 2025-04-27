@@ -112,7 +112,7 @@ class _ProfileViewState extends State<ProfileView> {
                 leading: Icon(Icons.delete),
                 trailing: Icon(Icons.chevron_right),
                 onTap: () {
-                  log("Cambiar contra");
+                  context.push("/profile/delete-account");
                 },
               ),
               SizedBox(height: 24),

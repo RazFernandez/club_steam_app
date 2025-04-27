@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:club_steam_app/views/login_workflow/login.dart';
 import 'package:club_steam_app/views/login_workflow/registration_email/registration_view.dart';
 import 'package:club_steam_app/views/login_workflow/registration_email/verificationEmail_view.dart';
+import 'package:club_steam_app/views/ScaffoldWithNavBar.dart';
 import 'package:club_steam_app/views/home.dart';
 
 final List<GoRoute> authRoutes = [
