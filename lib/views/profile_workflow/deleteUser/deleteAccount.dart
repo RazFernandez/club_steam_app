@@ -41,7 +41,7 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
                   children: [
                     SizableButton(
                         onPressed: () {
-                          context.go('/home');
+                          context.go('/profile');
                         },
                         text: "Cancelar",
                         width: mediumButtonsSize,
