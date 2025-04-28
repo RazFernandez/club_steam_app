@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:club_steam_app/widgets/Graphics/InfoCard.dart';
 import 'package:club_steam_app/widgets/Buttons/sizableButtom.dart';
 import 'package:go_router/go_router.dart';
+import 'package:club_steam_app/services/Auth/auth_service.dart';
+import 'package:club_steam_app/services/Firestores_DB/users_CRUD_DB_service.dart';
+import 'dart:developer';
+import 'package:club_steam_app/widgets/Popups/ConfirmationDialog.dart';
 
 class DeleteAccountView extends StatefulWidget {
   const DeleteAccountView({super.key});
@@ -11,13 +15,40 @@ class DeleteAccountView extends StatefulWidget {
 }
 
 class _DeleteAccountViewState extends State<DeleteAccountView> {
-  // // Remove
-  // final TestFunction testFunction = TestFunction();
+  AuthService authService = AuthService();
+  UsersCRUDService usersCRUDService = UsersCRUDService();
 
   // Size of the buttons
   final double largeButtonSize = 248;
   final double mediumButtonsSize = 144;
   final double smallButtonsSize = 120;
+
+  // Method to Confirm Logout of the user
+// Method to Confirm Logout of the user
+  Future<bool> shouldDeletedUser(String uid) async {
+    final shouldLogout = await showDialog<bool>(
+      context: context,
+      builder: (context) => ConfirmationDialog(
+        title: "¡Atención!",
+        text:
+            "Al eliminar tu cuenta, se borrarán permanentemente todos los proyectos que hayas creado y tu información personal. Esta acción es irreversible",
+        onConfirm: () {
+          Navigator.pop(context, true);
+        },
+        onCancel: () {
+          Navigator.pop(context, false);
+        },
+      ),
+    );
+
+    if (shouldLogout == true) {
+      await usersCRUDService.deleteUserService(uid);
+      log("User deleted");
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +78,14 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
                         width: mediumButtonsSize,
                         typeOfButton: ButtonType.outlinedButton),
                     SizableButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          String uid = authService.getCurrentUserUid()!;
+                          await authService.signout();
+                          await shouldDeletedUser(uid);
+                          if (context.mounted) {
+                            context.go("/login");
+                          }
+                        },
                         text: "Eliminar",
                         width: mediumButtonsSize,
                         typeOfButton: ButtonType.filledButton),

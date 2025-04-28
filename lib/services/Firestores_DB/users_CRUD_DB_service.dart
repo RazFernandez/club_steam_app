@@ -108,4 +108,26 @@ class UsersCRUDService {
       return null;
     }
   }
+
+  // Method to delete a user based on their UID
+  Future<void> deleteUserService(String uid) async {
+    final url = Uri.parse(
+        'https://us-central1-club-steam-abd01.cloudfunctions.net/deleteUserData?uid=$uid'); // Placeholder API
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"uid": uid}),
+      );
+
+      if (response.statusCode == 200) {
+        log("User deleted: ${response.body}");
+      } else {
+        log('Error: ${response.body}');
+      }
+    } catch (e) {
+      log("Excepción: $e");
+    }
+  }
 }
