@@ -36,7 +36,7 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
           Navigator.pop(context, true);
         },
         onCancel: () {
-          Navigator.pop(context, false);
+          Navigator.pop(context, false); // Only closes the alertDialog;
         },
       ),
     );
@@ -72,7 +72,7 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
                   children: [
                     SizableButton(
                         onPressed: () {
-                          context.go('/profile');
+                          Navigator.pop(context);
                         },
                         text: "Cancelar",
                         width: mediumButtonsSize,
@@ -80,10 +80,14 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
                     SizableButton(
                         onPressed: () async {
                           String uid = authService.getCurrentUserUid()!;
-                          await authService.signout();
-                          await shouldDeletedUser(uid);
-                          if (context.mounted) {
-                            context.go("/login");
+                          bool shouldDelete = await shouldDeletedUser(uid);
+
+                          // Only when user deletes their account, singout it
+                          if (shouldDelete) {
+                            await authService.signout();
+                            if (context.mounted) {
+                              context.go("/login");
+                            }
                           }
                         },
                         text: "Eliminar",
