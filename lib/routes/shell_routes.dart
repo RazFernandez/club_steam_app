@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:club_steam_app/views/home.dart';
 import 'package:club_steam_app/views/profile_workflow/profile.dart';
-import 'package:club_steam_app/views/profile_workflow/deleteUser/deleteAccount.dart';
+import 'package:club_steam_app/views/profile_workflow/profile_features/deleteAccount.dart';
 import 'package:club_steam_app/views/ScaffoldWithNavBar.dart';
+import 'package:club_steam_app/routes/profile_router.dart';
 
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -53,16 +54,7 @@ StatefulShellRoute buildShellRoute() {
       // Branch 3: Profile
       StatefulShellBranch(
         routes: [
-          GoRoute(
-            path: '/profile',
-            builder: (context, state) => const ProfileView(),
-            routes: [
-              GoRoute(
-                path: 'delete-account',
-                builder: (context, state) => const DeleteAccountView(),
-              ),
-            ],
-          ),
+          ...profileRoutes,
         ],
       ),
     ],

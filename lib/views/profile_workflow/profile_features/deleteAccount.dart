@@ -94,7 +94,7 @@ class _DeleteAccountViewState extends State<DeleteAccountView> {
                         width: mediumButtonsSize,
                         typeOfButton: ButtonType.filledButton),
                   ],
-                )
+                ),
               ],
             ),
           ),

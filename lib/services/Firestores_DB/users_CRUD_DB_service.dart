@@ -130,4 +130,38 @@ class UsersCRUDService {
       log("Excepción: $e");
     }
   }
+
+  // Method to update basic user information
+  Future<void> updateUserData({
+    required String uid,
+    required String nombres,
+    required String apellidoPaterno,
+    required String apellidoMaterno,
+    required String numeroCelular,
+  }) async {
+    final url = Uri.parse(
+        'https://us-central1-club-steam-abd01.cloudfunctions.net/updateUserInfo?uid=$uid'); // Replace with your actual deployed endpoint
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "uid": uid,
+          "nombres": nombres.trim(),
+          "apellidoPaterno": apellidoPaterno.trim(),
+          "apellidoMaterno": apellidoMaterno.trim(),
+          "numeroCelular": numeroCelular.trim(),
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        log("User updated: ${response.body}");
+      } else {
+        log("Error updating user: ${response.body}");
+      }
+    } catch (e) {
+      log("Excepción: $e");
+    }
+  }
 }

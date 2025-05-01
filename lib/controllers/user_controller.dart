@@ -44,6 +44,19 @@ class UserController {
     }
   }
 
+  // Getters for individual fields
+  String? get getNombres => nombres;
+  String? get getApellidoPaterno => apellidoPaterno;
+  String? get getApellidoMaterno => apellidoMaterno;
+  String? get getCorreoElectronico => correoElectronico;
+  String? get getNumeroControl => numeroControl;
+  String? get getNumeroCelular => numeroCelular;
+  String? get getTipoUsuario => tipoUsuario;
+  String? get getFotoPerfil => fotoPerfil;
+  List<String> get getProyectos => proyectos;
+  String? get getIngenieria => ingenieria;
+  String? get getUnidadAdministrativa => unidadAdministrativa;
+
   // Full name getter
   String get fullName => "$nombres $apellidoPaterno $apellidoMaterno";
 }
