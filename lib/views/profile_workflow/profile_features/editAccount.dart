@@ -78,9 +78,6 @@ class _EditAccountViewState extends State<EditAccountView> {
                         if (_validateForm()) {
                           String uid = authService.getCurrentUserUid()!;
 
-                          // Updated the user data in controller
-                          await userController.loadUser(uid);
-
                           // Send new data to database
                           await usersCRUDService.updateUserData(
                             uid: uid,
@@ -92,6 +89,19 @@ class _EditAccountViewState extends State<EditAccountView> {
                             numeroCelular:
                                 registrationUserFormData.cellPhoneNumber,
                           );
+
+                          // Updated the user data in controller
+                          await userController.loadUser(uid);
+
+                          // Save the new data in the registrationUserFormData
+                          registrationUserFormData.name =
+                              userController.nombres!;
+                          registrationUserFormData.lastFatherName =
+                              userController.apellidoPaterno!;
+                          registrationUserFormData.lastMotherName =
+                              userController.getApellidoMaterno!;
+                          registrationUserFormData.cellPhoneNumber =
+                              userController.numeroCelular!;
 
                           if (context.mounted) {
                             Navigator.pop(context);

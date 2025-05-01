@@ -33,14 +33,21 @@ class _EditAccountFormState extends State<EditAccountForm> {
   @override
   void initState() {
     super.initState();
-    registrationUserFormData.nameController.text = userController.nombres!;
-    registrationUserFormData.lastFatherNameController.text =
-        userController.apellidoPaterno!;
-    registrationUserFormData.lastMotherNameController.text =
+    registrationUserFormData.name = userController.nombres!;
+    registrationUserFormData.lastFatherName = userController.apellidoPaterno!;
+    registrationUserFormData.lastMotherName =
         userController.getApellidoMaterno!;
-    registrationUserFormData.cellPhoneNumberController.text =
-        userController.numeroCelular!;
+    registrationUserFormData.cellPhoneNumber = userController.numeroCelular!;
   }
+
+  // // Method to set Values to the textfield sof the registration User Form.
+  // void setValuesFromDataBase() {
+  //   registrationUserFormData.name = userController.nombres!;
+  //   registrationUserFormData.lastFatherName = userController.apellidoPaterno!;
+  //   registrationUserFormData.lastMotherName =
+  //       userController.getApellidoMaterno!;
+  //   registrationUserFormData.cellPhoneNumber = userController.numeroCelular!;
+  // }
 
   @override
   Widget build(BuildContext context) {

@@ -60,6 +60,18 @@ class RegistrationUserFormData {
   String get unit => _unitController.text;
   String get controlNumber => _controlNumberController.text;
 
+  // Setters to update the text value
+  set name(String value) => _nameController.text = value;
+  set lastFatherName(String value) => _lastFatherNameController.text = value;
+  set lastMotherName(String value) => _lastMotherNameController.text = value;
+  set email(String value) => _emailController.text = value;
+  set cellPhoneNumber(String value) => _cellPhoneNumberController.text = value;
+  set password(String value) => _passwordController.text = value;
+  set confirmPassword(String value) => _confirmPasswordController.text = value;
+  set userType(String value) => _userTypeController.text = value;
+  set unit(String value) => _unitController.text = value;
+  set controlNumber(String value) => _controlNumberController.text = value;
+
   // returns true if any of the text fields
   // contain data, and false if they are all empty.
   bool hasAnyDataFilled() {
